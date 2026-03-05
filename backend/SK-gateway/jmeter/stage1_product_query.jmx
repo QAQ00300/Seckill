@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jmeterTestPlan version="1.2" properties="5.0">
+  <hashTree>
+    <!-- 测试计划配置 -->
+    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="阶段1-商品查询性能测试">
+      <stringProp name="TestPlan.comments">测试基础架构下的商品查询性能</stringProp>
+      <boolProp name="TestPlan.functional_mode">false</boolProp>
+      <boolProp name="TestPlan.tearDown_on_shutdown">true</boolProp>
+
+      <!-- 用户定义的变量 -->
+      <elementProp name="TestPlan.user_defined_variables" elementType="Arguments">
+        <collectionProp name="Arguments.arguments">
+          <elementProp name="host" elementType="Argument">
+            <stringProp name="Argument.name">host</stringProp>
+            <stringProp name="Argument.value">localhost</stringProp>
+          </elementProp>
+          <elementProp name="port" elementType="Argument">
+            <stringProp name="Argument.name">port</stringProp>
+            <stringProp name="Argument.value">8080</stringProp>
+          </elementProp>
+          <elementProp name="stage" elementType="Argument">
+            <stringProp name="Argument.name">stage</stringProp>
+            <stringProp name="Argument.value">stage1</stringProp>
+          </elementProp>
+        </collectionProp>
+      </elementProp>
+    </TestPlan>
+
+    <hashTree>
+      <!-- 线程组：模拟100个并发用户 -->
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="商品查询并发测试">
+        <stringProp name="ThreadGroup.num_threads">100</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">10</stringProp>
+        <boolProp name="ThreadGroup.scheduler">true</boolProp>
+        <stringProp name="ThreadGroup.duration">300</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController">
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+          <stringProp name="LoopController.loops">-1</stringProp>
+        </elementProp>
+      </ThreadGroup>
+
+      <hashTree>
+        <!-- HTTP请求默认值 -->
+        <ConfigTestElement guiclass="HttpDefaultsGui" testclass="HttpRequestDefaults">
+          <stringProp name="HTTPSampler.domain">${host}</stringProp>
+          <stringProp name="HTTPSampler.port">${port}</stringProp>
+          <stringProp name="HTTPSampler.protocol">http</stringProp>
+          <stringProp name="HTTPSampler.contentEncoding">UTF-8</stringProp>
+        </ConfigTestElement>
+
+        <!-- HTTP头管理器 -->
+        <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager">
+          <collectionProp name="HeaderManager.headers">
+            <elementProp name="" elementType="Header">
+              <stringProp name="Header.name">Content-Type</stringProp>
+              <stringProp name="Header.value">application/json</stringProp>
+            </elementProp>
+            <elementProp name="" elementType="Header">
+              <stringProp name="Header.name">X-Stage</stringProp>
+              <stringProp name="Header.value">${stage}</stringProp>
+            </elementProp>
+            <elementProp name="" elementType="Header">
+              <stringProp name="Header.name">X-Test-Mode</stringProp>
+              <stringProp name="Header.value">true</stringProp>
+            </elementProp>
+          </collectionProp>
+        </HeaderManager>
+
+        <!-- HTTP请求：商品查询 -->
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="商品查询">
+          <stringProp name="HTTPSampler.path">/api/product/${__Random(1,100)}</stringProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+        </HTTPSamplerProxy>
+
+        <!-- 响应断言：检查响应头 -->
+        <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion">
+          <collectionProp name="Asserion.test_strings">
+            <stringProp>X-Response-Time</stringProp>
+            <stringProp>X-Stage</stringProp>
+          </collectionProp>
+        </ResponseAssertion>
+
+        <!-- 结果树查看器 -->
+        <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector">
+          <stringProp name="filename">results/stage1_product_query.jtl</stringProp>
+        </ResultCollector>
+
+        <!-- 聚合报告 -->
+        <ResultCollector guiclass="StatVisualizer" testclass="ResultCollector">
+          <stringProp name="filename">reports/stage1_product_query_report.csv</stringProp>
+        </ResultCollector>
+      </hashTree>
+    </hashTree>
+  </hashTree>
+</jmeterTestPlan>

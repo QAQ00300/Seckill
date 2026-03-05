@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/SK-client/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/SK-client/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/SK-common/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/SK-common/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/SK-core/core-boot/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/SK-core/core-boot/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/SK-core/core-cache/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/SK-core/core-cache/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/SK-core/core-mq/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/SK-core/core-mq/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/SK-core/core-seckill/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/SK-core/core-seckill/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/SK-core/core-stock/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/SK-core/core-stock/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/SK-core/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/SK-core/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/SK-gateway/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/SK-gateway/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/SK-order/order-ao/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/SK-order/order-ao/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/SK-order/order-api/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/SK-order/order-api/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/SK-order/order-biz/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/SK-order/order-biz/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/SK-order/order-bo/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/SK-order/order-bo/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/SK-order/order-boot/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/SK-order/order-boot/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/SK-order/order-constant/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/SK-order/order-constant/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/SK-order/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/SK-order/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/SK-user/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/SK-user/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/SK-user/user-ao/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/SK-user/user-ao/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/SK-user/user-api/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/SK-user/user-api/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/SK-user/user-biz/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/SK-user/user-biz/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/SK-user/user-bo/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/SK-user/user-bo/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/SK-user/user-boot/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/SK-user/user-boot/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/SK-user/user-constant/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/SK-user/user-constant/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
+  </component>
+</project>

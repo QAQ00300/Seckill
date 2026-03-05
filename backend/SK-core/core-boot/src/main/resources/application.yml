@@ -1,0 +1,21 @@
+# application-stage1.yml
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/sk_seckill
+    username: root
+    password: 123456
+
+  # 阶段1不启用缓存
+cache:
+  enabled: false
+
+  # 阶段1不启用消息队列
+mq:
+  enabled: false
+
+# 阶段1使用同步处理策略
+seckill:
+  strategy: sync  # 同步处理
+  thread-pool:
+    core-size: 50
+    max-size: 200

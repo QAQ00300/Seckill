@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+      </profile>
+      <profile name="Annotation profile for SecKill Backend" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.28/lombok-1.18.28.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.28/lombok-1.18.28.jar" />
+        </processorPath>
+        <module name="user-bo" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="client" target="1.5" />
+      <module name="common" target="1.5" />
+      <module name="gateway" target="1.5" />
+      <module name="order" target="1.5" />
+      <module name="secKill" target="1.5" />
+      <module name="user" target="1.5" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="SK-client" options="-parameters" />
+      <module name="SK-common" options="-parameters" />
+      <module name="SK-core" options="-parameters" />
+      <module name="SK-gateway" options="-parameters" />
+      <module name="SK-order" options="-parameters" />
+      <module name="SK-user" options="-parameters" />
+      <module name="backend" options="-parameters" />
+      <module name="core-boot" options="-parameters" />
+      <module name="core-cache" options="-parameters" />
+      <module name="core-mq" options="-parameters" />
+      <module name="core-seckill" options="-parameters" />
+      <module name="core-stock" options="-parameters" />
+      <module name="order-ao" options="-parameters" />
+      <module name="order-api" options="-parameters" />
+      <module name="order-biz" options="-parameters" />
+      <module name="order-bo" options="-parameters" />
+      <module name="order-boot" options="-parameters" />
+      <module name="order-constant" options="-parameters" />
+      <module name="user-ao" options="-parameters" />
+      <module name="user-api" options="-parameters" />
+      <module name="user-biz" options="-parameters" />
+      <module name="user-bo" options="-parameters" />
+      <module name="user-boot" options="-parameters" />
+      <module name="user-constant" options="-parameters" />
+    </option>
+  </component>
+</project>

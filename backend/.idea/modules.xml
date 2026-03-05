@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/SK-common/SK-common.iml" filepath="$PROJECT_DIR$/SK-common/SK-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SK-gateway/SK-gateway.iml" filepath="$PROJECT_DIR$/SK-gateway/SK-gateway.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SK-core/core-boot/core-boot.iml" filepath="$PROJECT_DIR$/SK-core/core-boot/core-boot.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SK-core/core-cache/core-cache.iml" filepath="$PROJECT_DIR$/SK-core/core-cache/core-cache.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SK-core/core-mq/core-mq.iml" filepath="$PROJECT_DIR$/SK-core/core-mq/core-mq.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SK-core/core-seckill/core-seckill.iml" filepath="$PROJECT_DIR$/SK-core/core-seckill/core-seckill.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SK-core/core-stock/core-stock.iml" filepath="$PROJECT_DIR$/SK-core/core-stock/core-stock.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SK-order/order-ao/order-ao.iml" filepath="$PROJECT_DIR$/SK-order/order-ao/order-ao.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SK-order/order-api/order-api.iml" filepath="$PROJECT_DIR$/SK-order/order-api/order-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SK-order/order-biz/order-biz.iml" filepath="$PROJECT_DIR$/SK-order/order-biz/order-biz.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SK-order/order-bo/order-bo.iml" filepath="$PROJECT_DIR$/SK-order/order-bo/order-bo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SK-order/order-boot/order-boot.iml" filepath="$PROJECT_DIR$/SK-order/order-boot/order-boot.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SK-order/order-constant/order-constant.iml" filepath="$PROJECT_DIR$/SK-order/order-constant/order-constant.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SK-user/user-ao/user-ao.iml" filepath="$PROJECT_DIR$/SK-user/user-ao/user-ao.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SK-user/user-api/user-api.iml" filepath="$PROJECT_DIR$/SK-user/user-api/user-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SK-user/user-biz/user-biz.iml" filepath="$PROJECT_DIR$/SK-user/user-biz/user-biz.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SK-user/user-boot/user-boot.iml" filepath="$PROJECT_DIR$/SK-user/user-boot/user-boot.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SK-user/user-constant/user-constant.iml" filepath="$PROJECT_DIR$/SK-user/user-constant/user-constant.iml" />
+    </modules>
+  </component>
+</project>

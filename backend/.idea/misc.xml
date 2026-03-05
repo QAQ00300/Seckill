@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ComposerSettings">
+    <execution />
+  </component>
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/SK-user/user-ao/pom.xml" />
+        <option value="$PROJECT_DIR$/SK-user/user-api/pom.xml" />
+        <option value="$PROJECT_DIR$/SK-user/user-biz/pom.xml" />
+        <option value="$PROJECT_DIR$/SK-user/user-bo/pom.xml" />
+        <option value="$PROJECT_DIR$/SK-user/user-boot/pom.xml" />
+        <option value="$PROJECT_DIR$/SK-user/user-constant/pom.xml" />
+        <option value="$PROJECT_DIR$/SK-order/order-ao/pom.xml" />
+        <option value="$PROJECT_DIR$/SK-order/order-api/pom.xml" />
+        <option value="$PROJECT_DIR$/SK-order/order-biz/pom.xml" />
+        <option value="$PROJECT_DIR$/SK-order/order-bo/pom.xml" />
+        <option value="$PROJECT_DIR$/SK-order/order-boot/pom.xml" />
+        <option value="$PROJECT_DIR$/SK-order/order-constant/pom.xml" />
+        <option value="$PROJECT_DIR$/SK-core/core-seckill/pom.xml" />
+        <option value="$PROJECT_DIR$/SK-core/core-stock/pom.xml" />
+        <option value="$PROJECT_DIR$/SK-core/core-cache/pom.xml" />
+        <option value="$PROJECT_DIR$/SK-core/core-mq/pom.xml" />
+        <option value="$PROJECT_DIR$/SK-core/core-boot/pom.xml" />
+      </list>
+    </option>
+    <option name="ignoredFiles">
+      <set>
+        <option value="$PROJECT_DIR$/api_gateway/pom.xml" />
+        <option value="$PROJECT_DIR$/client/pom.xml" />
+        <option value="$PROJECT_DIR$/common/pom.xml" />
+        <option value="$PROJECT_DIR$/gateway/pom.xml" />
+        <option value="$PROJECT_DIR$/order/pom.xml" />
+        <option value="$PROJECT_DIR$/secKill/pom.xml" />
+        <option value="$PROJECT_DIR$/user/pom.xml" />
+      </set>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" project-jdk-name="openjdk-23" project-jdk-type="JavaSDK" />
+</project>

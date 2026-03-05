@@ -1,0 +1,129 @@
+server:
+  port: 8080
+  netty:
+    connection-timeout: 5000
+
+spring:
+  profiles:
+    active: stage1  # 默认阶段1
+
+  # Redis配置（用于限流）
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    database: 0
+    timeout: 3000
+
+  cloud:
+    gateway:
+      # 全局超时配置
+      httpclient:
+        connect-timeout: 3000
+        response-timeout: 5000
+        pool:
+          type: elastic
+          max-connections: 1000
+          max-idle-time: 30000
+
+      # 路由配置
+      routes:
+        # 用户服务路由
+        - id: user-service
+          uri: lb://sk-user
+          predicates:
+            - Path=/api/user/**
+          filters:
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 1000
+                redis-rate-limiter.burstCapacity: 2000
+                redis-rate-limiter.requestedTokens: 1
+            - StripPrefix=1
+
+        # 商品服务路由
+        - id: product-service
+          uri: lb://sk-product
+          predicates:
+            - Path=/api/product/**
+          filters:
+            - StripPrefix=1
+
+        # 秒杀服务路由
+        - id: seckill-service
+          uri: lb://sk-seckill
+          predicates:
+            - Path=/api/seckill/**
+          filters:
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 500
+                redis-rate-limiter.burstCapacity: 1000
+            - StripPrefix=1
+
+        # 订单服务路由
+        - id: order-service
+          uri: lb://sk-order
+          predicates:
+            - Path=/api/order/**
+          filters:
+            - StripPrefix=1
+
+        # 测试接口路由
+        - id: test-service
+          uri: lb://sk-test
+          predicates:
+            - Path=/api/test/**
+          filters:
+            - StripPrefix=1
+
+      # 全局过滤器配置
+      default-filters:
+        - name: Hystrix
+          args:
+            name: default
+            fallbackUri: forward:/fallback
+
+# 日志配置
+logging:
+  level:
+    com.sk.gateway: INFO
+    org.springframework.cloud.gateway: INFO
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
+  file:
+    name: logs/gateway.log
+    max-size: 100MB
+    max-history: 7
+
+# 监控配置
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,gateway
+  endpoint:
+    gateway:
+      enabled: true
+    health:
+      show-details: always
+
+# 网关自定义配置
+sk:
+  gateway:
+    # 阶段配置
+    stage: ${spring.profiles.active:stage1}
+    # 性能监控
+    performance:
+      enabled: true
+      slow-request-threshold: 1000  # 慢请求阈值(ms)
+      log-detail: true
+    # 限流配置
+    rate-limit:
+      enabled: true
+      default-replenish-rate: 100
+      default-burst-capacity: 200
+    # 测试模式
+    test-mode:
+      enabled: true
+      record-performance: true
+      save-to-db: true

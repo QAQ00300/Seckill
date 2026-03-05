@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jmeterTestPlan version="1.2" properties="5.0">
+  <hashTree>
+    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="阶段3-秒杀下单性能测试">
+      <stringProp name="TestPlan.comments">测试消息队列异步处理下的秒杀性能</stringProp>
+    </TestPlan>
+
+    <hashTree>
+      <!-- 测试数据文件：用户ID列表 -->
+      <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet">
+        <stringProp name="filename">jmeter/test_data.csv</stringProp>
+        <stringProp name="variableNames">userId</stringProp>
+        <boolProp name="ignoreFirstLine">true</boolProp>
+        <stringProp name="delimiter">,</stringProp>
+      </CSVDataSet>
+
+      <!-- 线程组：模拟1000个并发用户 -->
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="秒杀并发测试">
+        <stringProp name="ThreadGroup.num_threads">1000</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">5</stringProp>
+        <boolProp name="ThreadGroup.scheduler">true</boolProp>
+        <stringProp name="ThreadGroup.duration">60</stringProp>
+      </ThreadGroup>
+
+      <hashTree>
+        <!-- HTTP头管理器 -->
+        <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager">
+          <collectionProp name="HeaderManager.headers">
+            <elementProp name="" elementType="Header">
+              <stringProp name="Header.name">Content-Type</stringProp>
+              <stringProp name="Header.value">application/json</stringProp>
+            </elementProp>
+            <elementProp name="" elementType="Header">
+              <stringProp name="Header.name">X-Stage</stringProp>
+              <stringProp name="Header.value">stage3</stringProp>
+            </elementProp>
+          </collectionProp>
+        </HeaderManager>
+
+        <!-- HTTP请求：秒杀下单 -->
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="秒杀下单">
+          <stringProp name="HTTPSampler.path">/api/seckill/order</stringProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <stringProp name="HTTPSampler.postBody">{
+            "userId": ${userId},
+            "seckillId": 1,
+            "quantity": 1,
+            "requestId": "jmeter_${__time()}_${userId}"
+          }</stringProp>
+        </HTTPSamplerProxy>
+
+        <!-- JSON断言：检查返回结果 -->
+        <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor">
+          <stringProp name="JSONPostProcessor.jsonPaths">$.success</stringProp>
+          <stringProp name="JSONPostProcessor.expectedValue">true</stringProp>
+        </JSONPostProcessor>
+
+        <!-- 事务控制器：统计整个秒杀流程 -->
+        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController">
+          <boolProp name="TransactionController.includeTimers">false</boolProp>
+          <boolProp name="TransactionController.parent">false</boolProp>
+        </TransactionController>
+
+        <!-- 性能监控监听器 -->
+        <kg.apc.jmeter.vizualizers.CorrectedResultCollector guiclass="kg.apc.jmeter.vizualizers.JmeterGraphVisualizer">
+          <stringProp name="filename">reports/stage3_seckill_order.csv</stringProp>
+        </kg.apc.jmeter.vizualizers.CorrectedResultCollector>
+      </hashTree>
+    </hashTree>
+  </hashTree>
+</jmeterTestPlan>

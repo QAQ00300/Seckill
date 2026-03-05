@@ -26,8 +26,18 @@
         <spring-cloud.version>2022.0.4</spring-cloud.version>
         <spring-cloud-alibaba.version>2022.0.0.0</spring-cloud-alibaba.version>
 
+
+
+        <!--其他-->
+        <springfox.version>3.0.0</springfox.version>
+        <spring-tx.version>5.3.25</spring-tx.version>
+        <jakarta.validation.version>3.0.2</jakarta.validation.version>
+
+
+
         <!-- alibaba相关版本 -->
         <transmittable-thread-local.version>2.14.2</transmittable-thread-local.version>
+        <fastjson.version>1.2.83</fastjson.version>
 
         <!-- 数据库 -->
         <mysql.version>8.0.33</mysql.version>
@@ -77,6 +87,25 @@
                 <scope>import</scope>
             </dependency>
 
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-actuator-autoconfigure</artifactId>
+                <version>${spring-boot.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-configuration-processor</artifactId>
+                <version>${spring-boot.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-web</artifactId>
+                <version>${spring-boot.version}</version>
+            </dependency>
+
+
             <!-- Spring Cloud依赖管理 -->
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
@@ -101,11 +130,40 @@
                 <version>${transmittable-thread-local.version}</version>
             </dependency>
 
+            <!--工具-->
             <dependency>
                 <groupId>io.swagger.core.v3</groupId>
                 <artifactId>swagger-annotations</artifactId>
                 <version>${swagger.version}</version>
             </dependency>
+
+            <!--其他依赖-->
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-boot-starter</artifactId>
+                <version>${springfox.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-tx</artifactId>
+                <version>${spring-tx.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>jakarta.validation</groupId>
+                <artifactId>jakarta.validation-api</artifactId>
+                <version>${jakarta.validation.version}</version>
+            </dependency>
+
+            <!-- Fastjson 依赖 -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson.version}</version>
+            </dependency>
+
+
 
             <!-- ============ 第一阶段：基础微服务 ============ -->
             <!-- MySQL -->
