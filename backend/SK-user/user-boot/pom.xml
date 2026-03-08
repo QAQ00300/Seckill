@@ -20,7 +20,19 @@
         <revision>release-1.0.0</revision>
     </properties>
 
+    <dependencies>
 
+        <dependency>
+            <groupId>com.seckill</groupId>
+            <artifactId>user-biz</artifactId>
+            <version>${revision}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+        </dependency>
+    </dependencies>
 
 
 </project>

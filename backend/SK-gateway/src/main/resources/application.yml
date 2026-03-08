@@ -1,7 +1,11 @@
 server:
   port: 8080
-  netty:
+  tomcat:
     connection-timeout: 5000
+    max-connections: 8192
+    threads:
+      max: 200
+      min-spare: 10
 
 spring:
   profiles:
@@ -27,53 +31,42 @@ spring:
 
       # 路由配置
       routes:
+        # 网关管理接口
+        - id: gateway-query
+          uri: no://op
+          predicates: Path=/gateway/query/**
+
+        - id: gateway-mutation
+          uri: no://op
+          predicates: Path=/gateway/mutation/**
+
         # 用户服务路由
-        - id: user-service
+        - id: SK-user
           uri: lb://sk-user
-          predicates:
-            - Path=/api/user/**
+          predicates: Path=/api/user/**
           filters:
             - name: RequestRateLimiter
               args:
                 redis-rate-limiter.replenishRate: 1000
                 redis-rate-limiter.burstCapacity: 2000
-                redis-rate-limiter.requestedTokens: 1
             - StripPrefix=1
 
-        # 商品服务路由
-        - id: product-service
-          uri: lb://sk-product
-          predicates:
-            - Path=/api/product/**
+        # 订单服务路由 - 修正路径为复数
+        - id: SK-order
+          uri: lb://sk-order
+          predicates: Path=/api/orders/**  # 改为复数匹配
           filters:
             - StripPrefix=1
 
-        # 秒杀服务路由
-        - id: seckill-service
-          uri: lb://sk-seckill
-          predicates:
-            - Path=/api/seckill/**
+        # 秒杀核心服务路由
+        - id: SK-core
+          uri: lb://sk-core
+          predicates: Path=/api/core/**
           filters:
             - name: RequestRateLimiter
               args:
                 redis-rate-limiter.replenishRate: 500
                 redis-rate-limiter.burstCapacity: 1000
-            - StripPrefix=1
-
-        # 订单服务路由
-        - id: order-service
-          uri: lb://sk-order
-          predicates:
-            - Path=/api/order/**
-          filters:
-            - StripPrefix=1
-
-        # 测试接口路由
-        - id: test-service
-          uri: lb://sk-test
-          predicates:
-            - Path=/api/test/**
-          filters:
             - StripPrefix=1
 
       # 全局过滤器配置

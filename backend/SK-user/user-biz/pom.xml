@@ -11,7 +11,7 @@
     </parent>
     <artifactId>user-biz</artifactId>
     <version>${revision}</version>
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
     <name>user-biz</name>
     <properties>
         <maven.compiler.source>${java.version}</maven.compiler.source>
