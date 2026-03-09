@@ -8,11 +8,11 @@
         <groupId>com.seckill</groupId>
         <artifactId>SK-user</artifactId>
         <version>${revision}</version>
-        <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>user-bo</artifactId>
     <version>${revision}</version>
-    <name>user-bo</name>
+    <packaging>jar</packaging>
+    <name>user-boot</name>
     <properties>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>

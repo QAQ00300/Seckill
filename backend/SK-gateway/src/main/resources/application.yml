@@ -12,11 +12,13 @@ spring:
     active: stage1  # 默认阶段1
 
   # Redis配置（用于限流）
-  redis:
-    host: 127.0.0.1
-    port: 6379
-    database: 0
-    timeout: 3000
+  data:
+    redis:
+      host: 127.0.0.1
+      port: 6379
+      database: 0
+      timeout: 3000
+
 
   cloud:
     gateway:
@@ -103,20 +105,23 @@ management:
 # 网关自定义配置
 sk:
   gateway:
-    # 阶段配置
-    stage: ${spring.profiles.active:stage1}
-    # 性能监控
-    performance:
-      enabled: true
-      slow-request-threshold: 1000  # 慢请求阈值(ms)
-      log-detail: true
     # 限流配置
     rate-limit:
       enabled: true
-      default-replenish-rate: 100
-      default-burst-capacity: 200
-    # 测试模式
-    test-mode:
-      enabled: true
-      record-performance: true
-      save-to-db: true
+      default-limit: 100
+      default-window: 1
+    # 请求日志配置
+    request-log:
+      enabled: true                    # 是否启用请求日志
+      max-body-length: 1000            # 请求体最大记录长度（字符）
+      include-methods:                 # 记录哪些 HTTP 方法的请求体
+        - POST
+        - PUT
+        - PATCH                        # 可以添加更多
+      exclude-paths:                   # 排除的路径前缀
+        - /actuator
+        - /swagger
+        - /api-docs
+        - /favicon.ico
+        - /gateway                     # 排除网关自身接口
+        - /health

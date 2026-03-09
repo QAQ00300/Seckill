@@ -11,12 +11,18 @@
     </parent>
     <artifactId>core-boot</artifactId>
     <version>release-1.0.0</version>
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
     <name>core-boot</name>
 
 
 
     <dependencies>
+
+        <dependency>
+            <groupId>com.seckill</groupId>
+            <artifactId>core-seckill</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-boot-starter</artifactId>

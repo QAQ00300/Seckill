@@ -114,13 +114,12 @@ public class GatewayQueryController {
                 return result;
             }
 
-            // 简单轮询策略
             int index = Math.abs(new Random().nextInt()) % instances.size();
             ServiceInstance instance = instances.get(index);
 
             result.put("status", "OK");
             result.put("selectedInstance", buildInstanceInfo(Collections.singletonList(instance)).get(0));
-            result.put("loadBalanceStrategy", "ROUND_ROBIN");
+            result.put("loadBalanceStrategy", "RANDOM");
             result.put("timestamp", System.currentTimeMillis());
 
             log.info("实例选择成功：serviceId={}, selectedUri={}",

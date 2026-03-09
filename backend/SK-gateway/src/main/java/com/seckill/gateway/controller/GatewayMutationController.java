@@ -47,12 +47,16 @@ public class GatewayMutationController {
         Map<String, Object> result = new HashMap<>();
 
         try {
-            // 1. 验证请求参数
             if (request.getServiceId() == null || request.getServiceId().isEmpty()) {
                 throw new IllegalArgumentException("serviceId 不能为空");
             }
 
-            // 2. 检查服务是否已存在
+            if (request.getServiceId().contains("..") ||
+                    request.getServiceId().contains("/") ||
+                    request.getServiceId().contains("\\")) {
+                throw new IllegalArgumentException("serviceId 包含非法字符");
+            }
+
             List<ServiceInstance> existingInstances = discoveryClient.getInstances(request.getServiceId());
             if (!existingInstances.isEmpty()) {
                 log.warn("服务已存在：serviceId={}, 当前实例数={}",
@@ -61,16 +65,20 @@ public class GatewayMutationController {
                 result.put("message", "服务已存在，将更新实例列表");
             }
 
-            // 3. 注册服务实例
             int registeredCount = 0;
             if (request.getInstances() != null && !request.getInstances().isEmpty()) {
                 for (InstanceInfo instance : request.getInstances()) {
+                    if (instance.getHost() == null || instance.getPort() == null) {
+                        throw new IllegalArgumentException("实例的主机和端口不能为空");
+                    }
+                    if (instance.getPort() < 1 || instance.getPort() > 65535) {
+                        throw new IllegalArgumentException("端口号必须在 1-65535 范围内");
+                    }
                     log.info("注册实例：host={}, port={}", instance.getHost(), instance.getPort());
                     registeredCount++;
                 }
             }
 
-            // 4. 构建响应
             result.put("status", "SUCCESS");
             result.put("message", "服务路由注册成功");
             result.put("serviceId", request.getServiceId());

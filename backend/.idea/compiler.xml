@@ -15,17 +15,22 @@
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.28/lombok-1.18.28.jar" />
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.28/lombok-1.18.28.jar" />
         </processorPath>
-        <module name="user-biz" />
+        <module name="user-boot" />
+        <module name="core-boot" />
         <module name="order-biz" />
-      </profile>
-      <profile name="Annotation profile for user-bo" enabled="true">
-        <sourceOutputDir name="target/generated-sources/annotations" />
-        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <processorPath useClasspath="false">
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.28/lombok-1.18.28.jar" />
-        </processorPath>
+        <module name="SK-gateway" />
+        <module name="order-constant" />
+        <module name="user-ao" />
+        <module name="user-constant" />
+        <module name="core-cache" />
+        <module name="order-api" />
+        <module name="user-api" />
+        <module name="core-mq" />
         <module name="user-bo" />
+        <module name="order-ao" />
+        <module name="order-boot" />
+        <module name="order-bo" />
+        <module name="user-biz" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>

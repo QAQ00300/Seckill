@@ -11,7 +11,7 @@
     </parent>
     <artifactId>SK-gateway</artifactId>
     <version>${revision}</version>
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
     <name>SK-gateway</name>
 
     <properties>

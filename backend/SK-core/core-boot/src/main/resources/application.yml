@@ -1,21 +1,50 @@
-# application-stage1.yml
+# 应用基础配置
 spring:
+  application:
+    name: SK-core
+
   datasource:
-    url: jdbc:mysql://localhost:3306/sk_seckill
+    url: jdbc:mysql://localhost:3306/sk_seckill?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
     username: root
     password: 123456
 
-  # 阶段1不启用缓存
-cache:
-  enabled: false
 
-  # 阶段1不启用消息队列
-mq:
-  enabled: false
+# MyBatis-Plus 配置
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/**/*.xml
+  type-aliases-package: com.seckill.core.seckill.model,com.seckill.core.stock.model
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
-# 阶段1使用同步处理策略
+# 缓存配置（阶段 1 不启用）
 seckill:
-  strategy: sync  # 同步处理
-  thread-pool:
-    core-size: 50
-    max-size: 200
+  cache:
+    enabled: false
+    type: none
+
+# 消息队列配置（阶段 1 不启用）
+
+  mq:
+    enabled: false
+    type: none
+
+# 秒杀业务配置
+sk:
+  seckill:
+    enabled: true
+    strategy: sync
+    max-quantity: 10
+    user-rate-limit: 60
+    ip-rate-limit: 30
+    risk-control-enabled: false
+    validate-user-enabled: true
+    validate-stock-enabled: true
+    timeout: 5000
+    retry-count: 0
+
+# 服务器配置
+server:
+  port: 8080
+  servlet:
+    context-path: /

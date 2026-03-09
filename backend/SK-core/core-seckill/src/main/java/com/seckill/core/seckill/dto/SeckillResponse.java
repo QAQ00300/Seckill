@@ -65,4 +65,35 @@ public class SeckillResponse {
      * 响应时间
      */
     private Long responseTime = System.currentTimeMillis();
+
+
+    public static SeckillResponse success(String orderNo, BigDecimal seckillPrice) {
+        SeckillResponse response = new SeckillResponse();
+        response.setSuccess(true);
+        response.setOrderNo(orderNo);
+        response.setSeckillPrice(seckillPrice);
+        return response;
+    }
+
+    /**
+     * 失败响应
+     */
+    public static SeckillResponse fail(Integer errorCode, String errorMessage) {
+        SeckillResponse response = new SeckillResponse();
+        response.setSuccess(false);
+        response.setErrorCode(errorCode != null ? String.valueOf(errorCode) : "500");
+        response.setErrorMessage(errorMessage);
+        return response;
+    }
+
+    /**
+     * 失败响应（字符串错误码）
+     */
+    public static SeckillResponse fail(String errorCode, String errorMessage) {
+        SeckillResponse response = new SeckillResponse();
+        response.setSuccess(false);
+        response.setErrorCode(errorCode);
+        response.setErrorMessage(errorMessage);
+        return response;
+    }
 }

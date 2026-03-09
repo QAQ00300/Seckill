@@ -14,7 +14,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-
 import java.nio.charset.StandardCharsets;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
@@ -33,16 +32,15 @@ public class RequestLogFilter implements GlobalFilter, Ordered {
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         ServerHttpRequest request = exchange.getRequest();
 
-        // 只记录API请求，不记录静态资源
         if (!shouldLog(request)) {
             return chain.filter(exchange);
         }
 
         int requestNumber = requestCounter.incrementAndGet();
 
-        // 记录请求体（对于POST/PUT请求）
         if (request.getMethod() == HttpMethod.POST ||
-                request.getMethod() == HttpMethod.PUT) {
+                request.getMethod() == HttpMethod.PUT ||
+                request.getMethod() == HttpMethod.PATCH) {
 
             return logRequestBody(exchange, chain, requestNumber);
         }
@@ -56,10 +54,8 @@ public class RequestLogFilter implements GlobalFilter, Ordered {
 
         ServerHttpRequest request = exchange.getRequest();
 
-        // 获取请求体
         Flux<DataBuffer> body = request.getBody();
 
-        // 缓存请求体
         AtomicReference<StringBuilder> bodyRef = new AtomicReference<>(new StringBuilder());
 
         return body
@@ -72,9 +68,12 @@ public class RequestLogFilter implements GlobalFilter, Ordered {
                 .collectList()
                 .flatMap(contents -> {
                     String requestBody = String.join("", contents);
-                    bodyRef.get().append(requestBody);
 
-                    // 创建新的请求，包含缓存的body
+                    int maxBodyLength = 1000;
+                    String truncatedBody = requestBody.length() > maxBodyLength ?
+                            requestBody.substring(0, maxBodyLength) + "... (truncated)" :
+                            requestBody;
+
                     ServerHttpRequest mutatedRequest = new ServerHttpRequestDecorator(request) {
                         @Override
                         public Flux<DataBuffer> getBody() {
@@ -84,14 +83,11 @@ public class RequestLogFilter implements GlobalFilter, Ordered {
                         }
                     };
 
-                    // 记录请求日志
-                    log.info("请求[{}] - 方法: {}, 路径: {}, 请求体: {}",
+                    log.info("请求 [{}] - 方法：{}, 路径：{}, 请求体：{}",
                             requestNumber,
                             request.getMethod(),
                             request.getPath(),
-                            requestBody.length() > 1000 ?
-                                    requestBody.substring(0, 1000) + "..." :
-                                    requestBody);
+                            truncatedBody);
 
                     return chain.filter(exchange.mutate()
                             .request(mutatedRequest)
@@ -104,7 +100,9 @@ public class RequestLogFilter implements GlobalFilter, Ordered {
         return !path.contains("/actuator") &&
                 !path.contains("/swagger") &&
                 !path.contains("/api-docs") &&
-                !path.contains("/favicon.ico");
+                !path.contains("/favicon.ico") &&
+                !path.contains("/health") &&
+                !path.startsWith("/gateway/");
     }
 
     @Override

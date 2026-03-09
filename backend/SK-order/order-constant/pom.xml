@@ -11,7 +11,7 @@
     </parent>
     <artifactId>order-constant</artifactId>
     <version>${revision}</version>
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
     <name>order-constant</name>
     <properties>
         <maven.compiler.source>${java.version}</maven.compiler.source>

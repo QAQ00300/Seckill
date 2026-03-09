@@ -20,7 +20,6 @@ import java.util.Map;
 @Component
 public class StageRoutingFilter implements GlobalFilter, Ordered {
 
-    // 阶段到服务版本的映射
     private static final Map<String, String> STAGE_VERSION_MAP = new HashMap<>();
 
     static {
@@ -33,24 +32,18 @@ public class StageRoutingFilter implements GlobalFilter, Ordered {
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         ServerHttpRequest request = exchange.getRequest();
 
-        // 1. 获取阶段信息
         String stage = request.getHeaders().getFirst("X-Stage");
 
-        // 如果请求头中没有，则使用默认阶段
         if (stage == null || stage.isEmpty()) {
             stage = System.getProperty("spring.profiles.active", "stage1");
         }
 
-        // 2. 根据阶段添加路由标识
         String version = STAGE_VERSION_MAP.getOrDefault(stage, "v1");
 
         ServerHttpRequest mutatedRequest = request.mutate()
                 .header("X-Stage", stage)
                 .header("X-Version", version)
                 .build();
-
-        // 3. 根据阶段修改路由路径（如果需要）
-        // 例如：/api/seckill/order -> /api/v1/seckill/order
 
         ServerWebExchange mutatedExchange = exchange.mutate()
                 .request(mutatedRequest)
@@ -61,6 +54,6 @@ public class StageRoutingFilter implements GlobalFilter, Ordered {
 
     @Override
     public int getOrder() {
-        return Ordered.HIGHEST_PRECEDENCE + 1;  // 在性能过滤器之后执行
+        return Ordered.HIGHEST_PRECEDENCE;
     }
 }
