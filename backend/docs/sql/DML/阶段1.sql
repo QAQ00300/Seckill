@@ -20,30 +20,73 @@ CREATE TABLE `product` (
                            `create_time` datetime DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB COMMENT='商品表';
 
--- 3. 秒杀活动表
-CREATE TABLE `seckill` (
-                           `id` bigint PRIMARY KEY AUTO_INCREMENT COMMENT '秒杀ID',
-                           `product_id` bigint NOT NULL COMMENT '商品ID',
-                           `seckill_price` decimal(10,2) NOT NULL COMMENT '秒杀价',
-                           `seckill_stock` int NOT NULL COMMENT '秒杀库存',
-                           `start_time` datetime NOT NULL COMMENT '开始时间',
-                           `end_time` datetime NOT NULL COMMENT '结束时间',
-                           `status` tinyint DEFAULT 2 COMMENT '状态：2-未开始，1-进行中，0-已结束',
-                           `create_time` datetime DEFAULT CURRENT_TIMESTAMP,
-                           KEY `idx_time_status` (`start_time`, `end_time`, `status`)
-) ENGINE=InnoDB COMMENT='秒杀活动表';
 
--- 4. 订单表（简化，去除支付相关）
+
+-- ============================================
+-- 1. 普通订单表
+-- ============================================
+DROP TABLE IF EXISTS `order`;
 CREATE TABLE `order` (
-                         `id` bigint PRIMARY KEY AUTO_INCREMENT COMMENT '订单ID',
-                         `order_no` varchar(32) NOT NULL COMMENT '订单号',
-                         `user_id` bigint NOT NULL COMMENT '用户ID',
-                         `product_id` bigint NOT NULL COMMENT '商品ID',
-                         `seckill_id` bigint COMMENT '秒杀ID',
-                         `quantity` int DEFAULT 1 COMMENT '数量',
-                         `total_price` decimal(10,2) NOT NULL COMMENT '总金额',
-                         `order_status` tinyint DEFAULT 0 COMMENT '状态：0-待处理，1-已完成，2-已取消',
-                         `create_time` datetime DEFAULT CURRENT_TIMESTAMP,
+                         `id` BIGINT PRIMARY KEY AUTO_INCREMENT COMMENT '订单 ID',
+                         `order_no` VARCHAR(32) NOT NULL COMMENT '订单号（ORD 开头）',
+                         `user_id` BIGINT NOT NULL COMMENT '用户 ID',
+                         `product_id` BIGINT NOT NULL COMMENT '商品 ID',
+                         `unit_price` DECIMAL(10,2) COMMENT '单价',
+                         `quantity` INT DEFAULT 1 COMMENT '数量',
+                         `total_price` DECIMAL(10,2) NOT NULL COMMENT '总金额',
+                         `order_status` TINYINT DEFAULT 0 COMMENT '状态：0-待处理，1-已支付，2-已完成，3-已取消，4-已退款',
+                         `pay_time` DATETIME COMMENT '支付时间',
+                         `remark` VARCHAR(500) COMMENT '备注',
+                         `create_time` DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                         `update_time` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
                          UNIQUE KEY `uk_order_no` (`order_no`),
-                         KEY `idx_user_time` (`user_id`, `create_time`)
-) ENGINE=InnoDB COMMENT='订单表';
+                         KEY `idx_user_id` (`user_id`),
+                         KEY `idx_product_id` (`product_id`),
+                         KEY `idx_order_status` (`order_status`),
+                         KEY `idx_user_create_time` (`user_id`, `create_time`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='普通订单表';
+
+-- ============================================
+-- 2. 秒杀订单表
+-- ============================================
+DROP TABLE IF EXISTS `seckill_order`;
+CREATE TABLE `seckill_order` (
+                                 `id` BIGINT PRIMARY KEY AUTO_INCREMENT COMMENT '订单 ID',
+                                 `order_no` VARCHAR(32) NOT NULL COMMENT '订单号（SK 开头）',
+                                 `user_id` BIGINT NOT NULL COMMENT '用户 ID',
+                                 `seckill_id` BIGINT NOT NULL COMMENT '秒杀活动 ID',
+                                 `product_id` BIGINT NOT NULL COMMENT '商品 ID',
+                                 `unit_price` DECIMAL(10,2) COMMENT '商品原价',
+                                 `seckill_price` DECIMAL(10,2) COMMENT '秒杀价格',
+                                 `quantity` INT DEFAULT 1 COMMENT '数量',
+                                 `total_price` DECIMAL(10,2) NOT NULL COMMENT '总金额',
+                                 `order_status` TINYINT DEFAULT 0 COMMENT '状态：0-待处理，1-已支付，2-已完成，3-已取消，4-已退款',
+                                 `pay_time` DATETIME COMMENT '支付时间',
+                                 `create_time` DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                                 `update_time` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+                                 UNIQUE KEY `uk_order_no` (`order_no`),
+                                 KEY `idx_user_id` (`user_id`),
+                                 KEY `idx_seckill_id` (`seckill_id`),
+                                 KEY `idx_user_seckill` (`user_id`, `seckill_id`),
+                                 KEY `idx_create_time` (`create_time`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='秒杀订单表';
+
+-- ============================================
+-- 3. 关联表：秒杀活动表（供参考）
+-- ============================================
+DROP TABLE IF EXISTS `seckill`;
+
+CREATE TABLE `seckill` (
+                           `id` BIGINT PRIMARY KEY AUTO_INCREMENT COMMENT '秒杀 ID',
+                           `product_id` BIGINT NOT NULL COMMENT '商品 ID',
+                           `seckill_price` DECIMAL(10,2) NOT NULL COMMENT '秒杀价',
+                           `seckill_stock` INT NOT NULL COMMENT '秒杀库存',
+                           `start_time` DATETIME NOT NULL COMMENT '开始时间',
+                           `end_time` DATETIME NOT NULL COMMENT '结束时间',
+                           `status` TINYINT DEFAULT 2 COMMENT '状态：2-未开始，1-进行中，0-已结束',
+                           `create_time` DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                           `update_time` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+                           KEY `idx_time_status` (`start_time`, `end_time`, `status`),
+                           KEY `idx_product_id` (`product_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='秒杀活动表';
+

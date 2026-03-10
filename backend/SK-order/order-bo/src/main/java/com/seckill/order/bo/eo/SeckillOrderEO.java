@@ -1,4 +1,4 @@
-package com.seckill.core.seckill.model;
+package com.seckill.order.bo.eo;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @Data
 @Builder
 @TableName("`order`")
-public class SeckillOrder {
+public class SeckillOrderEO {
 
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
@@ -27,9 +27,13 @@ public class SeckillOrder {
 
     private Long productId;
 
+    private BigDecimal unitPrice;
+
     private BigDecimal seckillPrice;
 
     private Integer quantity;
+
+    private BigDecimal totalPrice;
 
     private Integer orderStatus;
 

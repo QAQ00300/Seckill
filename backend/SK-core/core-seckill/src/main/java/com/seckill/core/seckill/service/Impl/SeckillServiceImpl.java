@@ -5,32 +5,30 @@ import com.seckill.core.seckill.dto.SeckillRequest;
 import com.seckill.core.seckill.dto.SeckillResponse;
 import com.seckill.core.seckill.exception.SeckillException;
 import com.seckill.core.seckill.mapper.SeckillActivityMapper;
-import com.seckill.core.seckill.mapper.SeckillOrderMapper;
 import com.seckill.core.seckill.model.SeckillActivity;
-import com.seckill.core.seckill.model.SeckillOrder;
 import com.seckill.core.seckill.service.SeckillService;
 import com.seckill.core.stock.service.StockService;
-import lombok.Data;
+import com.seckill.order.biz.service.SeckillOrderService;
+import com.seckill.order.bo.eo.SeckillOrderEO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 /**
  * 秒杀服务实现类（阶段 1：同步处理）
  */
 @Service
 @Slf4j
-@Data
 @RequiredArgsConstructor
 public class SeckillServiceImpl implements SeckillService {
 
     private final SeckillActivityMapper seckillActivityMapper;
-    private final SeckillOrderMapper seckillOrderMapper;
     private final StockService stockService;
+    private final SeckillOrderService seckillOrderService;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -44,8 +42,8 @@ public class SeckillServiceImpl implements SeckillService {
             // 1. 验证秒杀活动
             SeckillActivity activity = validateSeckill(request.getSeckillId());
 
-            // 2. 验证用户资格
-            if (!validateUserSeckill(request.getUserId(), request.getSeckillId())) {
+            // 2. 验证用户资格（使用 order 模块的服务）
+            if (seckillOrderService.hasParticipated(request.getUserId(), request.getSeckillId())) {
                 throw new SeckillException(400, "您已参加过该秒杀活动");
             }
 
@@ -59,10 +57,10 @@ public class SeckillServiceImpl implements SeckillService {
                 throw new SeckillException(400, "库存不足");
             }
 
-            // 4. 创建订单
-            SeckillOrder order = createOrder(request, activity);
+            // 4. 创建订单（使用 order 模块的服务）
+            SeckillOrderEO order = createSeckillOrder(request, activity);
 
-            long duration = System.currentTimeMillis() - startTime;
+            long duration= System.currentTimeMillis() - startTime;
             log.info("秒杀成功 - orderId: {}, duration: {}ms", order.getOrderNo(), duration);
 
             return SeckillResponse.success(order.getOrderNo(), activity.getSeckillPrice());
@@ -102,12 +100,7 @@ public class SeckillServiceImpl implements SeckillService {
 
     @Override
     public boolean validateUserSeckill(Long userId, Long seckillId) {
-        LambdaQueryWrapper<SeckillOrder> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(SeckillOrder::getUserId, userId)
-                .eq(SeckillOrder::getSeckillId, seckillId);
-
-        Long count = seckillOrderMapper.selectCount(wrapper);
-        return count == 0;
+        return false;
     }
 
     private SeckillActivity validateSeckill(Long seckillId) {
@@ -131,22 +124,25 @@ public class SeckillServiceImpl implements SeckillService {
         return activity;
     }
 
-    private SeckillOrder createOrder(SeckillRequest request, SeckillActivity activity) {
-        SeckillOrder order = new SeckillOrder();
-        order.setOrderNo(generateOrderNo());
-        order.setUserId(request.getUserId());
-        order.setSeckillId(request.getSeckillId());
-        order.setProductId(activity.getProductId());
-        order.setSeckillPrice(activity.getSeckillPrice());
-        order.setQuantity(request.getQuantity());
-        order.setOrderStatus(0); // 待处理
+    private SeckillOrderEO createSeckillOrder(SeckillRequest request, SeckillActivity activity) {
+        BigDecimal totalPrice = activity.getSeckillPrice()
+                .multiply(BigDecimal.valueOf(request.getQuantity()));
 
-        seckillOrderMapper.insert(order);
+        SeckillOrderEO order = SeckillOrderEO.builder()
+                .userId(request.getUserId())
+                .seckillId(request.getSeckillId())
+                .productId(activity.getProductId())
+                .unitPrice(activity.getSeckillPrice())
+                .seckillPrice(activity.getSeckillPrice())
+                .quantity(request.getQuantity())
+                .totalPrice(totalPrice)
+                .orderStatus(0) // 待处理
+                .build();
+
+        String orderNo = seckillOrderService.createSeckillOrder(order);
+        order.setOrderNo(orderNo);
+
         return order;
-    }
-
-    private String generateOrderNo() {
-        return "SK" + System.currentTimeMillis() + UUID.randomUUID().toString().replace("-", "").substring(0, 6).toUpperCase();
     }
 
 

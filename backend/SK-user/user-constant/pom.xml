@@ -21,6 +21,10 @@
         <revision>release-1.0.0</revision>
     </properties>
 
+    <dependencies>
+
+
+    </dependencies>
 
 
 </project>

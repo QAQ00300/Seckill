@@ -1,6 +1,7 @@
 package com.seckill.order.bo.eo;
 
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.seckill.common.base.bo.BaseEO;
@@ -11,6 +12,7 @@ import lombok.experimental.SuperBuilder;
 
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 @Data
 @SuperBuilder
@@ -18,9 +20,6 @@ import java.io.Serializable;
 @EqualsAndHashCode(callSuper = true)
 @TableName("order")
 public class OrderEO extends BaseEO implements Serializable {
-
-    @TableField("id")
-    private Integer Id;
 
     @TableField("order_no")
     private Integer orderNo;
@@ -43,7 +42,14 @@ public class OrderEO extends BaseEO implements Serializable {
     @TableField("order_status")
     private Integer orderStatus;
 
+    @TableField(value = "pay_time", fill = FieldFill.UPDATE)
+    private LocalDateTime payTime;
 
+    @TableField(value = "create_time", fill = FieldFill.INSERT)
+    private LocalDateTime createTime;
+
+    @TableField(value = "update_time", fill = FieldFill.INSERT_UPDATE)
+    private LocalDateTime updateTime;
 
 
 }

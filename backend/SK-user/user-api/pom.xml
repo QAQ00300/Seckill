@@ -20,7 +20,34 @@
         <revision>release-1.0.0</revision>
     </properties>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.seckill</groupId>
+            <artifactId>user-constant</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.seckill</groupId>
+            <artifactId>user-ao</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.seckill</groupId>
+            <artifactId>user-bo</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.seckill</groupId>
+            <artifactId>user-biz</artifactId>
+        </dependency>
 
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-boot-starter</artifactId>
+        </dependency>
+    </dependencies>
 
 
 </project>

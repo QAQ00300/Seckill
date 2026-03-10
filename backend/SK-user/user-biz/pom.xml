@@ -25,6 +25,16 @@
             <groupId>com.seckill</groupId>
             <artifactId>user-bo</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.seckill</groupId>
+            <artifactId>user-ao</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.seckill</groupId>
+            <artifactId>user-constant</artifactId>
+        </dependency>
+
+
     </dependencies>
 
 

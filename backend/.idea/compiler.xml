@@ -17,20 +17,68 @@
         </processorPath>
         <module name="user-boot" />
         <module name="core-boot" />
-        <module name="order-biz" />
         <module name="SK-gateway" />
-        <module name="order-constant" />
-        <module name="user-ao" />
-        <module name="user-constant" />
-        <module name="core-cache" />
-        <module name="order-api" />
-        <module name="user-api" />
         <module name="core-mq" />
-        <module name="user-bo" />
+        <module name="order-constant" />
+        <module name="core-cache" />
         <module name="order-ao" />
+        <module name="order-api" />
         <module name="order-boot" />
         <module name="order-bo" />
+      </profile>
+      <profile name="Annotation profile for order-biz" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.28/lombok-1.18.28.jar" />
+        </processorPath>
+        <module name="order-biz" />
+      </profile>
+      <profile name="Annotation profile for user-ao" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.28/lombok-1.18.28.jar" />
+        </processorPath>
+        <module name="user-ao" />
+      </profile>
+      <profile name="Annotation profile for user-api" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.28/lombok-1.18.28.jar" />
+        </processorPath>
+        <module name="user-api" />
+      </profile>
+      <profile name="Annotation profile for user-biz" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.28/lombok-1.18.28.jar" />
+        </processorPath>
         <module name="user-biz" />
+      </profile>
+      <profile name="Annotation profile for user-bo" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.28/lombok-1.18.28.jar" />
+        </processorPath>
+        <module name="user-bo" />
+      </profile>
+      <profile name="Annotation profile for user-constant" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.28/lombok-1.18.28.jar" />
+        </processorPath>
+        <module name="user-constant" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
