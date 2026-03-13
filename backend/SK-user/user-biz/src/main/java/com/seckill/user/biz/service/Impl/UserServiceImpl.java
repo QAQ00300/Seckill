@@ -24,7 +24,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEO> implements 
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public Integer register(UserRegisterREQ req) {
+    public Long register(UserRegisterREQ req) {
         // 检查用户名是否存在
         if (isUsernameExist(req.getUsername())) {
             throw new CustomException(UserErrorCode.USERNAME_DUPLICATE);
@@ -55,7 +55,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEO> implements 
     }
 
     @Override
-    public UserEO getById(Integer id) {
+    public UserEO getById(Long id) {
         return baseMapper.selectById(id);
     }
 
@@ -87,7 +87,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEO> implements 
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void update(Integer userId, UserUpdateREQ req) {
+    public void update(Long userId, UserUpdateREQ req) {
         UserEO user = getById(userId);
         if (user == null) {
             throw new CustomException(UserErrorCode.USER_NOT_FOUND);
@@ -134,7 +134,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEO> implements 
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void setStatus(Integer userId, Integer status) {
+    public void setStatus(Long userId, Integer status) {
         UserEO user= getById(userId);
         if (user == null) {
             throw new CustomException(UserErrorCode.USER_NOT_FOUND);
@@ -147,7 +147,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEO> implements 
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void adminResetPassword(Integer userId, AdminResetPasswordREQ req) {
+    public void adminResetPassword(Long userId, AdminResetPasswordREQ req) {
         UserEO user = getById(userId);
         if (user == null) {
             throw new CustomException(UserErrorCode.USER_NOT_FOUND);
@@ -175,7 +175,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEO> implements 
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void delete(Integer userId) {
+    public void delete(Long userId) {
         UserEO user = getById(userId);
         if (user == null) {
             throw new CustomException(UserErrorCode.USER_NOT_FOUND);

@@ -13,7 +13,7 @@ import java.util.List;
 @Data
 @Component
 @ConfigurationProperties(prefix = "sk.gateway")
-public class GatewayProperties {
+public class SKGatewayProperties {
 
     /**
      * 阶段配置

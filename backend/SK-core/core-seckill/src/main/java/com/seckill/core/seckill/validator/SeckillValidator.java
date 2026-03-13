@@ -2,7 +2,7 @@ package com.seckill.core.seckill.validator;
 
 
 import com.seckill.core.seckill.dto.SeckillRequest;
-import com.seckill.core.boot.exception.SeckillException;
+import com.seckill.core.seckill.exception.SeckillException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -18,20 +18,21 @@ public class SeckillValidator {
      */
     public void validateRequest(SeckillRequest request) {
         if (request == null) {
-            throw new SeckillException(101);
+            throw new SeckillException(101, "请求参数为空");
         }
 
         if (request.getUserId() == null || request.getUserId() <= 0) {
-            throw new SeckillException(102);
+            throw new SeckillException(102, "用户 ID 不合法");
         }
 
         if (request.getSeckillId() == null || request.getSeckillId() <= 0) {
-            throw new SeckillException(103);
+            throw new SeckillException(103, "秒杀活动 ID 不合法");
         }
 
         if (request.getQuantity() == null || request.getQuantity() <= 0) {
-            throw new SeckillException(104);
+            throw new SeckillException(104, "购买数量不合法");
         }
+
 
         // 验证请求时间（防止重放攻击）
         validateTimestamp(request.getTimestamp());
@@ -45,15 +46,14 @@ public class SeckillValidator {
      */
     private void validateTimestamp(Long timestamp) {
         if (timestamp == null) {
-            throw new SeckillException(105);
+            throw new SeckillException(105, "时间戳不能为空");
         }
 
         long currentTime = System.currentTimeMillis();
         long diff = Math.abs(currentTime - timestamp);
 
-        // 允许5分钟的时间偏差
         if (diff > 5 * 60 * 1000) {
-            throw new SeckillException(106);
+            throw new SeckillException(106, "时间戳已过期，请重新请求");
         }
     }
 

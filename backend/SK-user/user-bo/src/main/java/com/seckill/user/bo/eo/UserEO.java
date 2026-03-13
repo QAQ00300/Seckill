@@ -19,7 +19,7 @@ import java.io.Serializable;
 public class UserEO extends BaseEO implements Serializable {
 
     @TableId(value = "id", type = IdType.AUTO)
-    private Integer id;
+    private Long userId;
 
     @TableField("username")
     private String username;

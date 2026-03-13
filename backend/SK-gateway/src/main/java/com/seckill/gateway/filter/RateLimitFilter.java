@@ -27,7 +27,7 @@ public class RateLimitFilter implements GlobalFilter, Ordered {
 
     private final ReactiveRedisTemplate<String, String> redisTemplate;
 
-    private final com.seckill.gateway.config.GatewayProperties properties;
+    private final com.seckill.gateway.config.SKGatewayProperties properties;
 
     private static final String RATE_LIMIT_KEY_PREFIX = "rate:limit:";
 

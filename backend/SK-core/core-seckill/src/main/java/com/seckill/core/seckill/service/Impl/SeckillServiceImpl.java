@@ -1,15 +1,17 @@
 package com.seckill.core.seckill.service.Impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.seckill.core.seckill.client.SeckillOrderClient;
+import com.seckill.core.seckill.dto.SeckillOrderDTO;
 import com.seckill.core.seckill.dto.SeckillRequest;
 import com.seckill.core.seckill.dto.SeckillResponse;
 import com.seckill.core.seckill.exception.SeckillException;
 import com.seckill.core.seckill.mapper.SeckillActivityMapper;
 import com.seckill.core.seckill.model.SeckillActivity;
 import com.seckill.core.seckill.service.SeckillService;
+import com.seckill.core.seckill.validator.SeckillValidator;
 import com.seckill.core.stock.service.StockService;
-import com.seckill.order.biz.service.SeckillOrderService;
-import com.seckill.order.bo.eo.SeckillOrderEO;
+import com.seckill.common.tools.result.Result;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -28,7 +30,9 @@ public class SeckillServiceImpl implements SeckillService {
 
     private final SeckillActivityMapper seckillActivityMapper;
     private final StockService stockService;
-    private final SeckillOrderService seckillOrderService;
+    private final SeckillOrderClient seckillOrderClient;
+    private final SeckillValidator seckillValidator;
+
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -39,15 +43,23 @@ public class SeckillServiceImpl implements SeckillService {
         long startTime = System.currentTimeMillis();
 
         try {
-            // 1. 验证秒杀活动
+            // 1. 基础请求验证
+            seckillValidator.validateRequest(request);
+
+            // 2. 验证秒杀活动
             SeckillActivity activity = validateSeckill(request.getSeckillId());
 
-            // 2. 验证用户资格（使用 order 模块的服务）
-            if (seckillOrderService.hasParticipated(request.getUserId(), request.getSeckillId())) {
+            // 3. 验证用户资格（通过 Feign 远程调用 order 服务）
+            Result<Boolean> checkResult = seckillOrderClient.hasParticipated(
+                    request.getUserId(),
+                    request.getSeckillId()
+            );
+
+            if (!checkResult.isSuccess() || Boolean.TRUE.equals(checkResult.getData())) {
                 throw new SeckillException(400, "您已参加过该秒杀活动");
             }
 
-            // 3. 扣减库存（同步）
+            // 4. 扣减库存（同步）
             boolean deducted = stockService.deductStock(
                     request.getSeckillId(),
                     request.getQuantity()
@@ -57,13 +69,19 @@ public class SeckillServiceImpl implements SeckillService {
                 throw new SeckillException(400, "库存不足");
             }
 
-            // 4. 创建订单（使用 order 模块的服务）
-            SeckillOrderEO order = createSeckillOrder(request, activity);
+            // 5. 创建订单（通过 Feign 远程调用 order 服务）
+            SeckillOrderDTO orderDTO = buildSeckillOrderDTO(request, activity);
+            Result<String> orderResult = seckillOrderClient.createOrder(orderDTO);
 
-            long duration= System.currentTimeMillis() - startTime;
-            log.info("秒杀成功 - orderId: {}, duration: {}ms", order.getOrderNo(), duration);
+            if (!orderResult.isSuccess()) {
+                throw new SeckillException(400, "订单创建失败：" + orderResult.getMessage());
+            }
 
-            return SeckillResponse.success(order.getOrderNo(), activity.getSeckillPrice());
+            String orderNo = orderResult.getData();
+            long duration = System.currentTimeMillis() - startTime;
+            log.info("秒杀成功 - orderId: {}, duration: {}ms", orderNo, duration);
+
+            return SeckillResponse.success(orderNo, activity.getSeckillPrice());
 
         } catch (SeckillException e) {
             log.warn("秒杀失败：{}", e.getMessage());
@@ -124,11 +142,11 @@ public class SeckillServiceImpl implements SeckillService {
         return activity;
     }
 
-    private SeckillOrderEO createSeckillOrder(SeckillRequest request, SeckillActivity activity) {
+    private SeckillOrderDTO buildSeckillOrderDTO(SeckillRequest request, SeckillActivity activity) {
         BigDecimal totalPrice = activity.getSeckillPrice()
                 .multiply(BigDecimal.valueOf(request.getQuantity()));
 
-        SeckillOrderEO order = SeckillOrderEO.builder()
+        return SeckillOrderDTO.builder()
                 .userId(request.getUserId())
                 .seckillId(request.getSeckillId())
                 .productId(activity.getProductId())
@@ -138,11 +156,6 @@ public class SeckillServiceImpl implements SeckillService {
                 .totalPrice(totalPrice)
                 .orderStatus(0) // 待处理
                 .build();
-
-        String orderNo = seckillOrderService.createSeckillOrder(order);
-        order.setOrderNo(orderNo);
-
-        return order;
     }
 
 

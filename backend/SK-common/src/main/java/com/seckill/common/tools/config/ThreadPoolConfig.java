@@ -48,6 +48,6 @@ public class ThreadPoolConfig {
             case "DiscardPolicy" -> new ThreadPoolExecutor.DiscardPolicy();
             default -> new ThreadPoolExecutor.AbortPolicy();
         };
-        }
+
     }
 }

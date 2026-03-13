@@ -110,7 +110,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEO> implemen
         }
 
         order.setOrderStatus(status);
-        if (OrderStatus.PAID.getCode().equals(status)) {
+        if (status == OrderStatus.PAID.getCode()) {
             order.setPayTime(LocalDateTime.now());
         }
         order.setUpdateTime(LocalDateTime.now());
@@ -127,7 +127,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEO> implemen
                     OrderErrorCode.ORDER_NOT_FOUND.getMessage());
         }
 
-        if (!OrderStatus.PENDING.getCode().equals(order.getOrderStatus())) {
+        if (order.getOrderStatus() != OrderStatus.PENDING.getCode()) {
             throw new CustomException(OrderErrorCode.ORDER_CANCEL_NOT_ALLOWED.getCode(),
                     OrderErrorCode.ORDER_CANCEL_NOT_ALLOWED.getMessage());
         }
@@ -208,7 +208,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEO> implemen
             throw new CustomException(OrderErrorCode.QUANTITY_INVALID.getCode(),
                     OrderErrorCode.QUANTITY_INVALID.getMessage());
         }
-        if (order.getTotalPrice() == null || order.getTotalPrice().compareTo(BigDecimal.ZERO) <= 0) {
+        if (order.getTotalPrice() == null || order.getTotalPrice() <= 0.0) {
             throw new CustomException(OrderErrorCode.PRICE_INVALID.getCode(),
                     OrderErrorCode.PRICE_INVALID.getMessage());
         }

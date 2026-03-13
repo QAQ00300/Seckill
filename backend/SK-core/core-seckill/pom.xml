@@ -11,19 +11,20 @@
     </parent>
     <artifactId>core-seckill</artifactId>
     <version>release-1.0.0</version>
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
     <name>core-seckill</name>
 
 
     <dependencies>
         <dependency>
             <groupId>com.seckill</groupId>
-            <artifactId>core-cache</artifactId>
+            <artifactId>SK-common</artifactId>
         </dependency>
         <dependency>
             <groupId>com.seckill</groupId>
-            <artifactId>core-boot</artifactId>
+            <artifactId>core-cache</artifactId>
         </dependency>
+
         <dependency>
             <groupId>com.seckill</groupId>
             <artifactId>core-mq</artifactId>
@@ -31,14 +32,6 @@
         <dependency>
             <groupId>com.seckill</groupId>
             <artifactId>core-stock</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.seckill</groupId>
-            <artifactId>order-bo</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.seckill</groupId>
-            <artifactId>order-biz</artifactId>
         </dependency>
 
 
@@ -50,6 +43,8 @@
             <groupId>jakarta.validation</groupId>
             <artifactId>jakarta.validation-api</artifactId>
         </dependency>
+
+
     </dependencies>
 
 

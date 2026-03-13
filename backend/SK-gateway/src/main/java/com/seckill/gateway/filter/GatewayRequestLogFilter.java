@@ -24,7 +24,7 @@ import java.util.concurrent.atomic.AtomicReference;
  */
 @Component
 @Slf4j
-public class RequestLogFilter implements GlobalFilter, Ordered {
+public class GatewayRequestLogFilter implements GlobalFilter, Ordered {
 
     private final AtomicInteger requestCounter = new AtomicInteger(0);
 

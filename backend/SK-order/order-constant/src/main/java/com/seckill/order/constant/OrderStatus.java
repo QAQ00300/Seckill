@@ -10,32 +10,23 @@ import java.util.List;
 @AllArgsConstructor
 public enum OrderStatus {
 
-    PENDING(0, "待处理", Arrays.asList(PAID, CANCELLED)),
-    PAID(1, "已支付", Arrays.asList(COMPLETED, REFUNDED)),
-    COMPLETED(2, "已完成", Arrays.asList()),
-    CANCELLED(3, "已取消", Arrays.asList()),
-    REFUNDED(4, "已退款", Arrays.asList());
+    PENDING(0, "待处理"),
+    PAID(1, "已支付"),
+    COMPLETED(2, "已完成"),
+    CANCELLED(3, "已取消"),
+    REFUNDED(4, "已退款");
 
-    private final Integer code;
-    private final String description;
-    private final List<OrderStatus> nextStatuses;
+    private final int code;
+    private final String desc;
 
-    /**
-     * 检查状态转换是否合法
-     */
-    public boolean canTransferTo(OrderStatus targetStatus) {
-        if (targetStatus == null) {
-            return false;
-        }
-        return this.nextStatuses.contains(targetStatus);
-    }
-
-    public static OrderStatus fromCode(Integer code) {
-        for (OrderStatus status : values()) {
-            if (status.getCode().equals(code)) {
-                return status;
-            }
-        }
-        throw new IllegalArgumentException("Unknown order status: " + code);
+    // 获取下一个可能的状态
+    public List<OrderStatus> getNextStatuses() {
+        return switch (this) {
+            case PENDING -> Arrays.asList(PAID, CANCELLED);
+            case PAID -> Arrays.asList(COMPLETED, REFUNDED);
+            case COMPLETED -> Arrays.asList();
+            case CANCELLED -> Arrays.asList();
+            case REFUNDED -> Arrays.asList();
+        };
     }
 }

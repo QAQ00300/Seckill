@@ -18,7 +18,7 @@ import java.io.IOException;
 @Component
 @Order(1)
 @Slf4j
-public class RequestLogFilter extends OncePerRequestFilter {
+public class MvcRequestLogFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,

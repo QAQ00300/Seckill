@@ -14,14 +14,14 @@ public interface UserService {
      * @param req 注册请求
      * @return 用户 ID
      */
-    Integer register(UserRegisterREQ req);
+    Long register(UserRegisterREQ req);
 
     /**
      * 根据 ID 查询用户
-     * @param id 用户 ID
+     * @param userId 用户 ID
      * @return 用户实体
      */
-    UserEO getById(Integer id);
+    UserEO getById(Long userId);
 
     /**
      * 根据用户名查询用户
@@ -55,21 +55,21 @@ public interface UserService {
      * @param userId 用户 ID
      * @param req 更新请求
      */
-    void update(Integer userId, UserUpdateREQ req);
+    void update(Long userId, UserUpdateREQ req);
 
     /**
      * 设置用户状态（管理员操作）
      * @param userId 用户 ID
      * @param status 状态
      */
-    void setStatus(Integer userId, Integer status);
+    void setStatus(Long userId, Integer status);
 
     /**
      * 管理员重置用户密码
      * @param userId 用户 ID
      * @param req 重置密码请求
      */
-    void adminResetPassword(Integer userId, AdminResetPasswordREQ req);
+    void adminResetPassword(Long userId, AdminResetPasswordREQ req);
 
     /**
      * 检查用户名是否存在
@@ -96,5 +96,5 @@ public interface UserService {
      * 删除用户（管理员操作）
      * @param userId 用户 ID
      */
-    void delete(Integer userId);
+    void delete(Long userId);
 }

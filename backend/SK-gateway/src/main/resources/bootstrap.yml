@@ -7,12 +7,4 @@ spring:
       discovery:
         server-addr: 127.0.0.1:8848
         namespace: public
-        group: SK_GROUP
-
-      config:
-        server-addr: 127.0.0.1:8848
-        file-extension: yaml
-        namespace: public
-        group: SK_GROUP
-        prefix: sk-gateway        # 配置前缀
-        refresh-enabled: true     # 启用自动刷新
+        group: DEFAULT_GROUP

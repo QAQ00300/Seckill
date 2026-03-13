@@ -83,7 +83,7 @@ public class SeckillOrderServiceImpl extends ServiceImpl<SeckillOrderMapper, Sec
         }
 
         order.setOrderStatus(status);
-        if (OrderStatus.PAID.getCode().equals(status)) {
+        if (status == OrderStatus.PAID.getCode()) {
             order.setPayTime(LocalDateTime.now());
         }
         order.setUpdateTime(LocalDateTime.now());
@@ -100,7 +100,7 @@ public class SeckillOrderServiceImpl extends ServiceImpl<SeckillOrderMapper, Sec
                     OrderErrorCode.ORDER_NOT_FOUND.getMessage());
         }
 
-        if (!OrderStatus.PENDING.getCode().equals(order.getOrderStatus())) {
+        if (order.getOrderStatus() != OrderStatus.PENDING.getCode()) {
             throw new CustomException(OrderErrorCode.ORDER_CANCEL_NOT_ALLOWED.getCode(),
                     OrderErrorCode.ORDER_CANCEL_NOT_ALLOWED.getMessage());
         }

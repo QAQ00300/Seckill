@@ -4,8 +4,8 @@ package com.seckill.core.boot;
 
 import com.seckill.core.boot.config.SwaggerConfig;
 import com.seckill.core.boot.config.ThreadPoolConfig;
-import com.seckill.core.boot.exception.GlobalExceptionHandler;
-import com.seckill.core.boot.filter.RequestLogFilter;
+import com.seckill.core.seckill.exception.CoreGlobalExceptionHandler;
+import com.seckill.core.boot.filter.MvcRequestLogFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -27,16 +27,16 @@ public class CoreAutoConfiguration {
      * 全局异常处理器
      */
     @Bean
-    public GlobalExceptionHandler globalExceptionHandler() {
-        return new GlobalExceptionHandler();
+    public CoreGlobalExceptionHandler globalExceptionHandler() {
+        return new CoreGlobalExceptionHandler();
     }
 
     /**
      * 请求日志过滤器
      */
     @Bean
-    public RequestLogFilter requestLogFilter() {
-        return new RequestLogFilter();
+    public MvcRequestLogFilter requestLogFilter() {
+        return new MvcRequestLogFilter();
     }
 
     /**

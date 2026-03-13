@@ -23,7 +23,7 @@ import java.util.Map;
 // ... existing code ...
 @Order(-1)
 @Configuration
-public class GlobalExceptionHandler implements ErrorWebExceptionHandler {
+public class GatewayGlobalExceptionHandler implements ErrorWebExceptionHandler {
 
     @Override
     public Mono<Void> handle(ServerWebExchange exchange, Throwable ex) {

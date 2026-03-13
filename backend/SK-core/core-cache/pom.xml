@@ -16,7 +16,10 @@
 
 
     <dependencies>
-
+        <dependency>
+            <groupId>com.seckill</groupId>
+            <artifactId>SK-common</artifactId>
+        </dependency>
     </dependencies>
 
 

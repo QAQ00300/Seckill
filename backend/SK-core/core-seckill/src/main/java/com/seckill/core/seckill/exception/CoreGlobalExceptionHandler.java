@@ -1,4 +1,4 @@
-package com.seckill.core.boot.exception;
+package com.seckill.core.seckill.exception;
 
 
 
@@ -18,7 +18,7 @@ import java.util.Map;
  */
 @RestControllerAdvice
 @Slf4j
-public class GlobalExceptionHandler {
+public class CoreGlobalExceptionHandler {
 
     /**
      * 通用响应格式

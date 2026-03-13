@@ -11,10 +11,14 @@
     </parent>
     <artifactId>core-stock</artifactId>
     <version>release-1.0.0</version>
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
     <name>core-stock</name>
-
-
+    <dependencies>
+        <dependency>
+            <groupId>com.seckill</groupId>
+            <artifactId>SK-common</artifactId>
+        </dependency>
+    </dependencies>
 
 
 
