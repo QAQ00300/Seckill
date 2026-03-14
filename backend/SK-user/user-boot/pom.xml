@@ -21,7 +21,10 @@
     </properties>
 
     <dependencies>
-
+        <dependency>
+            <groupId>com.seckill</groupId>
+            <artifactId>SK-common</artifactId>
+        </dependency>
         <dependency>
             <groupId>com.seckill</groupId>
             <artifactId>user-biz</artifactId>

@@ -60,23 +60,52 @@ spring:
           uri: no://op
           predicates: Path=/gateway/mutation/**
 
-        # 用户服务路由
-        - id: SK-user
+        # 用户服务路由 - 按请求类型分离
+        - id: SK-user-query
           uri: lb://sk-user
-          predicates: Path=/api/user/**
+          predicates: Path=/api/user/query/**
           filters:
             - name: RequestRateLimiter
               args:
                 redis-rate-limiter.replenishRate: 1000
                 redis-rate-limiter.burstCapacity: 2000
-            - StripPrefix=1
+            - StripPrefix=2
 
-        # 订单服务路由 - 修正路径为复数
-        - id: SK-order
-          uri: lb://sk-order
-          predicates: Path=/api/orders/**  # 改为复数匹配
+        - id: SK-user-mutation
+          uri: lb://sk-user
+          predicates: Path=/api/user/mutation/**
           filters:
-            - StripPrefix=1
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 500
+                redis-rate-limiter.burstCapacity: 1000
+            - StripPrefix=2
+
+        # 订单服务路由 - 按请求类型分离
+        - id: SK-order-query
+          uri: lb://sk-order
+          predicates: Path=/api/order/query/**
+          filters:
+            - StripPrefix=2
+
+        - id: SK-order-mutation
+          uri: lb://sk-order
+          predicates: Path=/api/order/mutation/**
+          filters:
+            - StripPrefix=2
+
+        # 秒杀订单服务路由 - 按请求类型分离
+        - id: SK-seckill-order-query
+          uri: lb://sk-order
+          predicates: Path=/api/order/seckill/query/**
+          filters:
+            - StripPrefix=3
+
+        - id: SK-seckill-order-mutation
+          uri: lb://sk-order
+          predicates: Path=/api/order/seckill/mutation/**
+          filters:
+            - StripPrefix=3
 
         # 秒杀核心服务路由
         - id: SK-core
@@ -88,6 +117,7 @@ spring:
                 redis-rate-limiter.replenishRate: 500
                 redis-rate-limiter.burstCapacity: 1000
             - StripPrefix=1
+
 
 
 # 日志配置

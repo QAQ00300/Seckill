@@ -22,6 +22,10 @@
     <dependencies>
         <dependency>
             <groupId>com.seckill</groupId>
+            <artifactId>SK-common</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.seckill</groupId>
             <artifactId>order-bo</artifactId>
         </dependency>
         <dependency>

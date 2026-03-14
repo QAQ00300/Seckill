@@ -4,17 +4,12 @@ import com.seckill.common.tools.result.Result;
 import com.seckill.user.biz.service.UserService;
 import com.seckill.user.bo.eo.UserEO;
 import com.seckill.user.constant.UserStatus;
-import com.seckill.user.ao.req.AdminResetPasswordREQ;
-import com.seckill.user.ao.req.UserRegisterREQ;
-import com.seckill.user.ao.req.UserUpdateREQ;
 import com.seckill.user.ao.res.UserResVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,24 +17,17 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping("/api/user/query")
 @RequiredArgsConstructor
-@Api(tags = "用户管理接口 - 管理员操作")
-public class UserController {
+@Api(tags = "用户查询接口 - 管理员操作（GET）")
+public class UserQueryController {
 
     private final UserService userService;
 
-    @PostMapping("/register")
-    @ApiOperation("管理员创建用户")
-    public Result<Integer> register(@Validated @RequestBody UserRegisterREQ req) {
-        Integer userId = userService.register(req);
-        return Result.success(userId);
-    }
-
     @GetMapping("/{id}")
     @ApiOperation("根据 ID 查询用户")
-    public Result<UserResVO> getUserById(@PathVariable Integer id) {
-        UserEO user= userService.getById(id);
+    public Result<UserResVO> getUserById(@PathVariable Long id) {
+        UserEO user = userService.getById(id);
         if (user == null) {
             return Result.error(404, "用户不存在");
         }
@@ -51,7 +39,31 @@ public class UserController {
     @GetMapping("/username/{username}")
     @ApiOperation("根据用户名查询用户")
     public Result<UserResVO> getUserByUsername(@PathVariable String username) {
-        UserEO user= userService.getByUsername(username);
+        UserEO user = userService.getByUsername(username);
+        if (user == null) {
+            return Result.error(404, "用户不存在");
+        }
+
+        UserResVO vo = convertToVO(user);
+        return Result.success(vo);
+    }
+
+    @GetMapping("/phone/{phone}")
+    @ApiOperation("根据手机号查询用户")
+    public Result<UserResVO> getUserByPhone(@PathVariable String phone) {
+        UserEO user = userService.getByPhone(phone);
+        if (user == null) {
+            return Result.error(404, "用户不存在");
+        }
+
+        UserResVO vo = convertToVO(user);
+        return Result.success(vo);
+    }
+
+    @GetMapping("/email/{email}")
+    @ApiOperation("根据邮箱查询用户")
+    public Result<UserResVO> getUserByEmail(@PathVariable String email) {
+        UserEO user = userService.getByEmail(email);
         if (user == null) {
             return Result.error(404, "用户不存在");
         }
@@ -68,37 +80,6 @@ public class UserController {
                 .map(this::convertToVO)
                 .collect(Collectors.toList());
         return Result.success(vos);
-    }
-
-    @PutMapping("/{id}")
-    @ApiOperation("更新用户信息（管理员）")
-    public Result<Void> updateUser(@PathVariable Integer id,
-                                   @Validated @RequestBody UserUpdateREQ req) {
-        userService.update(id, req);
-        return Result.success();
-    }
-
-    @PutMapping("/{id}/status")
-    @ApiOperation("设置用户状态（管理员）")
-    public Result<Void> setUserStatus(@PathVariable Integer id,
-                                      @RequestParam Integer status) {
-        userService.setStatus(id, status);
-        return Result.success();
-    }
-
-    @PutMapping("/{id}/password")
-    @ApiOperation("管理员重置用户密码")
-    public Result<Void> adminResetPassword(@PathVariable Integer id,
-                                           @Validated @RequestBody AdminResetPasswordREQ req) {
-        userService.adminResetPassword(id, req);
-        return Result.success();
-    }
-
-    @DeleteMapping("/{id}")
-    @ApiOperation("删除用户（管理员）")
-    public Result<Void> deleteUser(@PathVariable Integer id) {
-        userService.delete(id);
-        return Result.success();
     }
 
     @GetMapping("/check/username/{username}")

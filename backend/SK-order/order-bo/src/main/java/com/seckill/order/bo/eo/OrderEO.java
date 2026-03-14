@@ -25,7 +25,7 @@ public class OrderEO extends BaseEO implements Serializable {
     private Integer orderNo;
 
     @TableField("user_id")
-    private Integer userId;
+    private Long userId;
 
     @TableField("product_id")
     private Integer productId;

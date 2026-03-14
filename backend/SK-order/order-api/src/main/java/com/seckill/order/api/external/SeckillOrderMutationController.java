@@ -3,37 +3,24 @@ package com.seckill.order.api.external;
 import com.seckill.common.tools.result.Result;
 import com.seckill.order.biz.service.SeckillOrderService;
 import com.seckill.order.bo.eo.SeckillOrderEO;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigDecimal;
-
 @RestController
-@RequestMapping("/api/order/seckill")
-@Slf4j
+@RequestMapping("/api/order/seckill/mutation")
 @RequiredArgsConstructor
-public class SeckillOrderController {
+@Slf4j
+@Tag(name = "秒杀订单变更接口", description = "秒杀订单增删改相关 API（POST/PUT/DELETE）")
+public class SeckillOrderMutationController {
 
     private final SeckillOrderService seckillOrderService;
 
-    /**
-     * 检查用户是否已参与秒杀（供 Feign 调用）
-     */
-    @GetMapping("/check-participation")
-    public Result<Boolean> checkParticipation(
-            @RequestParam Long userId,
-            @RequestParam Long seckillId) {
-
-        boolean participated = seckillOrderService.hasParticipated(userId, seckillId);
-        return Result.success(participated);
-    }
-
-    /**
-     * 创建秒杀订单（供 Feign 调用）
-     * 注意：这里需要接收 DTO 参数，但为了简化，我们直接使用 EO
-     */
     @PostMapping("/create")
+    @Operation(summary = "创建秒杀订单", description = "创建秒杀订单")
     public Result<String> createOrder(@RequestBody SeckillOrderEO order) {
         try {
             String orderNo = seckillOrderService.createSeckillOrder(order);
