@@ -35,7 +35,6 @@ public class SeckillServiceImpl implements SeckillService {
 
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
     public SeckillResponse processSeckill(SeckillRequest request) {
         log.info("开始处理秒杀请求 - userId: {}, seckillId: {}",
                 request.getUserId(), request.getSeckillId());
@@ -46,10 +45,10 @@ public class SeckillServiceImpl implements SeckillService {
             // 1. 基础请求验证
             seckillValidator.validateRequest(request);
 
-            // 2. 验证秒杀活动
+            // 2. 验证秒杀活动（在事务内）
             SeckillActivity activity = validateSeckill(request.getSeckillId());
 
-            // 3. 验证用户资格（通过 Feign 远程调用 order 服务）
+            // 3. 验证用户资格（Feign 远程调用，不在事务内）
             Result<Boolean> checkResult = seckillOrderClient.hasParticipated(
                     request.getUserId(),
                     request.getSeckillId()
@@ -59,6 +58,26 @@ public class SeckillServiceImpl implements SeckillService {
                 throw new SeckillException(400, "您已参加过该秒杀活动");
             }
 
+            // 4-5. 扣减库存并创建订单（事务内）
+            return processDeductAndCreateOrder(request, activity, startTime);
+
+        } catch (SeckillException e) {
+            log.warn("秒杀失败：{}", e.getMessage());
+            return SeckillResponse.fail(e.getCode(), e.getMessage());
+        } catch (Exception e) {
+            log.error("系统异常", e);
+            return SeckillResponse.fail(500, "系统繁忙，请稍后重试");
+        }
+    }
+
+    /**
+     * 处理库存扣减和订单创建（带事务）
+     */
+    @Transactional(rollbackFor = Exception.class)
+    public SeckillResponse processDeductAndCreateOrder(SeckillRequest request,
+                                                       SeckillActivity activity,
+                                                       long startTime) {
+        try {
             // 4. 扣减库存（同步）
             boolean deducted = stockService.deductStock(
                     request.getSeckillId(),
@@ -74,6 +93,10 @@ public class SeckillServiceImpl implements SeckillService {
             Result<String> orderResult = seckillOrderClient.createOrder(orderDTO);
 
             if (!orderResult.isSuccess()) {
+                // 阶段 1：记录补偿日志，后续需要回滚库存
+                log.error("订单创建失败，需要补偿回滚库存 - seckillId: {}, userId: {}",
+                        request.getSeckillId(), request.getUserId());
+                // TODO: 阶段 3 使用 MQ 事务消息保证最终一致性
                 throw new SeckillException(400, "订单创建失败：" + orderResult.getMessage());
             }
 
@@ -84,11 +107,10 @@ public class SeckillServiceImpl implements SeckillService {
             return SeckillResponse.success(orderNo, activity.getSeckillPrice());
 
         } catch (SeckillException e) {
-            log.warn("秒杀失败：{}", e.getMessage());
-            return SeckillResponse.fail(e.getCode(), e.getMessage());
+            throw e;
         } catch (Exception e) {
-            log.error("系统异常", e);
-            return SeckillResponse.fail(500, "系统繁忙，请稍后重试");
+            log.error("处理过程异常", e);
+            throw new SeckillException(500, "系统错误");
         }
     }
 

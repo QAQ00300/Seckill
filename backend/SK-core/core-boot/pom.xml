@@ -25,6 +25,18 @@
             <groupId>com.seckill</groupId>
             <artifactId>core-seckill</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.seckill</groupId>
+            <artifactId>core-stock</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.seckill</groupId>
+            <artifactId>core-mq</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.seckill</groupId>
+            <artifactId>core-cache</artifactId>
+        </dependency>
 
 
         <dependency>

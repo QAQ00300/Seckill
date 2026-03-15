@@ -28,10 +28,25 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEO> implemen
     @Override
     @Transactional(rollbackFor = Exception.class)
     public String createOrder(OrderEO order) {
-        validateOrder(order);
+        // 基础字段验证（简化版）
+        if (order.getUserId() == null || order.getUserId() <= 0) {
+            throw new CustomException(OrderErrorCode.USER_ID_INVALID.getCode(),
+                    OrderErrorCode.USER_ID_INVALID.getMessage());
+        }
 
+        if (order.getProductId() == null || order.getProductId() <= 0) {
+            throw new CustomException(OrderErrorCode.PRODUCT_ID_INVALID.getCode(),
+                    OrderErrorCode.PRODUCT_ID_INVALID.getMessage());
+        }
+
+        if (order.getQuantity() == null || order.getQuantity() <= 0) {
+            throw new CustomException(OrderErrorCode.QUANTITY_INVALID.getCode(),
+                    OrderErrorCode.QUANTITY_INVALID.getMessage());
+        }
+
+        // 生成订单号
         String orderNo = generateOrderNo("ORD");
-        order.setOrderNo(Integer.valueOf(orderNo));
+        order.setOrderNo(orderNo);
 
         if (order.getOrderStatus() == null) {
             order.setOrderStatus(OrderStatus.PENDING.getCode());
@@ -188,9 +203,9 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEO> implemen
 
         List<OrderEO> orders = list(wrapper);
         BigDecimal total = BigDecimal.ZERO;
-        for (OrderEO order: orders) {
+        for (OrderEO order : orders) {
             if (order.getTotalPrice() != null) {
-                total = total.add(BigDecimal.valueOf(order.getTotalPrice()));
+                total = total.add(order.getTotalPrice());
             }
         }
         return total;
@@ -208,7 +223,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEO> implemen
             throw new CustomException(OrderErrorCode.QUANTITY_INVALID.getCode(),
                     OrderErrorCode.QUANTITY_INVALID.getMessage());
         }
-        if (order.getTotalPrice() == null || order.getTotalPrice() <= 0.0) {
+        if (order.getTotalPrice() == null || order.getTotalPrice().compareTo(java.math.BigDecimal.ZERO) <= 0) {
             throw new CustomException(OrderErrorCode.PRICE_INVALID.getCode(),
                     OrderErrorCode.PRICE_INVALID.getMessage());
         }

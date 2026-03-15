@@ -12,6 +12,7 @@ import lombok.experimental.SuperBuilder;
 
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Data
@@ -22,22 +23,22 @@ import java.time.LocalDateTime;
 public class OrderEO extends BaseEO implements Serializable {
 
     @TableField("order_no")
-    private Integer orderNo;
+    private String orderNo;
 
     @TableField("user_id")
     private Long userId;
 
     @TableField("product_id")
-    private Integer productId;
+    private Long productId;
 
     @TableField("seckill_id")
-    private String seckillId;
+    private Long seckillId;
 
     @TableField("quantity")
     private Integer quantity;
 
     @TableField("total_price")
-    private Double totalPrice;
+    private BigDecimal totalPrice;
 
     @TableField("order_status")
     private Integer orderStatus;

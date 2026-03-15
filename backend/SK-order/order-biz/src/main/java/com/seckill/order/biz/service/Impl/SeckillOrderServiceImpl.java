@@ -129,9 +129,12 @@ public class SeckillOrderServiceImpl extends ServiceImpl<SeckillOrderMapper, Sec
 
     @Override
     public boolean hasParticipated(Long userId, Long seckillId) {
-        long count = getBaseMapper().countByUserIdAndSeckillId(userId, seckillId);
+        long count = count(new LambdaQueryWrapper<SeckillOrderEO>()
+                .eq(SeckillOrderEO::getUserId, userId)
+                .eq(SeckillOrderEO::getSeckillId, seckillId));
         return count > 0;
     }
+
 
     private void validateSeckillOrder(SeckillOrderEO order) {
         if (order.getUserId() == null || order.getUserId() <= 0) {
