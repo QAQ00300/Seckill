@@ -8,17 +8,17 @@
         <groupId>com.seckill</groupId>
         <artifactId>SK-user</artifactId>
         <version>${revision}</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>user-constant</artifactId>
     <version>${revision}</version>
-    <packaging>jar</packaging>
+
     <name>user-constant</name>
 
     <properties>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <revision>release-1.0.0</revision>
     </properties>
 
     <dependencies>

@@ -32,7 +32,9 @@ public class SeckillOrderServiceImpl extends ServiceImpl<SeckillOrderMapper, Sec
         order.setOrderNo(orderNo);
 
         if (order.getOrderStatus() == null) {
-            order.setOrderStatus(OrderStatus.PENDING.getCode());
+            // 修改：订单创建时直接设置为已支付状态
+            order.setOrderStatus(OrderStatus.PAID.getCode());
+            order.setPayTime(LocalDateTime.now());
         }
 
         order.setCreateTime(LocalDateTime.now());
@@ -100,7 +102,8 @@ public class SeckillOrderServiceImpl extends ServiceImpl<SeckillOrderMapper, Sec
                     OrderErrorCode.ORDER_NOT_FOUND.getMessage());
         }
 
-        if (order.getOrderStatus() != OrderStatus.PENDING.getCode()) {
+        // 跳过了支付环节
+        if (order.getOrderStatus() != OrderStatus.PAID.getCode()) {
             throw new CustomException(OrderErrorCode.ORDER_CANCEL_NOT_ALLOWED.getCode(),
                     OrderErrorCode.ORDER_CANCEL_NOT_ALLOWED.getMessage());
         }

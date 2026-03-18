@@ -4,9 +4,10 @@ import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.seckill.common.base.bo.BaseEO;
-import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.experimental.SuperBuilder;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -15,7 +16,7 @@ import java.time.LocalDateTime;
  * 秒杀订单实体
  */
 @Data
-@Builder
+@SuperBuilder
 @EqualsAndHashCode(callSuper = true)
 @TableName("`order`")
 public class SeckillOrder extends BaseEO implements Serializable {

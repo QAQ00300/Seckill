@@ -8,6 +8,7 @@
         <groupId>com.seckill</groupId>
         <artifactId>seckill-backend</artifactId>
         <version>${revision}</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>SK-user</artifactId>
     <version>${revision}</version>
@@ -18,7 +19,6 @@
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <revision>release-1.0.0</revision>
     </properties>
 
     <modules>

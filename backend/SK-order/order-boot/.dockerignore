@@ -1,0 +1,32 @@
+# Maven 构建产物（只保留 JAR）
+target/
+!target/*.jar
+!target/order-boot*.jar
+
+# IDE 配置
+.idea/
+*.iml
+*.iws
+
+# 源代码（不需要复制到镜像）
+src/
+
+# 项目配置
+pom.xml
+.gitignore
+*.md
+
+# 兄弟模块（避免误复制）
+../order-ao/
+../order-api/
+../order-biz/
+../order-bo/
+../order-constant/
+
+# 日志
+logs/
+*.log
+
+# 操作系统文件
+.DS_Store
+Thumbs.db

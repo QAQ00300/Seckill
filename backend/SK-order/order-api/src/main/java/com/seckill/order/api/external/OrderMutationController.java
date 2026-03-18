@@ -65,7 +65,7 @@ public class OrderMutationController {
             @Parameter(description = "订单号") @PathVariable String orderNo,
             @Valid @RequestBody OrderEO order) {
         try {
-            order.setOrderNo(Integer.valueOf(orderNo));
+            order.setOrderNo(String.valueOf(orderNo));
             boolean result = orderService.updateOrder(order);
             return Result.success(result);
         } catch (Exception e) {

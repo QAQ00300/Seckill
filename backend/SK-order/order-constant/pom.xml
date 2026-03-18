@@ -8,10 +8,10 @@
         <groupId>com.seckill</groupId>
         <artifactId>SK-order</artifactId>
         <version>${revision}</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>order-constant</artifactId>
     <version>${revision}</version>
-    <packaging>jar</packaging>
     <name>order-constant</name>
     <properties>
         <maven.compiler.source>${java.version}</maven.compiler.source>

@@ -8,16 +8,15 @@
         <groupId>com.seckill</groupId>
         <artifactId>SK-order</artifactId>
         <version>${revision}</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>order-bo</artifactId>
     <version>${revision}</version>
-    <packaging>jar</packaging>
     <name>order-bo</name>
     <properties>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <revision>release-1.0.0</revision>
     </properties>
 
 

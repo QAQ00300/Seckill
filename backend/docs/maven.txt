@@ -1,0 +1,12 @@
+# 1. 清理所有
+cd D:\work\Seckill\backend
+mvn clean
+
+# 2. 删除本地仓库的相关文件夹
+rm -r C:\Users\你的用户名\.m2\repository\com\seckill
+
+# 3. 先构建父模块（指定绝对路径可能会更可靠）
+mvn -f D:\work\Seckill\backend\pom.xml clean install -N -Drevision=release-1.0.0
+
+# 4. 然后构建所有
+mvn -f D:\work\Seckill\backend\pom.xml clean install -Drevision=release-1.0.0

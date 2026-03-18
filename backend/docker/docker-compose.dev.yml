@@ -1,0 +1,125 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: sk-mysql-dev
+    environment:
+      MYSQL_ROOT_PASSWORD: Ppg123456
+      MYSQL_DATABASE: seckill
+      TZ: Asia/Shanghai
+    ports:
+      - "3306:3306"
+    volumes:
+      - ../../docs/sql/DML:/docker-entrypoint-initdb.d
+      - mysql-dev-data:/var/lib/mysql
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_general_ci
+      - --default-time-zone=+00:00
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    networks:
+      - sk-dev-network
+
+  redis:
+    image: redis:7-alpine
+    container_name: sk-redis-dev
+    ports:
+      - "6379:6379"
+    networks:
+      - sk-dev-network
+
+  sk-gateway:
+    build:
+      context: ../../SK-gateway
+      dockerfile: Dockerfile
+    container_name: sk-gateway-dev
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
+      - SPRING_DATASOURCE_REDIS_HOST=redis
+      - SPRING_DATASOURCE_REDIS_PORT=6379
+      - JAVA_OPTS=-Xmx256m -Xms256m -Duser.timezone=Asia/Shanghai
+    depends_on:
+      redis:
+        condition: service_started
+      mysql:
+        condition: service_healthy
+    networks:
+      - sk-dev-network
+    restart: unless-stopped
+
+  sk-user:
+    build:
+      context: ../../SK-user/user-boot
+      dockerfile: Dockerfile
+    container_name: sk-user-dev
+    ports:
+      - "8082:8082"
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/seckill?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=Ppg123456
+      - SPRING_CLOUD_NACOS_DISCOVERY_ENABLED=false
+      - JAVA_OPTS=-Xmx256m -Xms256m -Duser.timezone=Asia/Shanghai
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - sk-dev-network
+    restart: unless-stopped
+
+  sk-order:
+    build:
+      context: ../../SK-order/order-boot
+      dockerfile: Dockerfile
+    container_name: sk-order-dev
+    ports:
+      - "8083:8083"
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/seckill?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=Ppg123456
+      - SPRING_CLOUD_NACOS_DISCOVERY_ENABLED=false
+      - JAVA_OPTS=-Xmx256m -Xms256m -Duser.timezone=Asia/Shanghai
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - sk-dev-network
+    restart: unless-stopped
+
+  sk-core:
+    build:
+      context: ../../SK-core/core-boot
+      dockerfile: Dockerfile
+    container_name: sk-core-dev
+    ports:
+      - "8081:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/seckill?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=Ppg123456
+      - SPRING_CLOUD_NACOS_DISCOVERY_ENABLED=false
+      - JAVA_OPTS=-Xmx256m -Xms256m -Duser.timezone=Asia/Shanghai
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - sk-dev-network
+    restart: unless-stopped
+
+volumes:
+  mysql-dev-data:
+
+networks:
+  sk-dev-network:
+    driver: bridge

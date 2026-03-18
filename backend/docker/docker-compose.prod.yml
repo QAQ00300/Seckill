@@ -1,0 +1,232 @@
+version: '3.8'
+
+services:
+  mysql-master:
+    image: mysql:8.0
+    container_name: sk-mysql-prod-master
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: seckill
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-prod-data:/var/lib/mysql
+      - ./logs/mysql:/var/log/mysql
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_general_ci
+      - --max_connections=1000
+      - --innodb_buffer_pool_size=1G
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 2G
+        reservations:
+          cpus: '1.0'
+          memory: 1G
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    networks:
+      - sk-prod-network
+
+  redis-sentinel:
+    image: redis:7-alpine
+    container_name: sk-redis-prod
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-prod-data:/data
+    command: redis-server --appendonly yes --maxmemory 512mb --maxmemory-policy allkeys-lru
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1G
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - sk-prod-network
+
+  nacos-cluster:
+    image: nacos/nacos-server:v2.2.3
+    container_name: sk-nacos-prod
+    environment:
+      - MODE=cluster
+      - NACOS_SERVERS=nacos1:8848 nacos2:8848 nacos3:8848
+      - SPRING_DATASOURCE_PLATFORM=mysql
+      - MYSQL_SERVICE_HOST=mysql-master
+      - MYSQL_SERVICE_DB_NAME=nacos_config
+      - MYSQL_SERVICE_USER=root
+      - MYSQL_SERVICE_PASSWORD=${MYSQL_ROOT_PASSWORD}
+    ports:
+      - "8848:8848"
+      - "9848:9848"
+    deploy:
+      replicas: 3
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1G
+    depends_on:
+      - mysql-master
+    networks:
+      - sk-prod-network
+
+  sk-gateway:
+    build:
+      context: ../../SK-gateway
+      dockerfile: Dockerfile
+    container_name: sk-gateway-prod
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - SPRING_CLOUD_NACOS_DISCOVERY_SERVER-ADDR=nacos-cluster:8848
+      - SPRING_CLOUD_NACOS_CONFIG_SERVER-ADDR=nacos-cluster:8848
+      - SPRING_DATA_REDIS_HOST=redis-sentinel
+      - JAVA_OPTS=-Xmx1g -Xms1g -XX:+UseG1GC
+    volumes:
+      - ./logs/gateway:/app/logs
+    deploy:
+      replicas: 2
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1G
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+      restart_policy:
+        condition: on-failure
+        delay: 10s
+        max_attempts: 3
+    depends_on:
+      - nacos-cluster
+      - redis-sentinel
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "10"
+    networks:
+      - sk-prod-network
+
+  sk-user:
+    build:
+      context: ../../SK-user/user-boot
+      dockerfile: Dockerfile
+    container_name: sk-user-prod
+    ports:
+      - "8082:8082"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - SPRING_CLOUD_NACOS_DISCOVERY_SERVER-ADDR=nacos-cluster:8848
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-master:3306/seckill
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - JAVA_OPTS=-Xmx1g -Xms1g
+    volumes:
+      - ./logs/user:/app/logs
+    deploy:
+      replicas: 2
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1G
+      restart_policy:
+        condition: on-failure
+    depends_on:
+      - mysql-master
+      - nacos-cluster
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "10"
+    networks:
+      - sk-prod-network
+
+  sk-order:
+    build:
+      context: ../../SK-order/order-boot
+      dockerfile: Dockerfile
+    container_name: sk-order-prod
+    ports:
+      - "8083:8083"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - SPRING_CLOUD_NACOS_DISCOVERY_SERVER-ADDR=nacos-cluster:8848
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-master:3306/seckill
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - JAVA_OPTS=-Xmx1g -Xms1g
+    volumes:
+      - ./logs/order:/app/logs
+    deploy:
+      replicas: 2
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1G
+      restart_policy:
+        condition: on-failure
+    depends_on:
+      - mysql-master
+      - nacos-cluster
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "10"
+    networks:
+      - sk-prod-network
+
+  sk-core:
+    build:
+      context: ../../SK-core/core-boot
+      dockerfile: Dockerfile
+    container_name: sk-core-prod
+    ports:
+      - "8081:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - SPRING_CLOUD_NACOS_DISCOVERY_SERVER-ADDR=nacos-cluster:8848
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-master:3306/seckill
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - JAVA_OPTS=-Xmx1g -Xms1g
+    volumes:
+      - ./logs/core:/app/logs
+    deploy:
+      replicas: 2
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1G
+      restart_policy:
+        condition: on-failure
+    depends_on:
+      - mysql-master
+      - nacos-cluster
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "10"
+    networks:
+      - sk-prod-network
+
+volumes:
+  mysql-prod-data:
+  redis-prod-data:
+
+networks:
+  sk-prod-network:
+    driver: overlay
