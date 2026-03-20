@@ -1,6 +1,6 @@
 package com.seckill.core.seckill.service.Impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.seckill.core.cache.service.CacheService;
 import com.seckill.core.seckill.client.SeckillOrderClient;
 import com.seckill.core.seckill.dto.SeckillOrderDTO;
 import com.seckill.core.seckill.dto.SeckillRequest;
@@ -32,6 +32,10 @@ public class SeckillServiceImpl implements SeckillService {
     private final StockService stockService;
     private final SeckillOrderClient seckillOrderClient;
     private final SeckillValidator seckillValidator;
+    private final CacheService cacheService;
+
+    private static final String SECKILL_ACTIVITY_KEY_PREFIX = "seckill:activity:";
+    private static final long ACTIVITY_CACHE_EXPIRE_SECONDS = 300;
 
 
     @Override
@@ -100,7 +104,11 @@ public class SeckillServiceImpl implements SeckillService {
                 throw new SeckillException(400, "订单创建失败：" + orderResult.getMessage());
             }
 
+
+            //订单创建成功后删除缓存
             String orderNo = orderResult.getData();
+            invalidateSeckillActivityCache(request.getSeckillId());  // 删除缓存
+
             long duration = System.currentTimeMillis() - startTime;
             log.info("秒杀成功 - orderId: {}, duration: {}ms", orderNo, duration);
 
@@ -116,12 +124,30 @@ public class SeckillServiceImpl implements SeckillService {
 
     @Override
     public SeckillActivity getSeckillActivity(Long seckillId) {
-        return seckillActivityMapper.selectById(seckillId);
+        // 1. 先尝试从缓存获取
+        String cacheKey = SECKILL_ACTIVITY_KEY_PREFIX + seckillId;
+        SeckillActivity cached = cacheService.get(cacheKey, SeckillActivity.class);
+        if (cached != null) {
+            log.debug("缓存命中 - seckillId: {}", seckillId);
+            return cached;
+        }
+
+        // 2. 缓存未命中，查询数据库
+        log.debug("缓存未命中，查询数据库 - seckillId: {}", seckillId);
+        SeckillActivity activity = seckillActivityMapper.selectById(seckillId);
+
+        // 3. 写入缓存
+        if (activity != null) {
+            cacheService.set(cacheKey, activity, ACTIVITY_CACHE_EXPIRE_SECONDS);
+            log.debug("回写缓存 - seckillId: {}", seckillId);
+        }
+
+        return activity;
     }
 
     @Override
     public boolean checkSeckillStatus(Long seckillId) {
-        SeckillActivity activity = seckillActivityMapper.selectById(seckillId);
+        SeckillActivity activity = getSeckillActivity(seckillId);
         if (activity == null) {
             return false;
         }
@@ -134,7 +160,7 @@ public class SeckillServiceImpl implements SeckillService {
 
     @Override
     public Integer getSeckillStock(Long seckillId) {
-        SeckillActivity activity = seckillActivityMapper.selectById(seckillId);
+        SeckillActivity activity = getSeckillActivity(seckillId);
         return activity != null ? activity.getRemainStock() : 0;
     }
 
@@ -143,8 +169,12 @@ public class SeckillServiceImpl implements SeckillService {
         return false;
     }
 
+
+    /**
+     * 验证秒杀活动（优先从缓存获取）
+     */
     private SeckillActivity validateSeckill(Long seckillId) {
-        SeckillActivity activity = seckillActivityMapper.selectById(seckillId);
+        SeckillActivity activity = getSeckillActivity(seckillId);
         if (activity == null) {
             throw new SeckillException(404, "秒杀活动不存在");
         }
@@ -162,6 +192,15 @@ public class SeckillServiceImpl implements SeckillService {
         }
 
         return activity;
+    }
+
+    /**
+     * 使缓存失效（用于数据更新后）
+     */
+    private void invalidateSeckillActivityCache(Long seckillId) {
+        String cacheKey = SECKILL_ACTIVITY_KEY_PREFIX + seckillId;
+        cacheService.delete(cacheKey);
+        log.debug("缓存已失效 - seckillId: {}", seckillId);
     }
 
     private SeckillOrderDTO buildSeckillOrderDTO(SeckillRequest request, SeckillActivity activity) {

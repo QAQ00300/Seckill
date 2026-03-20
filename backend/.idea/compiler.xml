@@ -25,7 +25,6 @@
         <module name="user-constant" />
         <module name="core-cache" />
         <module name="order-api" />
-        <module name="core-seckill" />
         <module name="user-api" />
         <module name="core-mq" />
         <module name="user-bo" />
@@ -34,6 +33,16 @@
         <module name="order-bo" />
         <module name="user-biz" />
         <module name="SK-common" />
+      </profile>
+      <profile name="Annotation profile for core-seckill" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.42/lombok-1.18.42.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.42/lombok-1.18.42.jar" />
+        </processorPath>
+        <module name="core-seckill" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>

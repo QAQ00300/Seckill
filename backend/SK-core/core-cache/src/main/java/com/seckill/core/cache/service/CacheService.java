@@ -1,4 +1,4 @@
-package com.seckill.core.cache;
+package com.seckill.core.cache.service;
 
 
 /**
