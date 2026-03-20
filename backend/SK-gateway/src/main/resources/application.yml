@@ -1,11 +1,5 @@
 server:
   port: 8080
-  tomcat:
-    connection-timeout: 5000
-    max-connections: 8192
-    threads:
-      max: 200
-      min-spare: 10
 
 spring:
   profiles:
@@ -34,7 +28,7 @@ spring:
         file-extension: yaml
         namespace: public
         group: DEFAULT_GROUP
-        prefix: sk-gateway
+        prefix: SK-gateway
         refresh-enabled: true
         import-check:
           enabled: false

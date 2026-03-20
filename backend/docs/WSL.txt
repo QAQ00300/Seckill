@@ -1,0 +1,10 @@
+# 进入 WSL
+wsl
+
+# 关闭单个容器
+docker stop redis
+docker stop mysql
+docker stop nacos
+
+# 关闭所有容器
+docker stop $(docker ps -q)
