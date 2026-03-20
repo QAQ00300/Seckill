@@ -1,6 +1,6 @@
 spring:
   application:
-    name: sk-gateway
+    name: SK-gateway
 
   cloud:
     nacos:

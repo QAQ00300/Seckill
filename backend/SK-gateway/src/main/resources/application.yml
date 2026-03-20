@@ -34,7 +34,7 @@ spring:
         file-extension: yaml
         namespace: public
         group: DEFAULT_GROUP
-        prefix: sk-gateway
+        prefix: SK-gateway
         refresh-enabled: true
         import-check:
           enabled: false

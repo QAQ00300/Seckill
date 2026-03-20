@@ -1,12 +1,16 @@
 spring:
   application:
-    name: sk-order
+    name: SK-order
 
   datasource:
     url: jdbc:mysql://localhost:3306/seckill?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
     username: root
     password: Ppg123456
     driver-class-name: com.mysql.cj.jdbc.Driver
+    druid:
+      min-idle: 5
+      max-active: 20
+      max-wait: 10000
 
   # Nacos 配置（如果需要）
   cloud:
@@ -18,7 +22,6 @@ spring:
 
 # MyBatis-Plus 配置
 mybatis-plus:
-  mapper-locations: classpath*:/mapper/**/*.xml
   type-aliases-package: com.seckill.order.bo.eo
   configuration:
     map-underscore-to-camel-case: true
