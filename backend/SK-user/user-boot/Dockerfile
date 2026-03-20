@@ -6,7 +6,7 @@ WORKDIR /app
 RUN apk add --no-cache tzdata
 
 # 复制 JAR 包
-ARG JAR_FILE=target/*.jar
+ARG JAR_FILE=target/user-boot.jar
 COPY ${JAR_FILE} app.jar
 
 # 设置时区

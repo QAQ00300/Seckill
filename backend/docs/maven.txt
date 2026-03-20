@@ -1,12 +1,18 @@
-# 1. 清理所有
+# 1. 清理并重新打包
 cd D:\work\Seckill\backend
-mvn clean
+mvn clean package -DskipTests
 
-# 2. 删除本地仓库的相关文件夹
+# 2. 验证 JAR 包生成
+ls SK-gateway/target/*.jar
+ls SK-user/user-boot/target/*.jar
+ls SK-order/order-boot/target/*.jar
+ls SK-core/core-boot/target/*.jar
+
+#  删除本地仓库的相关文件夹
 rm -r C:\Users\你的用户名\.m2\repository\com\seckill
 
-# 3. 先构建父模块（指定绝对路径可能会更可靠）
+#  先构建父模块（指定绝对路径可能会更可靠）
 mvn -f D:\work\Seckill\backend\pom.xml clean install -N -Drevision=release-1.0.0
 
-# 4. 然后构建所有
+#  然后构建所有
 mvn -f D:\work\Seckill\backend\pom.xml clean install -Drevision=release-1.0.0
