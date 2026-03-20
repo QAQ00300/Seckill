@@ -1,0 +1,9 @@
+# 进入 1Panel MySQL 容器或使用客户端连接
+mysql -u root -p
+
+# 创建数据库
+CREATE DATABASE seckill DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+
+# 导入数据
+use seckill;
+source /path/to/docs/sql/DML/xxx.sql;

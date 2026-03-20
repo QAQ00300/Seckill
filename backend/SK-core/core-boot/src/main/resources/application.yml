@@ -69,4 +69,4 @@ sk:
 
 # 服务器配置
 server:
-  port: 8081
+  port: 8080

@@ -1,44 +1,11 @@
 services:
-  mysql:
-    image: mysql:8.0
-    container_name: sk-mysql
-    environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-Ppg123456}
-      MYSQL_DATABASE: seckill
-      TZ: Asia/Shanghai
-    ports:
-      - "3306:3306"
-    volumes:
-      - mysql-data:/var/lib/mysql
-      - ../../docs/sql/DML:/docker-entrypoint-initdb.d
-    command:
-      - --character-set-server=utf8mb4
-      - --collation-server=utf8mb4_general_ci
-      - --default-time-zone=+00:00
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-      interval: 30s
-      timeout: 10s
-      retries: 5
-    networks:
-      - sk-network
 
-  redis:
-    image: redis:7-alpine
-    container_name: sk-redis
-    ports:
-      - "6379:6379"
-    volumes:
-      - redis-data:/data
-    command: redis-server --appendonly yes
-    networks:
-      - sk-network
 
   sk-gateway:
     build:
-      context: ../../SK-gateway
+      context: ../SK-gateway
       dockerfile: Dockerfile
-    container_name: sk-gateway
+    container_name: SK-gateway
     ports:
       - "8080:8080"
     environment:
@@ -57,17 +24,17 @@ services:
 
   sk-user:
     build:
-      context: ../../SK-user/user-boot
+      context: ../SK-user/user-boot
       dockerfile: Dockerfile
-    container_name: sk-user
+    container_name: SK-user
     ports:
-      - "8082:8082"
+      - "8082:8080"
     environment:
-      - SPRING_PROFILES_ACTIVE=prod
-      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/seckill?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
-      - SPRING_DATASOURCE_USERNAME=root
-      - SPRING_DATASOURCE_PASSWORD=${MYSQL_ROOT_PASSWORD:-Ppg123456}
-      - SPRING_CLOUD_NACOS_DISCOVERY_ENABLED=false
+      - SPRING_DATASOURCE_URL=jdbc:mysql://${MYSQL_HOST}:${MYSQL_PORT}/${MYSQL_DATABASE}?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+      - SPRING_DATASOURCE_USERNAME=${MYSQL_USERNAME}
+      - SPRING_DATASOURCE_PASSWORD=${MYSQL_PASSWORD}
+      - SPRING_DATA_REDIS_HOST=${REDIS_HOST}
+      - SPRING_DATA_REDIS_PORT=${REDIS_PORT}
       - JAVA_OPTS=-Xmx256m -Xms256m -Duser.timezone=Asia/Shanghai
     depends_on:
       mysql:
@@ -78,17 +45,17 @@ services:
 
   sk-order:
     build:
-      context: ../../SK-order/order-boot
+      context: ../SK-order/order-boot
       dockerfile: Dockerfile
-    container_name: sk-order
+    container_name: SK-order
     ports:
-      - "8083:8083"
+      - "8083:8080"
     environment:
-      - SPRING_PROFILES_ACTIVE=prod
-      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/seckill?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
-      - SPRING_DATASOURCE_USERNAME=root
-      - SPRING_DATASOURCE_PASSWORD=${MYSQL_ROOT_PASSWORD:-Ppg123456}
-      - SPRING_CLOUD_NACOS_DISCOVERY_ENABLED=false
+      - SPRING_DATASOURCE_URL=jdbc:mysql://${MYSQL_HOST}:${MYSQL_PORT}/${MYSQL_DATABASE}?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+      - SPRING_DATASOURCE_USERNAME=${MYSQL_USERNAME}
+      - SPRING_DATASOURCE_PASSWORD=${MYSQL_PASSWORD}
+      - SPRING_DATA_REDIS_HOST=${REDIS_HOST}
+      - SPRING_DATA_REDIS_PORT=${REDIS_PORT}
       - JAVA_OPTS=-Xmx256m -Xms256m -Duser.timezone=Asia/Shanghai
     depends_on:
       mysql:
@@ -99,17 +66,17 @@ services:
 
   sk-core:
     build:
-      context: ../../SK-core/core-boot
+      context: ../SK-core/core-boot
       dockerfile: Dockerfile
-    container_name: sk-core
+    container_name: SK-core
     ports:
       - "8081:8080"
     environment:
-      - SPRING_PROFILES_ACTIVE=prod
-      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/seckill?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
-      - SPRING_DATASOURCE_USERNAME=root
-      - SPRING_DATASOURCE_PASSWORD=${MYSQL_ROOT_PASSWORD:-Ppg123456}
-      - SPRING_CLOUD_NACOS_DISCOVERY_ENABLED=false
+      - SPRING_DATASOURCE_URL=jdbc:mysql://${MYSQL_HOST}:${MYSQL_PORT}/${MYSQL_DATABASE}?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+      - SPRING_DATASOURCE_USERNAME=${MYSQL_USERNAME}
+      - SPRING_DATASOURCE_PASSWORD=${MYSQL_PASSWORD}
+      - SPRING_DATA_REDIS_HOST=${REDIS_HOST}
+      - SPRING_DATA_REDIS_PORT=${REDIS_PORT
       - JAVA_OPTS=-Xmx256m -Xms256m -Duser.timezone=Asia/Shanghai
     depends_on:
       mysql:
