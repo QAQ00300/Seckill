@@ -6,8 +6,9 @@ WORKDIR /app
 RUN apk add --no-cache tzdata
 
 # 复制 JAR 包
-ARG JAR_FILE=target/*.jar
-COPY ${JAR_FILE} app.jar
+# ARG JAR_FILE=target/*.jar
+# COPY ${JAR_FILE} app.jar
+COPY target/*.jar app.jar
 
 # 设置时区
 ENV TZ=Asia/Shanghai

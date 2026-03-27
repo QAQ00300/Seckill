@@ -8,3 +8,6 @@ docker stop nacos
 
 # 关闭所有容器
 docker stop $(docker ps -q)
+
+# 获取nacos启动参数
+echo -n "your-secret-key-here" | base64

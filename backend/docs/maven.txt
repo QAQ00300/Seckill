@@ -1,6 +1,13 @@
 # 1. 清理并重新打包
 cd D:\work\Seckill\backend
+
+# 跳过测试
+mvn clean package -pl user-service -am -DskipTests
 mvn clean package -DskipTests
+
+# 打包名为 user-service 的模块
+mvn clean package -pl user-service -am
+
 
 # 2. 验证 JAR 包生成
 ls SK-gateway/target/*.jar

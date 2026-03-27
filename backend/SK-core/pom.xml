@@ -51,6 +51,15 @@
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>flatten-maven-plugin</artifactId>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.3.0</version>
+                <configuration>
+                    <!-- 关键配置：将生成的JAR文件命名为 app.jar -->
+                    <finalName>SK-core</finalName>
+                </configuration>
+            </plugin>
 
         </plugins>
     </build>

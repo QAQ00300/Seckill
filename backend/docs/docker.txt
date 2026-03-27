@@ -1,7 +1,17 @@
 
-
 # 3. 启动 Docker
 docker-compose -f docker/docker-compose.prod.yml up -d --build
 
 # 4. 查看日志
 docker-compose -f docker/docker-compose.prod.yml logs -f
+
+
+
+
+# 创建导出目录
+mkdir C:\docker-export -Force
+
+# 导出 sk-gateway(路径\文件名\镜像文件)
+docker save -o C:\docker-export\docker-sk-gateway.tar docker-sk-gateway:latest
+
+docker save -o D:\work\Images\1.1\docker-sk-gateway.tar docker-sk-gateway:latest
