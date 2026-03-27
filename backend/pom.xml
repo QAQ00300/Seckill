@@ -12,7 +12,7 @@
     <description>SecKill Backend</description>
     <properties>
         <!-- 基本信息 -->
-        <revision>release-2.0.0</revision>
+        <revision>release-3.0.0</revision>
 
         <!-- Java版本 -->
         <java.version>17</java.version>
