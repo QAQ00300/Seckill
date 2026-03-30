@@ -15,7 +15,7 @@ public interface SeckillOrderClient {
     /**
      * 检查用户是否已参与秒杀
      */
-    @GetMapping("/api/order/seckill/check-participation")
+    @GetMapping("/api/order/seckill/query/check-participation")
     Result<Boolean> hasParticipated(
             @RequestParam("userId") Long userId,
             @RequestParam("seckillId") Long seckillId
@@ -24,7 +24,7 @@ public interface SeckillOrderClient {
     /**
      * 创建秒杀订单
      */
-    @PostMapping("/api/order/seckill/create")
+    @PostMapping("/api/order/seckill/mutation/create")
     Result<String> createOrder(
             @RequestBody SeckillOrderDTO orderDTO
     );

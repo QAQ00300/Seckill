@@ -1,9 +1,9 @@
 
 # 3. 启动 Docker
-docker-compose -f docker/docker-compose.prod.yml up -d --build
+docker-compose -f docker/docker-compose.yml up -d --build
 
 # 4. 查看日志
-docker-compose -f docker/docker-compose.prod.yml logs -f
+docker-compose -f docker/docker-compose.yml logs -f
 
 
 
