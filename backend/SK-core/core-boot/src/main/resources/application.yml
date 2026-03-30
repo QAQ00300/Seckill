@@ -20,7 +20,7 @@ spring:
         namespace: public
         group: DEFAULT_GROUP
     loadbalancer:
-      enabled: false
+      enabled: true
 
 # Feign 配置
 feign:

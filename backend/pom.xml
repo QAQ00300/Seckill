@@ -195,6 +195,13 @@
                 <version>${openfeign.version}</version>
             </dependency>
 
+            <!-- Spring Cloud LoadBalancer -->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-loadbalancer</artifactId>
+                <version>${loadbalancer.version}</version>
+            </dependency>
+
 
             <!-- ============ 第一阶段：基础微服务 ============ -->
             <!-- MySQL -->
