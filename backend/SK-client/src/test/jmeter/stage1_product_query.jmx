@@ -1,95 +1,114 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jmeterTestPlan version="1.2" properties="5.0">
   <hashTree>
-    <!-- 测试计划配置 -->
-    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="阶段1-商品查询性能测试">
-      <stringProp name="TestPlan.comments">测试基础架构下的商品查询性能</stringProp>
+    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Stage1 - Product Query Baseline" enabled="true">
+      <stringProp name="TestPlan.comments">Stage1: Basic Microservice Architecture Performance Baseline</stringProp>
       <boolProp name="TestPlan.functional_mode">false</boolProp>
-      <boolProp name="TestPlan.tearDown_on_shutdown">true</boolProp>
-
-      <!-- 用户定义的变量 -->
-      <elementProp name="TestPlan.user_defined_variables" elementType="Arguments">
-        <collectionProp name="Arguments.arguments">
-          <elementProp name="host" elementType="Argument">
-            <stringProp name="Argument.name">host</stringProp>
-            <stringProp name="Argument.value">localhost</stringProp>
-          </elementProp>
-          <elementProp name="port" elementType="Argument">
-            <stringProp name="Argument.name">port</stringProp>
-            <stringProp name="Argument.value">8080</stringProp>
-          </elementProp>
-          <elementProp name="stage" elementType="Argument">
-            <stringProp name="Argument.name">stage</stringProp>
-            <stringProp name="Argument.value">stage1</stringProp>
-          </elementProp>
-        </collectionProp>
-      </elementProp>
+      <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
+      <stringProp name="TestPlan.user_define_classpath"></stringProp>
+      <stringProp name="TestPlan.name">Stage1 - Product Query Baseline</stringProp>
     </TestPlan>
-
+    <hashTree/>
+    <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Product Query Thread Group" enabled="true">
+      <stringProp name="ThreadGroup.comments">100 concurrent users, ramp-up 10s, duration 60s</stringProp>
+      <elementProp name="ThreadGroup.main_controller" testclass="LoopController" guiclass="LoopControlPanel" testname="Loop Controller">
+        <boolProp name="LoopController.continue_forever">false</boolProp>
+        <stringProp name="LoopController.loops">-1</stringProp>
+      </elementProp>
+      <stringProp name="ThreadGroup.num_threads">100</stringProp>
+      <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+      <stringProp name="ThreadGroup.ramp_time">10</stringProp>
+      <boolProp name="ThreadGroup.scheduler">true</boolProp>
+      <stringProp name="ThreadGroup.duration">60</stringProp>
+      <stringProp name="ThreadGroup.delay"></stringProp>
+      <stringProp name="ThreadGroup.startup_delay"></stringProp>
+      <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
+      <stringProp name="ThreadGroup.name">Product Query Thread Group</stringProp>
+    </ThreadGroup>
     <hashTree>
-      <!-- 线程组：模拟100个并发用户 -->
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="商品查询并发测试">
-        <stringProp name="ThreadGroup.num_threads">100</stringProp>
-        <stringProp name="ThreadGroup.ramp_time">10</stringProp>
-        <boolProp name="ThreadGroup.scheduler">true</boolProp>
-        <stringProp name="ThreadGroup.duration">300</stringProp>
-        <elementProp name="ThreadGroup.main_controller" elementType="LoopController">
-          <boolProp name="LoopController.continue_forever">false</boolProp>
-          <stringProp name="LoopController.loops">-1</stringProp>
-        </elementProp>
-      </ThreadGroup>
-
-      <hashTree>
-        <!-- HTTP请求默认值 -->
-        <ConfigTestElement guiclass="HttpDefaultsGui" testclass="HttpRequestDefaults">
-          <stringProp name="HTTPSampler.domain">${host}</stringProp>
-          <stringProp name="HTTPSampler.port">${port}</stringProp>
-          <stringProp name="HTTPSampler.protocol">http</stringProp>
-          <stringProp name="HTTPSampler.contentEncoding">UTF-8</stringProp>
-        </ConfigTestElement>
-
-        <!-- HTTP头管理器 -->
-        <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager">
-          <collectionProp name="HeaderManager.headers">
-            <elementProp name="" elementType="Header">
-              <stringProp name="Header.name">Content-Type</stringProp>
-              <stringProp name="Header.value">application/json</stringProp>
-            </elementProp>
-            <elementProp name="" elementType="Header">
-              <stringProp name="Header.name">X-Stage</stringProp>
-              <stringProp name="Header.value">${stage}</stringProp>
-            </elementProp>
-            <elementProp name="" elementType="Header">
-              <stringProp name="Header.name">X-Test-Mode</stringProp>
-              <stringProp name="Header.value">true</stringProp>
-            </elementProp>
-          </collectionProp>
-        </HeaderManager>
-
-        <!-- HTTP请求：商品查询 -->
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="商品查询">
-          <stringProp name="HTTPSampler.path">/api/product/${__Random(1,100)}</stringProp>
-          <stringProp name="HTTPSampler.method">GET</stringProp>
-        </HTTPSamplerProxy>
-
-        <!-- 响应断言：检查响应头 -->
-        <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion">
-          <collectionProp name="Asserion.test_strings">
-            <stringProp>X-Response-Time</stringProp>
-            <stringProp>X-Stage</stringProp>
-          </collectionProp>
-        </ResponseAssertion>
-
-        <!-- 结果树查看器 -->
-        <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector">
-          <stringProp name="filename">results/stage1_product_query.jtl</stringProp>
-        </ResultCollector>
-
-        <!-- 聚合报告 -->
-        <ResultCollector guiclass="StatVisualizer" testclass="ResultCollector">
-          <stringProp name="filename">reports/stage1_product_query_report.csv</stringProp>
-        </ResultCollector>
-      </hashTree>
+      <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Product Query Request" enabled="true">
+        <stringProp name="HTTPSampler.domain">localhost</stringProp>
+        <stringProp name="HTTPSampler.port">8079</stringProp>
+        <stringProp name="HTTPSampler.path">/gateway/test/ping</stringProp>
+        <stringProp name="HTTPSampler.method">GET</stringProp>
+        <stringProp name="HTTPSampler.follow_redirects">true</stringProp>
+        <stringProp name="HTTPSampler.auto_redirects">false</stringProp>
+        <stringProp name="HTTPSampler.use_keepalive">true</stringProp>
+        <stringProp name="HTTPSampler.DO_MULTIPART_POST">false</stringProp>
+        <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+        <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+        <stringProp name="HTTPSampler.response_timeout"></stringProp>
+        <stringProp name="HTTPSampler.IPSourceType">0</stringProp>
+        <stringProp name="HTTPSampler.name">Product Query Request</stringProp>
+      </HTTPSamplerProxy>
+      <hashTree/>
+      <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Think Time" enabled="true">
+        <stringProp name="ConstantTimer.delay">100</stringProp>
+        <stringProp name="ConstantTimer.name">Think Time</stringProp>
+      </ConstantTimer>
+      <hashTree/>
     </hashTree>
+    <ResultCollector guiclass="SummaryReport" testclass="ResultCollector" testname="Summary Report" enabled="true">
+      <stringProp name="ResultCollector.filename"></stringProp>
+      <objProp>
+        <name>saveConfig</name>
+        <value class="SampleSaveConfiguration">
+          <time>true</time>
+          <latency>true</latency>
+          <timestamp>true</timestamp>
+          <success>true</success>
+          <label>true</label>
+          <code>true</code>
+          <message>true</message>
+          <threadName>true</threadName>
+          <dataType>false</dataType>
+          <encoding>false</encoding>
+          <assertions>true</assertions>
+          <subresults>false</subresults>
+          <responseData>false</responseData>
+          <samplerData>false</samplerData>
+          <xml>false</xml>
+          <fieldNames>true</fieldNames>
+          <responseHeaders>false</responseHeaders>
+          <requestHeaders>false</requestHeaders>
+          <threadCounts>true</threadCounts>
+          <idleTime>true</idleTime>
+          <connectTime>true</connectTime>
+        </value>
+      </objProp>
+      <stringProp name="filename"></stringProp>
+    </ResultCollector>
+    <hashTree/>
+    <ResultCollector guiclass="StatVisualizer" testclass="ResultCollector" testname="Aggregate Report" enabled="true">
+      <stringProp name="ResultCollector.filename"></stringProp>
+      <objProp>
+        <name>saveConfig</name>
+        <value class="SampleSaveConfiguration">
+          <time>true</time>
+          <latency>true</latency>
+          <timestamp>true</timestamp>
+          <success>true</success>
+          <label>true</label>
+          <code>true</code>
+          <message>true</message>
+          <threadName>true</threadName>
+          <dataType>false</dataType>
+          <encoding>false</encoding>
+          <assertions>true</assertions>
+          <subresults>false</subresults>
+          <responseData>false</responseData>
+          <samplerData>false</samplerData>
+          <xml>false</xml>
+          <fieldNames>true</fieldNames>
+          <responseHeaders>false</responseHeaders>
+          <requestHeaders>false</requestHeaders>
+          <threadCounts>true</threadCounts>
+          <idleTime>true</idleTime>
+          <connectTime>true</connectTime>
+        </value>
+      </objProp>
+      <stringProp name="filename"></stringProp>
+    </ResultCollector>
+    <hashTree/>
   </hashTree>
 </jmeterTestPlan>

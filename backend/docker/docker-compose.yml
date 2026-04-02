@@ -1,34 +1,87 @@
 services:
 
-  # ========== Nacos 服务发现与配置中心 ==========
-  nacos:
-    image: nacos/nacos-server:v2.2.0
-    container_name: nacos
+  # ========== MySQL 8.4.5 ==========
+  mysql:
+    image: mysql:8.4.5
+    container_name: sk-mysql
     environment:
-      # 单机模式运行（适合开发和测试）
-      - MODE=standalone
-      # 使用内嵌 Derby 数据库存储配置（无需额外 MySQL）
-      - SPRING_DATASOURCE_PLATFORM=derby
-      # JVM 内存配置
-      - JAVA_OPTS=-Xms256m -Xmx256m -Xmn128m
+      MYSQL_ROOT_PASSWORD: Ppg123456
+      MYSQL_DATABASE: seckill
+      MYSQL_CHARACTER_SET_SERVER: utf8mb4
+      MYSQL_COLLATION_SERVER: utf8mb4_unicode_ci
+      TZ: Asia/Shanghai
     ports:
-      # Nacos 控制台访问端口
-      - "8848:8848"
-      # gRPC 通信端口（Nacos 2.x 需要）
+      - "3305:3305"
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./mysql/conf:/etc/mysql/conf.d
+      - ./mysql/init:/docker-entrypoint-initdb.d
+    networks:
+      - sk-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+
+  # ========== Redis 7.4.8 ==========
+  redis:
+    image: redis:7.4.8
+    container_name: sk-redis
+    command: redis-server --appendonly yes --requirepass Ppg123456
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+      - ./redis/conf:/usr/local/etc/redis
+    networks:
+      - sk-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "Ppg123456", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  # ========== Nacos v3.1.1 ==========
+  nacos:
+    image: nacos/nacos-server:v3.1.1
+    container_name: sk-nacos
+    environment:
+      # 运行模式：standalone (单机) / cluster (集群)
+      - MODE=standalone
+      - JVM_XMS=256m
+      - JVM_XMX=256m
+      - NACOS_AUTH_ENABLE=false
+      - NACOS_AUTH_TOKEN=c2VjcmV0a2V5c2VjcmV0a2V5c2VjcmV0a2V5c2VjcmV0a2V5c2VjcmV0a2V5
+      - NACOS_AUTH_IDENTITY_KEY=seckill2026
+      - NACOS_AUTH_IDENTITY_VALUE=seckill2026
+      # 日志配置
+      - LOG_LEVEL=WARN
+      - SERVER_SERVLET_CONTEXT_PATH=/nacos
+    ports:
+      # Nacos 控制台 HTTP 端口
+      - "8848:8080"
+      # Nacos 2.x gRPC 端口（必须开放）
       - "9848:9848"
+      # Nacos 2.x gRPC 同步端口（可选）
       - "9849:9849"
     volumes:
-      # 持久化 Nacos 数据
+      # 持久化 Nacos 数据（配置、服务注册信息）
       - nacos-data:/home/nacos/data
     networks:
       - sk-network
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8848/nacos/actuator/health"]
+      test: ["CMD-SHELL", "curl -f http://localhost:8848/nacos/v1/console/health/readiness || exit 1"]
       interval: 30s
       timeout: 10s
       retries: 3
       start_period: 60s
+
+
 
   sk-gateway:
     build:
@@ -36,19 +89,28 @@ services:
       dockerfile: Dockerfile
     container_name: SK-gateway
     ports:
-      - "8080:8080"
+      - "8079:8079"
+    env_file:
+      - dev.env
     environment:
       - SPRING_PROFILES_ACTIVE=prod
-      - SPRING_CLOUD_NACOS_DISCOVERY_SERVER_ADDR=host.docker.internal:8848
-      - SPRING_CLOUD_NACOS_CONFIG_SERVER_ADDR=host.docker.internal:8848
-      - SPRING_DATASOURCE_REDIS_HOST=redis
-      - SPRING_DATASOURCE_REDIS_PORT=6379
+      - SPRING_CLOUD_NACOS_DISCOVERY_SERVER_ADDR=nacos:8848
+      - SPRING_CLOUD_NACOS_CONFIG_SERVER_ADDR=nacos:8848
+      - SPRING_DATASOURCE_REDIS_HOST=${REDIS_HOST}
+      - SPRING_DATASOURCE_REDIS_PORT=${REDIS_PORT}
+      - SPRING_DATASOURCE_REDIS_PASSWORD=${REDIS_PASSWORD:-Ppg123456}
       - JAVA_OPTS=-Xmx256m -Xms256m -Duser.timezone=Asia/Shanghai
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
     networks:
       - sk-network
     restart: unless-stopped
+    depends_on:
+      mysql:
+        condition: service_healthy
+      nacos:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
 
   sk-user:
     build:
@@ -57,20 +119,24 @@ services:
     container_name: SK-user
     ports:
       - "8082:8080"
+    env_file:
+      - dev.env
     environment:
-      - SPRING_CLOUD_NACOS_DISCOVERY_SERVER_ADDR=host.docker.internal:8848
-      - SPRING_CLOUD_NACOS_CONFIG_SERVER_ADDR=host.docker.internal:8848
+      - SPRING_CLOUD_NACOS_DISCOVERY_SERVER_ADDR=nacos:8848
+      - SPRING_CLOUD_NACOS_CONFIG_SERVER_ADDR=nacos:8848
       - SPRING_DATASOURCE_URL=jdbc:mysql://${MYSQL_HOST:-mysql}:${MYSQL_PORT:-3306}/${MYSQL_DATABASE}?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
       - SPRING_DATASOURCE_USERNAME=${MYSQL_USERNAME}
       - SPRING_DATASOURCE_PASSWORD=${MYSQL_PASSWORD}
-      - SPRING_DATA_REDIS_HOST=${REDIS_HOST:-redis}
-      - SPRING_DATA_REDIS_PORT=${REDIS_PORT}
       - JAVA_OPTS=-Xmx256m -Xms256m -Duser.timezone=Asia/Shanghai
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
     networks:
       - sk-network
     restart: unless-stopped
+    depends_on:
+      mysql:
+        condition: service_healthy
+      nacos:
+        condition: service_healthy
+
 
   sk-order:
     build:
@@ -79,20 +145,24 @@ services:
     container_name: SK-order
     ports:
       - "8083:8080"
+    env_file:
+      - dev.env
     environment:
-      - SPRING_CLOUD_NACOS_DISCOVERY_SERVER_ADDR=host.docker.internal:8848
-      - SPRING_CLOUD_NACOS_CONFIG_SERVER_ADDR=host.docker.internal:8848
+      - SPRING_CLOUD_NACOS_DISCOVERY_SERVER_ADDR=nacos:8848
+      - SPRING_CLOUD_NACOS_CONFIG_SERVER_ADDR=nacos:8848
       - SPRING_DATASOURCE_URL=jdbc:mysql://${MYSQL_HOST:-mysql}:${MYSQL_PORT:-3306}/${MYSQL_DATABASE}?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
       - SPRING_DATASOURCE_USERNAME=${MYSQL_USERNAME}
       - SPRING_DATASOURCE_PASSWORD=${MYSQL_PASSWORD}
-      - SPRING_DATA_REDIS_HOST=${REDIS_HOST:-redis}
-      - SPRING_DATA_REDIS_PORT=${REDIS_PORT}
       - JAVA_OPTS=-Xmx256m -Xms256m -Duser.timezone=Asia/Shanghai
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
     networks:
       - sk-network
     restart: unless-stopped
+    depends_on:
+      mysql:
+        condition: service_healthy
+      nacos:
+        condition: service_healthy
+
 
   sk-core:
     build:
@@ -101,24 +171,32 @@ services:
     container_name: SK-core
     ports:
       - "8081:8080"
+    env_file:
+      - dev.env
     environment:
-      - SPRING_CLOUD_NACOS_DISCOVERY_SERVER_ADDR=host.docker.internal:8848
-      - SPRING_CLOUD_NACOS_CONFIG_SERVER_ADDR=host.docker.internal:8848
+      - SPRING_CLOUD_NACOS_DISCOVERY_SERVER_ADDR=nacos:8848
+      - SPRING_CLOUD_NACOS_CONFIG_SERVER_ADDR=nacos:8848
       - SPRING_DATASOURCE_URL=jdbc:mysql://${MYSQL_HOST:-mysql}:${MYSQL_PORT:-3306}/${MYSQL_DATABASE}?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
       - SPRING_DATASOURCE_USERNAME=${MYSQL_USERNAME}
       - SPRING_DATASOURCE_PASSWORD=${MYSQL_PASSWORD}
-      - SPRING_DATA_REDIS_HOST=${REDIS_HOST:-redis}
-      - SPRING_DATA_REDIS_PORT=${REDIS_PORT}
       - JAVA_OPTS=-Xmx256m -Xms256m -Duser.timezone=Asia/Shanghai
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
     networks:
       - sk-network
     restart: unless-stopped
+    depends_on:
+      mysql:
+        condition: service_healthy
+      nacos:
+        condition: service_healthy
+
 
 networks:
   sk-network:
     driver: bridge
 volumes:
   nacos-data:
+    driver: local
+  redis-data:
+    driver: local
+  mysql-data:
     driver: local
