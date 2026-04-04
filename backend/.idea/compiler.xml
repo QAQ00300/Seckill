@@ -14,75 +14,44 @@
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="false">
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.42/lombok-1.18.42.jar" />
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.42/lombok-1.18.42.jar" />
         </processorPath>
-        <module name="user-boot" />
+        <module name="core-boot" />
         <module name="order-biz" />
+        <module name="SK-gateway" />
         <module name="order-constant" />
         <module name="user-ao" />
+        <module name="core-stock" />
         <module name="user-constant" />
+        <module name="core-cache" />
         <module name="order-api" />
+        <module name="core-seckill" />
         <module name="user-api" />
+        <module name="core-mq" />
         <module name="user-bo" />
         <module name="order-ao" />
-        <module name="order-boot" />
         <module name="order-bo" />
         <module name="user-biz" />
         <module name="SK-common" />
       </profile>
-      <profile name="Annotation profile for core-boot" enabled="true">
+      <profile name="Annotation profile for order-boot" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="false">
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.42/lombok-1.18.42.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.42/lombok-1.18.42.jar" />
         </processorPath>
-        <module name="core-boot" />
+        <module name="order-boot" />
       </profile>
-      <profile name="Annotation profile for core-cache" enabled="true">
+      <profile name="Annotation profile for user-boot" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="false">
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.42/lombok-1.18.42.jar" />
-        </processorPath>
-        <module name="core-cache" />
-      </profile>
-      <profile name="Annotation profile for core-mq" enabled="true">
-        <sourceOutputDir name="target/generated-sources/annotations" />
-        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <processorPath useClasspath="false">
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.42/lombok-1.18.42.jar" />
         </processorPath>
-        <module name="core-mq" />
-      </profile>
-      <profile name="Annotation profile for core-seckill" enabled="true">
-        <sourceOutputDir name="target/generated-sources/annotations" />
-        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <processorPath useClasspath="false">
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.42/lombok-1.18.42.jar" />
-        </processorPath>
-        <module name="core-seckill" />
-      </profile>
-      <profile name="Annotation profile for core-stock" enabled="true">
-        <sourceOutputDir name="target/generated-sources/annotations" />
-        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <processorPath useClasspath="false">
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.42/lombok-1.18.42.jar" />
-        </processorPath>
-        <module name="core-stock" />
-      </profile>
-      <profile name="Annotation profile for SK-gateway" enabled="true">
-        <sourceOutputDir name="target/generated-sources/annotations" />
-        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <processorPath useClasspath="false">
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.42/lombok-1.18.42.jar" />
-        </processorPath>
-        <module name="SK-gateway" />
+        <module name="user-boot" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>

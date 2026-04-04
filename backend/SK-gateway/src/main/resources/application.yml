@@ -2,37 +2,22 @@ server:
   port: 8079
 
 spring:
+  application:
+    name: SK-gateway
   profiles:
     active: stage1  # 默认阶段1
-  config:
-    import: optional:nacos:sk-gateway.yaml
 
   # Redis配置（用于限流）
   data:
     redis:
-      host: redis
+      host: 127.0.0.1
       port: 6379
+      password: Ppg123456
       database: 0
       timeout: 3000
 
 
   cloud:
-    nacos:
-      discovery:
-        server-addr: nacos:8848
-        namespace: public
-        group: DEFAULT_GROUP
-
-      config:
-        server-addr: nacos:8848
-        file-extension: yaml
-        namespace: public
-        group: DEFAULT_GROUP
-        prefix: SK-gateway
-        refresh-enabled: true
-        import-check:
-          enabled: false
-
     gateway:
       # 全局超时配置
       httpclient:
@@ -56,7 +41,7 @@ spring:
 
         # 用户服务路由 - 按请求类型分离
         - id: SK-user-query
-          uri: lb://sk-user
+          uri: http://localhost:8081
           predicates: Path=/api/user/query/**
           filters:
             - name: RequestRateLimiter
@@ -66,7 +51,7 @@ spring:
             - StripPrefix=2
 
         - id: SK-user-mutation
-          uri: lb://sk-user
+          uri: http://localhost:8081
           predicates: Path=/api/user/mutation/**
           filters:
             - name: RequestRateLimiter
@@ -77,33 +62,33 @@ spring:
 
         # 订单服务路由 - 按请求类型分离
         - id: SK-order-query
-          uri: lb://sk-order
+          uri: http://localhost:8080
           predicates: Path=/api/order/query/**
           filters:
             - StripPrefix=2
 
         - id: SK-order-mutation
-          uri: lb://sk-order
+          uri: http://localhost:8080
           predicates: Path=/api/order/mutation/**
           filters:
             - StripPrefix=2
 
         # 秒杀订单服务路由 - 按请求类型分离
         - id: SK-seckill-order-query
-          uri: lb://sk-order
+          uri: http://localhost:8080
           predicates: Path=/api/order/seckill/query/**
           filters:
             - StripPrefix=3
 
         - id: SK-seckill-order-mutation
-          uri: lb://sk-order
+          uri: http://localhost:8080
           predicates: Path=/api/order/seckill/mutation/**
           filters:
             - StripPrefix=3
 
         # 秒杀核心服务路由
         - id: SK-core
-          uri: lb://sk-core
+          uri: http://localhost:8082
           predicates: Path=/api/core/**
           filters:
             - name: RequestRateLimiter
@@ -114,11 +99,14 @@ spring:
 
 
 
+
 # 日志配置
 logging:
   level:
     com.sk.gateway: INFO
     org.springframework.cloud.gateway: INFO
+    com.alibaba.cloud.nacos: DEBUG
+    com.alibaba.nacos: DEBUG
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
   file:
@@ -139,53 +127,53 @@ management:
       show-details: always
 
 # Resilience4j 配置
-resilience4j:
-  circuitbreaker:
-    configs:
-      default:
-        # 滑动窗口大小（统计最近 10 次调用）
-        slidingWindowSize: 10
-        # 最小调用次数（达到 5 次才开始统计）
-        minimumNumberOfCalls: 5
-        # 失败率阈值（超过 50% 失败率则熔断）
-        failureRateThreshold: 50
-        # 熔断后等待 10 秒自动进入半开状态
-        waitDurationInOpenState: 10s
-        # 半开状态允许通过的请求数
-        permittedNumberOfCallsInHalfOpenState: 3
-        # 自动从半开状态过渡到关闭状态
-        automaticTransitionFromOpenToHalfOpenEnabled: true
-        # 记录哪些异常
-        recordExceptions:
-          - java.io.IOException
-          - java.util.concurrent.TimeoutException
-          - org.springframework.web.reactive.function.client.WebClientException
-    instances:
-      userCircuitBreaker:
-        baseConfig: default
-      orderCircuitBreaker:
-        baseConfig: default
-      seckillCircuitBreaker:
-        baseConfig: default
-        # 秒杀服务更严格：30% 失败率就熔断
-        failureRateThreshold: 30
-        # 更快恢复：5 秒后就尝试
-        waitDurationInOpenState: 5s
-
-  timelimiter:
-    configs:
-      default:
-        # 默认超时时间 3 秒
-        timeoutDuration: 3s
-    instances:
-      userCircuitBreaker:
-        baseConfig: default
-      orderCircuitBreaker:
-        baseConfig: default
-      seckillCircuitBreaker:
-        baseConfig: default
-        # 秒杀服务超时更短：2 秒
-        timeoutDuration: 2s
+#resilience4j:
+#  circuitbreaker:
+#    configs:
+#      default:
+#        # 滑动窗口大小（统计最近 10 次调用）
+#        slidingWindowSize: 10
+#        # 最小调用次数（达到 5 次才开始统计）
+#        minimumNumberOfCalls: 5
+#        # 失败率阈值（超过 50% 失败率则熔断）
+#        failureRateThreshold: 50
+#        # 熔断后等待 10 秒自动进入半开状态
+#        waitDurationInOpenState: 10s
+#        # 半开状态允许通过的请求数
+#        permittedNumberOfCallsInHalfOpenState: 3
+#        # 自动从半开状态过渡到关闭状态
+#        automaticTransitionFromOpenToHalfOpenEnabled: true
+#        # 记录哪些异常
+#        recordExceptions:
+#          - java.io.IOException
+#          - java.util.concurrent.TimeoutException
+#          - org.springframework.web.reactive.function.client.WebClientException
+#    instances:
+#      userCircuitBreaker:
+#        baseConfig: default
+#      orderCircuitBreaker:
+#        baseConfig: default
+#      seckillCircuitBreaker:
+#        baseConfig: default
+#        # 秒杀服务更严格：30% 失败率就熔断
+#        failureRateThreshold: 30
+#        # 更快恢复：5 秒后就尝试
+#        waitDurationInOpenState: 5s
+#
+#  timelimiter:
+#    configs:
+#      default:
+#        # 默认超时时间 3 秒
+#        timeoutDuration: 3s
+#    instances:
+#      userCircuitBreaker:
+#        baseConfig: default
+#      orderCircuitBreaker:
+#        baseConfig: default
+#      seckillCircuitBreaker:
+#        baseConfig: default
+#        # 秒杀服务超时更短：2 秒
+#        timeoutDuration: 2s
 
 
 # 网关自定义配置

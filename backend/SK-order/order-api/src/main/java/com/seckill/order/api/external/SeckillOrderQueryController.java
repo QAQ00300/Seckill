@@ -19,13 +19,15 @@ public class SeckillOrderQueryController {
     private final SeckillOrderService seckillOrderService;
 
     @GetMapping("/check-participation")
-    @Operation(summary = "检查用户是否已参与秒杀", description = "检查用户是否已参与指定秒杀活动")
+    @Operation(summary = "检查用户是否可参与秒杀", description = "返回 true 表示可参与，false 表示已参与过")
     public Result<Boolean> checkParticipation(
             @Parameter(description = "用户 ID") @RequestParam Long userId,
             @Parameter(description = "秒杀 ID") @RequestParam Long seckillId) {
         try {
+            // 查询是否已参与
             boolean participated = seckillOrderService.hasParticipated(userId, seckillId);
-            return Result.success(participated);
+            // 返回相反值：未参与过=true(可参与)，已参与过=false(不可参与)
+            return Result.success(!participated);
         } catch (Exception e) {
             log.error("检查用户参与状态失败：userId={}, seckillId={}", userId, seckillId, e);
             return Result.error(500, "检查失败：" + e.getMessage());

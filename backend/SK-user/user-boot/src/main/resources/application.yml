@@ -3,22 +3,10 @@ spring:
     name: SK-user
 
   datasource:
-    url: jdbc:mysql://localhost:3306/seckill?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://localhost:3305/seckill?useUnicode=true&characterEncoding=utf8&allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=GMT%2B8
     username: root
     password: Ppg123456
     driver-class-name: com.mysql.cj.jdbc.Driver
-    druid:
-      min-idle: 5
-      max-active: 20
-      max-wait: 10000
-
-  # Nacos 配置（如果需要）
-  cloud:
-    nacos:
-      discovery:
-        server-addr: 127.0.0.1:8848
-        namespace: public
-        group: DEFAULT_GROUP
 
 # MyBatis-Plus 配置
 mybatis-plus:
@@ -29,5 +17,5 @@ mybatis-plus:
 
 # 服务器配置
 server:
-  port: 8080
+  port: 8081
 

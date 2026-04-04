@@ -21,16 +21,17 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
 
         <!-- Spring相关版本 -->
-        <spring-boot.version>3.1.5</spring-boot.version>
+        <spring-boot.version>3.5.12</spring-boot.version>
         <spring-boot-maven.version>3.3.9</spring-boot-maven.version>
-        <spring-cloud.version>2022.0.4</spring-cloud.version>
-        <spring-cloud-alibaba.version>2022.0.0.0</spring-cloud-alibaba.version>
+        <spring-cloud.version>2025.0.1</spring-cloud.version>
+        <spring-cloud-alibaba.version>2025.0.0.0</spring-cloud-alibaba.version>
+
+        <gateway-server.version>4.3.2</gateway-server.version>
 
 
 
         <!--其他-->
         <springfox.version>3.0.0</springfox.version>
-        <spring-tx.version>5.3.25</spring-tx.version>
         <jakarta.validation.version>3.0.2</jakarta.validation.version>
         <openfeign.version>4.0.6</openfeign.version>
         <loadbalancer.version>4.0.5</loadbalancer.version>
@@ -42,7 +43,7 @@
 
         <!-- 数据库 -->
         <mysql.version>8.0.33</mysql.version>
-        <mybatis-plus.version>3.5.4.1</mybatis-plus.version>
+        <mybatis-plus.version>3.5.5</mybatis-plus.version>
         <druid.version>1.2.18</druid.version>
 
         <!-- Redis -->
@@ -109,6 +110,16 @@
                 <version>${spring-boot.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-gateway-server</artifactId>
+                <version>${gateway-server.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-gateway-server-webflux</artifactId>
+                <version>${gateway-server.version}</version>
+            </dependency>
 
             <!-- 1. WebFlux - 提供响应式编程支持（必须保留） -->
             <dependency>
@@ -174,12 +185,6 @@
                 <groupId>io.springfox</groupId>
                 <artifactId>springfox-boot-starter</artifactId>
                 <version>${springfox.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-tx</artifactId>
-                <version>${spring-tx.version}</version>
             </dependency>
 
             <dependency>

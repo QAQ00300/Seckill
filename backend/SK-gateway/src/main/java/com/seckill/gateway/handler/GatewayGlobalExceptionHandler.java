@@ -51,9 +51,9 @@ public class GatewayGlobalExceptionHandler implements ErrorWebExceptionHandler {
             return HttpStatus.NOT_FOUND;
         }
 
-        if (isRedisException(ex)) {
-            return HttpStatus.SERVICE_UNAVAILABLE;
-        }
+//        if (isRedisException(ex)) {
+//            return HttpStatus.SERVICE_UNAVAILABLE;
+//        }
 
         if (ex instanceof java.net.ConnectException ||
                 isConnectionException(ex)) {
@@ -78,9 +78,9 @@ public class GatewayGlobalExceptionHandler implements ErrorWebExceptionHandler {
             return "服务未找到";
         }
 
-        if (isRedisException(ex)) {
-            return "缓存服务不可用";
-        }
+//        if (isRedisException(ex)) {
+//            return "缓存服务不可用";
+//        }
 
         if (ex instanceof java.net.ConnectException ||
                 isConnectionException(ex)) {

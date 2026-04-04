@@ -7,15 +7,9 @@
   <version>release-1.0.0</version>
   <dependencies>
     <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter</artifactId>
-      <version>3.1.5</version>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
       <groupId>org.springframework.cloud</groupId>
-      <artifactId>spring-cloud-starter-gateway</artifactId>
-      <version>4.0.7</version>
+      <artifactId>spring-cloud-gateway-server-webflux</artifactId>
+      <version>4.3.2</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
@@ -27,19 +21,7 @@
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-actuator</artifactId>
-      <version>3.1.5</version>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.alibaba.cloud</groupId>
-      <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
-      <version>2022.0.0.0</version>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.alibaba.cloud</groupId>
-      <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
-      <version>2022.0.0.0</version>
+      <version>3.5.12</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
@@ -51,13 +33,13 @@
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-data-redis</artifactId>
-      <version>3.1.5</version>
+      <version>3.5.12</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-webflux</artifactId>
-      <version>3.1.5</version>
+      <version>3.5.12</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
@@ -71,6 +53,12 @@
       <artifactId>lombok</artifactId>
       <version>1.18.42</version>
       <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-tx</artifactId>
+      <version>6.2.17</version>
+      <scope>compile</scope>
     </dependency>
   </dependencies>
 </project>

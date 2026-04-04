@@ -49,12 +49,12 @@ public class SeckillServiceImpl implements SeckillService {
             SeckillActivity activity = validateSeckill(request.getSeckillId());
 
             // 3. 验证用户资格（Feign 远程调用，不在事务内）
-            Result<Boolean> checkResult = seckillOrderClient.hasParticipated(
+            Result<Boolean> canParticipateResult = seckillOrderClient.canParticipate(
                     request.getUserId(),
                     request.getSeckillId()
             );
 
-            if (!checkResult.isSuccess() || Boolean.TRUE.equals(checkResult.getData())) {
+            if (!canParticipateResult.isSuccess() || Boolean.FALSE.equals(canParticipateResult.getData())) {
                 throw new SeckillException(400, "您已参加过该秒杀活动");
             }
 

@@ -1,15 +1,32 @@
 
-# 3. 启动 Docker
+cd D:\work\Seckill\backend\SK-client\src\test\jmeter
+
+# 打包
+mvn clean package -am -DskipTests
+
+# 停止
+docker-compose -f docker/docker-compose.yml stop
+
+# 删除并停止
+docker-compose -f docker/docker-compose.yml down
+
+# 重新启动微服务
+docker-compose up -d
+
+# 构造并启动 Docker
 docker-compose -f docker/docker-compose.yml up -d --build
 
-# 4. 查看日志
+
+#查看容器信息
+docker ps --format "table {{.Names}}`t{{.Networks}}"
+
+#拉取中间件进网络
+docker network connect docker_sk-network 1Panel-mysql-JS9J
+docker network connect docker_sk-network 1Panel-redis-9CqK
+docker network connect docker_sk-network 1Panel-nacos-1742-standalone
+
+# 查看日志
 docker-compose -f docker/docker-compose.yml logs -f
-
-
-
-
-# 创建导出目录
-mkdir C:\docker-export -Force
 
 # 导出 sk-gateway(路径\文件名\镜像文件)
 docker save -o C:\docker-export\docker-sk-gateway.tar docker-sk-gateway:latest

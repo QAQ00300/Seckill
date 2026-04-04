@@ -16,7 +16,7 @@ public interface SeckillOrderClient {
      * 检查用户是否已参与秒杀
      */
     @GetMapping("/api/order/seckill/query/check-participation")
-    Result<Boolean> hasParticipated(
+    Result<Boolean> canParticipate(
             @RequestParam("userId") Long userId,
             @RequestParam("seckillId") Long seckillId
     );
