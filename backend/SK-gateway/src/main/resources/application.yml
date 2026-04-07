@@ -10,7 +10,7 @@ spring:
   # Redis配置（用于限流）
   data:
     redis:
-      host: 127.0.0.1
+      host: 1Panel-redis-9CqK
       port: 6379
       password: Ppg123456
       database: 0
@@ -19,83 +19,85 @@ spring:
 
   cloud:
     gateway:
-      # 全局超时配置
-      httpclient:
-        connect-timeout: 3000
-        response-timeout: 5000
-        pool:
-          type: elastic
-          max-connections: 1000
-          max-idle-time: 30000
+      server:
+        webflux:
+          # 全局超时配置
+          httpclient:
+            connect-timeout: 3000
+            response-timeout: 5000
+            pool:
+              type: elastic
+              max-connections: 1000
+              max-idle-time: 30000
 
-      # 路由配置
-      routes:
-        # 网关管理接口
-        - id: gateway-query
-          uri: no://op
-          predicates: Path=/gateway/query/**
+          # 路由配置
+          routes:
+            # 网关管理接口
+            - id: gateway-query
+              uri: no://op
+              predicates: Path=/gateway/query/**
 
-        - id: gateway-mutation
-          uri: no://op
-          predicates: Path=/gateway/mutation/**
+            - id: gateway-mutation
+              uri: no://op
+              predicates: Path=/gateway/mutation/**
 
-        # 用户服务路由 - 按请求类型分离
-        - id: SK-user-query
-          uri: http://localhost:8081
-          predicates: Path=/api/user/query/**
-          filters:
-            - name: RequestRateLimiter
-              args:
-                redis-rate-limiter.replenishRate: 1000
-                redis-rate-limiter.burstCapacity: 2000
-            - StripPrefix=2
+            # 用户服务路由 - 按请求类型分离
+            - id: SK-user-query
+              uri: http://localhost:8082
+              predicates: Path=/api/user/query/**
+              filters:
+                - name: RequestRateLimiter
+                  args:
+                    redis-rate-limiter.replenishRate: 1000
+                    redis-rate-limiter.burstCapacity: 2000
+                - StripPrefix=2
 
-        - id: SK-user-mutation
-          uri: http://localhost:8081
-          predicates: Path=/api/user/mutation/**
-          filters:
-            - name: RequestRateLimiter
-              args:
-                redis-rate-limiter.replenishRate: 500
-                redis-rate-limiter.burstCapacity: 1000
-            - StripPrefix=2
+            - id: SK-user-mutation
+              uri: http://localhost:8082
+              predicates: Path=/api/user/mutation/**
+              filters:
+                - name: RequestRateLimiter
+                  args:
+                    redis-rate-limiter.replenishRate: 500
+                    redis-rate-limiter.burstCapacity: 1000
+                - StripPrefix=2
 
-        # 订单服务路由 - 按请求类型分离
-        - id: SK-order-query
-          uri: http://localhost:8080
-          predicates: Path=/api/order/query/**
-          filters:
-            - StripPrefix=2
+            # 订单服务路由 - 按请求类型分离
+            - id: SK-order-query
+              uri: http://localhost:8083
+              predicates: Path=/api/order/query/**
+              filters:
+                - StripPrefix=2
 
-        - id: SK-order-mutation
-          uri: http://localhost:8080
-          predicates: Path=/api/order/mutation/**
-          filters:
-            - StripPrefix=2
+            - id: SK-order-mutation
+              uri: http://localhost:8083
+              predicates: Path=/api/order/mutation/**
+              filters:
+                - StripPrefix=2
 
-        # 秒杀订单服务路由 - 按请求类型分离
-        - id: SK-seckill-order-query
-          uri: http://localhost:8080
-          predicates: Path=/api/order/seckill/query/**
-          filters:
-            - StripPrefix=3
+            # 秒杀订单服务路由 - 按请求类型分离
+            - id: SK-seckill-order-query
+              uri: http://localhost:8083
+              predicates: Path=/api/order/seckill/query/**
+              filters:
+                - StripPrefix=3
 
-        - id: SK-seckill-order-mutation
-          uri: http://localhost:8080
-          predicates: Path=/api/order/seckill/mutation/**
-          filters:
-            - StripPrefix=3
+            - id: SK-seckill-order-mutation
+              uri: http://localhost:8083
+              predicates: Path=/api/order/seckill/mutation/**
+              filters:
+                - StripPrefix=3
 
-        # 秒杀核心服务路由
-        - id: SK-core
-          uri: http://localhost:8082
-          predicates: Path=/api/core/**
-          filters:
-            - name: RequestRateLimiter
-              args:
-                redis-rate-limiter.replenishRate: 500
-                redis-rate-limiter.burstCapacity: 1000
-            - StripPrefix=1
+            # 秒杀核心服务路由
+            - id: SK-core
+              uri: http://localhost:8081
+              predicates: Path=/api/core/**
+              filters:
+                - name: RequestRateLimiter
+                  args:
+                    redis-rate-limiter.replenishRate: 500
+                    redis-rate-limiter.burstCapacity: 1000
+                - StripPrefix=1
 
 
 
@@ -103,16 +105,18 @@ spring:
 # 日志配置
 logging:
   level:
-    com.sk.gateway: INFO
+    com.seckill.gateway: INFO
     org.springframework.cloud.gateway: INFO
     com.alibaba.cloud.nacos: DEBUG
     com.alibaba.nacos: DEBUG
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
+  logback:
+    rollingpolicy:
+      max-file-size: 100MB
+      max-history: 7
   file:
     name: logs/gateway.log
-    max-size: 100MB
-    max-history: 7
 
 # 监控配置
 management:
@@ -122,7 +126,7 @@ management:
         include: health,info,metrics,gateway
   endpoint:
     gateway:
-      enabled: true
+      access: read_only
     health:
       show-details: always
 

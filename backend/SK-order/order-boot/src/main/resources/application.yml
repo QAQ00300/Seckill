@@ -3,7 +3,7 @@ spring:
     name: SK-order
 
   datasource:
-    url: jdbc:mysql://localhost:3305/seckill?useUnicode=true&characterEncoding=utf8&allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=GMT%2B8
+    url: jdbc:mysql://1Panel-mysql-JS9J:3306/seckill?useUnicode=true&characterEncoding=utf8&allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=GMT%2B8
     username: root
     password: Ppg123456
     driver-class-name: com.mysql.cj.jdbc.Driver

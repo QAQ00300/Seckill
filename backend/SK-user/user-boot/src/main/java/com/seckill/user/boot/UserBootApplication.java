@@ -1,11 +1,13 @@
 package com.seckill.user.boot;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan(basePackages = {"com.seckill.user.boot"})
+@ComponentScan(basePackages = {"com.seckill.user"})
+@MapperScan("com.seckill.user.biz.mapper")
 public class UserBootApplication {
 
     public static void main(String[] args) {

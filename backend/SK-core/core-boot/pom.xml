@@ -73,6 +73,7 @@
                 <configuration>
                     <mainClass>com.seckill.core.boot.CoreApplication</mainClass>
                     <executable>true</executable>
+                    <finalName>SK-core</finalName>
                 </configuration>
                 <executions>
                     <execution>

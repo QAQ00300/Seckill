@@ -2,9 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/SK-client/SK-client.iml" filepath="$PROJECT_DIR$/SK-client/SK-client.iml" />
-      <module fileurl="file://$PROJECT_DIR$/SK-common/SK-common.iml" filepath="$PROJECT_DIR$/SK-common/SK-common.iml" />
-      <module fileurl="file://$PROJECT_DIR$/SK-gateway/SK-gateway.iml" filepath="$PROJECT_DIR$/SK-gateway/SK-gateway.iml" />
       <module fileurl="file://$PROJECT_DIR$/SK-core/core-boot/core-boot.iml" filepath="$PROJECT_DIR$/SK-core/core-boot/core-boot.iml" />
       <module fileurl="file://$PROJECT_DIR$/SK-core/core-cache/core-cache.iml" filepath="$PROJECT_DIR$/SK-core/core-cache/core-cache.iml" />
       <module fileurl="file://$PROJECT_DIR$/SK-core/core-mq/core-mq.iml" filepath="$PROJECT_DIR$/SK-core/core-mq/core-mq.iml" />

@@ -1,9 +1,12 @@
 spring:
   application:
     name: SK-user
+  cloud:
+    compatibility-verifier:
+      enabled: false
 
   datasource:
-    url: jdbc:mysql://localhost:3305/seckill?useUnicode=true&characterEncoding=utf8&allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=GMT%2B8
+    url: jdbc:mysql://1Panel-mysql-JS9J:3306/seckill?useUnicode=true&characterEncoding=utf8&allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=GMT%2B8
     username: root
     password: Ppg123456
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -17,5 +20,5 @@ mybatis-plus:
 
 # 服务器配置
 server:
-  port: 8081
+  port: 8082
 

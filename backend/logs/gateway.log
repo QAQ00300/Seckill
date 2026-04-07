@@ -79903,3 +79903,488 @@ Caused by: java.net.ConnectException: Connection refused: getsockopt
 2026-04-04T20:21:54.158+08:00  INFO 16768 --- [SK-gateway] [main] com.seckill.gateway.GatewayApplication   : Started GatewayApplication in 5.308 seconds (process running for 6.418)
 2026-04-04T20:23:45.437+08:00  INFO 16768 --- [SK-gateway] [SpringApplicationShutdownHook] o.s.b.w.embedded.netty.GracefulShutdown  : Commencing graceful shutdown. Waiting for active requests to complete
 2026-04-04T20:23:45.441+08:00  INFO 16768 --- [SK-gateway] [netty-shutdown] o.s.b.w.embedded.netty.GracefulShutdown  : Graceful shutdown complete
+2026-04-07T10:10:41.713+08:00  INFO 118384 --- [SK-gateway] [main] com.seckill.gateway.GatewayApplication   : Starting GatewayApplication using Java 17.0.11 with PID 118384 (D:\work\Seckill\backend\SK-gateway\target\classes started by L2326 in D:\work\Seckill\backend)
+2026-04-07T10:10:41.716+08:00  INFO 118384 --- [SK-gateway] [main] com.seckill.gateway.GatewayApplication   : The following 1 profile is active: "stage1"
+2026-04-07T10:10:43.061+08:00  INFO 118384 --- [SK-gateway] [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2026-04-07T10:10:43.065+08:00  INFO 118384 --- [SK-gateway] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-04-07T10:10:43.098+08:00  INFO 118384 --- [SK-gateway] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 16 ms. Found 0 Redis repository interfaces.
+2026-04-07T10:10:43.400+08:00  INFO 118384 --- [SK-gateway] [main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=e27b469a-3c22-390d-a741-b1f87bf96ea9
+2026-04-07T10:10:44.888+08:00  INFO 118384 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [After]
+2026-04-07T10:10:44.888+08:00  INFO 118384 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Before]
+2026-04-07T10:10:44.888+08:00  INFO 118384 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Between]
+2026-04-07T10:10:44.888+08:00  INFO 118384 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Cookie]
+2026-04-07T10:10:44.888+08:00  INFO 118384 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Header]
+2026-04-07T10:10:44.890+08:00  INFO 118384 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Host]
+2026-04-07T10:10:44.890+08:00  INFO 118384 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Method]
+2026-04-07T10:10:44.890+08:00  INFO 118384 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Path]
+2026-04-07T10:10:44.890+08:00  INFO 118384 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Query]
+2026-04-07T10:10:44.890+08:00  INFO 118384 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [ReadBody]
+2026-04-07T10:10:44.890+08:00  INFO 118384 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [RemoteAddr]
+2026-04-07T10:10:44.890+08:00  INFO 118384 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [XForwardedRemoteAddr]
+2026-04-07T10:10:44.890+08:00  INFO 118384 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Weight]
+2026-04-07T10:10:44.890+08:00  INFO 118384 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [CloudFoundryRouteService]
+2026-04-07T10:10:45.392+08:00  INFO 118384 --- [SK-gateway] [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 4 endpoints beneath base path '/actuator'
+2026-04-07T10:10:45.693+08:00  WARN 118384 --- [SK-gateway] [main] s.w.s.StarterDeprecatedAutoConfiguration : 
+
+**********************************************************
+
+spring-cloud-starter-gateway is deprecated. It will be removed in the next major release. Please use spring-cloud-starter-gateway-server-webflux instead.
+
+**********************************************************
+
+
+2026-04-07T10:10:45.700+08:00  WARN 118384 --- [SK-gateway] [main] iguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2026-04-07T10:10:45.911+08:00  INFO 118384 --- [SK-gateway] [main] o.s.b.web.embedded.netty.NettyWebServer  : Netty started on port 8079 (http)
+2026-04-07T10:10:46.380+08:00  INFO 118384 --- [SK-gateway] [main] com.seckill.gateway.GatewayApplication   : Started GatewayApplication in 5.426 seconds (process running for 6.481)
+2026-04-07T10:10:46.385+08:00  WARN 118384 --- [SK-gateway] [main] ServerWebfluxPropertiesMigrationListener : 
+The use of configuration keys that have been renamed was found in the environment:
+
+Property source 'Config resource 'class path resource [application.yml]' via location 'optional:classpath:/'':
+	Key: spring.cloud.gateway.routes[0].id
+		Line: 34
+		Replacement: spring.cloud.gateway.server.webflux.routes[0].id
+	Key: spring.cloud.gateway.routes[0].uri
+		Line: 35
+		Replacement: spring.cloud.gateway.server.webflux.routes[0].uri
+	Key: spring.cloud.gateway.routes[0].predicates
+		Line: 36
+		Replacement: spring.cloud.gateway.server.webflux.routes[0].predicates
+	Key: spring.cloud.gateway.routes[1].id
+		Line: 38
+		Replacement: spring.cloud.gateway.server.webflux.routes[1].id
+	Key: spring.cloud.gateway.routes[1].uri
+		Line: 39
+		Replacement: spring.cloud.gateway.server.webflux.routes[1].uri
+	Key: spring.cloud.gateway.routes[1].predicates
+		Line: 40
+		Replacement: spring.cloud.gateway.server.webflux.routes[1].predicates
+	Key: spring.cloud.gateway.routes[2].id
+		Line: 43
+		Replacement: spring.cloud.gateway.server.webflux.routes[2].id
+	Key: spring.cloud.gateway.routes[2].uri
+		Line: 44
+		Replacement: spring.cloud.gateway.server.webflux.routes[2].uri
+	Key: spring.cloud.gateway.routes[2].predicates
+		Line: 45
+		Replacement: spring.cloud.gateway.server.webflux.routes[2].predicates
+	Key: spring.cloud.gateway.routes[2].filters[0].name
+		Line: 47
+		Replacement: spring.cloud.gateway.server.webflux.routes[2].filters[0].name
+	Key: spring.cloud.gateway.routes[2].filters[0].args.redis-rate-limiter.replenishrate
+		Line: 49
+		Replacement: spring.cloud.gateway.server.webflux.routes[2].filters[0].args.redis-rate-limiter.replenishrate
+	Key: spring.cloud.gateway.routes[2].filters[0].args.redis-rate-limiter.burstcapacity
+		Line: 50
+		Replacement: spring.cloud.gateway.server.webflux.routes[2].filters[0].args.redis-rate-limiter.burstcapacity
+	Key: spring.cloud.gateway.routes[2].filters[1]
+		Line: 51
+		Replacement: spring.cloud.gateway.server.webflux.routes[2].filters[1]
+	Key: spring.cloud.gateway.routes[3].id
+		Line: 53
+		Replacement: spring.cloud.gateway.server.webflux.routes[3].id
+	Key: spring.cloud.gateway.routes[3].uri
+		Line: 54
+		Replacement: spring.cloud.gateway.server.webflux.routes[3].uri
+	Key: spring.cloud.gateway.routes[3].predicates
+		Line: 55
+		Replacement: spring.cloud.gateway.server.webflux.routes[3].predicates
+	Key: spring.cloud.gateway.routes[3].filters[0].name
+		Line: 57
+		Replacement: spring.cloud.gateway.server.webflux.routes[3].filters[0].name
+	Key: spring.cloud.gateway.routes[3].filters[0].args.redis-rate-limiter.replenishrate
+		Line: 59
+		Replacement: spring.cloud.gateway.server.webflux.routes[3].filters[0].args.redis-rate-limiter.replenishrate
+	Key: spring.cloud.gateway.routes[3].filters[0].args.redis-rate-limiter.burstcapacity
+		Line: 60
+		Replacement: spring.cloud.gateway.server.webflux.routes[3].filters[0].args.redis-rate-limiter.burstcapacity
+	Key: spring.cloud.gateway.routes[3].filters[1]
+		Line: 61
+		Replacement: spring.cloud.gateway.server.webflux.routes[3].filters[1]
+	Key: spring.cloud.gateway.routes[4].id
+		Line: 64
+		Replacement: spring.cloud.gateway.server.webflux.routes[4].id
+	Key: spring.cloud.gateway.routes[4].uri
+		Line: 65
+		Replacement: spring.cloud.gateway.server.webflux.routes[4].uri
+	Key: spring.cloud.gateway.routes[4].predicates
+		Line: 66
+		Replacement: spring.cloud.gateway.server.webflux.routes[4].predicates
+	Key: spring.cloud.gateway.routes[4].filters[0]
+		Line: 68
+		Replacement: spring.cloud.gateway.server.webflux.routes[4].filters[0]
+	Key: spring.cloud.gateway.routes[5].id
+		Line: 70
+		Replacement: spring.cloud.gateway.server.webflux.routes[5].id
+	Key: spring.cloud.gateway.routes[5].uri
+		Line: 71
+		Replacement: spring.cloud.gateway.server.webflux.routes[5].uri
+	Key: spring.cloud.gateway.routes[5].predicates
+		Line: 72
+		Replacement: spring.cloud.gateway.server.webflux.routes[5].predicates
+	Key: spring.cloud.gateway.routes[5].filters[0]
+		Line: 74
+		Replacement: spring.cloud.gateway.server.webflux.routes[5].filters[0]
+	Key: spring.cloud.gateway.routes[6].id
+		Line: 77
+		Replacement: spring.cloud.gateway.server.webflux.routes[6].id
+	Key: spring.cloud.gateway.routes[6].uri
+		Line: 78
+		Replacement: spring.cloud.gateway.server.webflux.routes[6].uri
+	Key: spring.cloud.gateway.routes[6].predicates
+		Line: 79
+		Replacement: spring.cloud.gateway.server.webflux.routes[6].predicates
+	Key: spring.cloud.gateway.routes[6].filters[0]
+		Line: 81
+		Replacement: spring.cloud.gateway.server.webflux.routes[6].filters[0]
+	Key: spring.cloud.gateway.routes[7].id
+		Line: 83
+		Replacement: spring.cloud.gateway.server.webflux.routes[7].id
+	Key: spring.cloud.gateway.routes[7].uri
+		Line: 84
+		Replacement: spring.cloud.gateway.server.webflux.routes[7].uri
+	Key: spring.cloud.gateway.routes[7].predicates
+		Line: 85
+		Replacement: spring.cloud.gateway.server.webflux.routes[7].predicates
+	Key: spring.cloud.gateway.routes[7].filters[0]
+		Line: 87
+		Replacement: spring.cloud.gateway.server.webflux.routes[7].filters[0]
+	Key: spring.cloud.gateway.routes[8].id
+		Line: 90
+		Replacement: spring.cloud.gateway.server.webflux.routes[8].id
+	Key: spring.cloud.gateway.routes[8].uri
+		Line: 91
+		Replacement: spring.cloud.gateway.server.webflux.routes[8].uri
+	Key: spring.cloud.gateway.routes[8].predicates
+		Line: 92
+		Replacement: spring.cloud.gateway.server.webflux.routes[8].predicates
+	Key: spring.cloud.gateway.routes[8].filters[0].name
+		Line: 94
+		Replacement: spring.cloud.gateway.server.webflux.routes[8].filters[0].name
+	Key: spring.cloud.gateway.routes[8].filters[0].args.redis-rate-limiter.replenishrate
+		Line: 96
+		Replacement: spring.cloud.gateway.server.webflux.routes[8].filters[0].args.redis-rate-limiter.replenishrate
+	Key: spring.cloud.gateway.routes[8].filters[0].args.redis-rate-limiter.burstcapacity
+		Line: 97
+		Replacement: spring.cloud.gateway.server.webflux.routes[8].filters[0].args.redis-rate-limiter.burstcapacity
+	Key: spring.cloud.gateway.routes[8].filters[1]
+		Line: 98
+		Replacement: spring.cloud.gateway.server.webflux.routes[8].filters[1]
+
+
+Each configuration key has been temporarily mapped to its replacement for your convenience. To silence this warning, please update your configuration to use the new keys.
+
+2026-04-07T10:10:46.387+08:00  WARN 118384 --- [SK-gateway] [main] o.s.b.c.p.m.PropertiesMigrationListener  : 
+The use of configuration keys that have been renamed was found in the environment:
+
+Property source 'Config resource 'class path resource [application.yml]' via location 'optional:classpath:/'':
+	Key: logging.file.max-history
+		Line: 115
+		Replacement: logging.logback.rollingpolicy.max-history
+	Key: logging.file.max-size
+		Line: 114
+		Replacement: logging.logback.rollingpolicy.max-file-size
+	Key: spring.cloud.gateway.httpclient.connect-timeout
+		Line: 24
+		Replacement: spring.cloud.gateway.server.webflux.httpclient.connect-timeout
+	Key: spring.cloud.gateway.httpclient.pool.max-connections
+		Line: 28
+		Replacement: spring.cloud.gateway.server.webflux.httpclient.pool.max-connections
+	Key: spring.cloud.gateway.httpclient.pool.max-idle-time
+		Line: 29
+		Replacement: spring.cloud.gateway.server.webflux.httpclient.pool.max-idle-time
+	Key: spring.cloud.gateway.httpclient.pool.type
+		Line: 27
+		Replacement: spring.cloud.gateway.server.webflux.httpclient.pool.type
+	Key: spring.cloud.gateway.httpclient.response-timeout
+		Line: 25
+		Replacement: spring.cloud.gateway.server.webflux.httpclient.response-timeout
+
+
+Each configuration key has been temporarily mapped to its replacement for your convenience. To silence this warning, please update your configuration to use the new keys.
+
+2026-04-07T10:10:46.388+08:00 ERROR 118384 --- [SK-gateway] [main] o.s.b.c.p.m.PropertiesMigrationListener  : 
+The use of configuration keys that are no longer supported was found in the environment:
+
+Property source 'Config resource 'class path resource [application.yml]' via location 'optional:classpath:/'':
+	Key: management.endpoint.gateway.enabled
+		Line: 125
+		Reason: Replacement key 'management.endpoint.gateway.access' uses an incompatible target type
+
+
+Please refer to the release notes or reference guide for potential alternatives.
+
+2026-04-07T10:13:59.702+08:00  INFO 118384 --- [SK-gateway] [SpringApplicationShutdownHook] o.s.b.w.embedded.netty.GracefulShutdown  : Commencing graceful shutdown. Waiting for active requests to complete
+2026-04-07T10:13:59.705+08:00  INFO 118384 --- [SK-gateway] [netty-shutdown] o.s.b.w.embedded.netty.GracefulShutdown  : Graceful shutdown complete
+2026-04-07T10:14:13.475+08:00  INFO 123184 --- [SK-gateway] [main] com.seckill.gateway.GatewayApplication   : Starting GatewayApplication using Java 17.0.11 with PID 123184 (D:\work\Seckill\backend\SK-gateway\target\classes started by L2326 in D:\work\Seckill\backend)
+2026-04-07T10:14:13.479+08:00  INFO 123184 --- [SK-gateway] [main] com.seckill.gateway.GatewayApplication   : The following 1 profile is active: "stage1"
+2026-04-07T10:14:14.854+08:00  INFO 123184 --- [SK-gateway] [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2026-04-07T10:14:14.856+08:00  INFO 123184 --- [SK-gateway] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-04-07T10:14:14.891+08:00  INFO 123184 --- [SK-gateway] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 16 ms. Found 0 Redis repository interfaces.
+2026-04-07T10:14:15.181+08:00  INFO 123184 --- [SK-gateway] [main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=a8463ad6-25d5-3f5f-ad43-4002dd492514
+2026-04-07T10:14:16.687+08:00  INFO 123184 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [After]
+2026-04-07T10:14:16.687+08:00  INFO 123184 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Before]
+2026-04-07T10:14:16.687+08:00  INFO 123184 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Between]
+2026-04-07T10:14:16.687+08:00  INFO 123184 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Cookie]
+2026-04-07T10:14:16.687+08:00  INFO 123184 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Header]
+2026-04-07T10:14:16.687+08:00  INFO 123184 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Host]
+2026-04-07T10:14:16.689+08:00  INFO 123184 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Method]
+2026-04-07T10:14:16.689+08:00  INFO 123184 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Path]
+2026-04-07T10:14:16.689+08:00  INFO 123184 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Query]
+2026-04-07T10:14:16.689+08:00  INFO 123184 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [ReadBody]
+2026-04-07T10:14:16.689+08:00  INFO 123184 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [RemoteAddr]
+2026-04-07T10:14:16.689+08:00  INFO 123184 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [XForwardedRemoteAddr]
+2026-04-07T10:14:16.689+08:00  INFO 123184 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Weight]
+2026-04-07T10:14:16.689+08:00  INFO 123184 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [CloudFoundryRouteService]
+2026-04-07T10:14:17.226+08:00  INFO 123184 --- [SK-gateway] [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 4 endpoints beneath base path '/actuator'
+2026-04-07T10:14:17.525+08:00  WARN 123184 --- [SK-gateway] [main] iguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2026-04-07T10:14:17.747+08:00  INFO 123184 --- [SK-gateway] [main] o.s.b.web.embedded.netty.NettyWebServer  : Netty started on port 8079 (http)
+2026-04-07T10:14:18.242+08:00  INFO 123184 --- [SK-gateway] [main] com.seckill.gateway.GatewayApplication   : Started GatewayApplication in 5.503 seconds (process running for 6.565)
+2026-04-07T10:14:18.247+08:00  WARN 123184 --- [SK-gateway] [main] o.s.b.c.p.m.PropertiesMigrationListener  : 
+The use of configuration keys that have been renamed was found in the environment:
+
+Property source 'Config resource 'class path resource [application.yml]' via location 'optional:classpath:/'':
+	Key: logging.file.max-history
+		Line: 117
+		Replacement: logging.logback.rollingpolicy.max-history
+	Key: logging.file.max-size
+		Line: 116
+		Replacement: logging.logback.rollingpolicy.max-file-size
+
+
+Each configuration key has been temporarily mapped to its replacement for your convenience. To silence this warning, please update your configuration to use the new keys.
+
+2026-04-07T10:14:18.247+08:00 ERROR 123184 --- [SK-gateway] [main] o.s.b.c.p.m.PropertiesMigrationListener  : 
+The use of configuration keys that are no longer supported was found in the environment:
+
+Property source 'Config resource 'class path resource [application.yml]' via location 'optional:classpath:/'':
+	Key: management.endpoint.gateway.enabled
+		Line: 127
+		Reason: Replacement key 'management.endpoint.gateway.access' uses an incompatible target type
+
+
+Please refer to the release notes or reference guide for potential alternatives.
+
+2026-04-07T10:14:50.780+08:00  INFO 123184 --- [SK-gateway] [SpringApplicationShutdownHook] o.s.b.w.embedded.netty.GracefulShutdown  : Commencing graceful shutdown. Waiting for active requests to complete
+2026-04-07T10:14:50.783+08:00  INFO 123184 --- [SK-gateway] [netty-shutdown] o.s.b.w.embedded.netty.GracefulShutdown  : Graceful shutdown complete
+2026-04-07T10:16:47.552+08:00  INFO 56872 --- [SK-gateway] [main] com.seckill.gateway.GatewayApplication   : Starting GatewayApplication using Java 17.0.11 with PID 56872 (D:\work\Seckill\backend\SK-gateway\target\classes started by L2326 in D:\work\Seckill\backend)
+2026-04-07T10:16:47.555+08:00  INFO 56872 --- [SK-gateway] [main] com.seckill.gateway.GatewayApplication   : The following 1 profile is active: "stage1"
+2026-04-07T10:16:48.912+08:00  INFO 56872 --- [SK-gateway] [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2026-04-07T10:16:48.915+08:00  INFO 56872 --- [SK-gateway] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-04-07T10:16:48.952+08:00  INFO 56872 --- [SK-gateway] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 18 ms. Found 0 Redis repository interfaces.
+2026-04-07T10:16:49.239+08:00  INFO 56872 --- [SK-gateway] [main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=a8463ad6-25d5-3f5f-ad43-4002dd492514
+2026-04-07T10:16:50.718+08:00  INFO 56872 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [After]
+2026-04-07T10:16:50.718+08:00  INFO 56872 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Before]
+2026-04-07T10:16:50.718+08:00  INFO 56872 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Between]
+2026-04-07T10:16:50.719+08:00  INFO 56872 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Cookie]
+2026-04-07T10:16:50.719+08:00  INFO 56872 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Header]
+2026-04-07T10:16:50.719+08:00  INFO 56872 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Host]
+2026-04-07T10:16:50.719+08:00  INFO 56872 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Method]
+2026-04-07T10:16:50.719+08:00  INFO 56872 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Path]
+2026-04-07T10:16:50.719+08:00  INFO 56872 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Query]
+2026-04-07T10:16:50.719+08:00  INFO 56872 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [ReadBody]
+2026-04-07T10:16:50.719+08:00  INFO 56872 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [RemoteAddr]
+2026-04-07T10:16:50.719+08:00  INFO 56872 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [XForwardedRemoteAddr]
+2026-04-07T10:16:50.719+08:00  INFO 56872 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Weight]
+2026-04-07T10:16:50.719+08:00  INFO 56872 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [CloudFoundryRouteService]
+2026-04-07T10:16:51.210+08:00  INFO 56872 --- [SK-gateway] [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 4 endpoints beneath base path '/actuator'
+2026-04-07T10:16:51.517+08:00  WARN 56872 --- [SK-gateway] [main] iguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2026-04-07T10:16:51.721+08:00  INFO 56872 --- [SK-gateway] [main] o.s.b.web.embedded.netty.NettyWebServer  : Netty started on port 8079 (http)
+2026-04-07T10:16:52.198+08:00  INFO 56872 --- [SK-gateway] [main] com.seckill.gateway.GatewayApplication   : Started GatewayApplication in 5.415 seconds (process running for 6.548)
+2026-04-07T10:17:28.451+08:00  INFO 56872 --- [SK-gateway] [SpringApplicationShutdownHook] o.s.b.w.embedded.netty.GracefulShutdown  : Commencing graceful shutdown. Waiting for active requests to complete
+2026-04-07T10:17:28.453+08:00  INFO 56872 --- [SK-gateway] [netty-shutdown] o.s.b.w.embedded.netty.GracefulShutdown  : Graceful shutdown complete
+2026-04-07T10:24:28.988+08:00  INFO 128296 --- [SK-gateway] [main] com.seckill.gateway.GatewayApplication   : Starting GatewayApplication using Java 17.0.11 with PID 128296 (D:\work\Seckill\backend\SK-gateway\target\classes started by L2326 in D:\work\Seckill\backend)
+2026-04-07T10:24:28.993+08:00  INFO 128296 --- [SK-gateway] [main] com.seckill.gateway.GatewayApplication   : The following 1 profile is active: "stage1"
+2026-04-07T10:24:30.301+08:00  INFO 128296 --- [SK-gateway] [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2026-04-07T10:24:30.305+08:00  INFO 128296 --- [SK-gateway] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-04-07T10:24:30.343+08:00  INFO 128296 --- [SK-gateway] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 18 ms. Found 0 Redis repository interfaces.
+2026-04-07T10:24:30.628+08:00  INFO 128296 --- [SK-gateway] [main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=a8463ad6-25d5-3f5f-ad43-4002dd492514
+2026-04-07T10:24:32.184+08:00  INFO 128296 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [After]
+2026-04-07T10:24:32.184+08:00  INFO 128296 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Before]
+2026-04-07T10:24:32.184+08:00  INFO 128296 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Between]
+2026-04-07T10:24:32.184+08:00  INFO 128296 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Cookie]
+2026-04-07T10:24:32.186+08:00  INFO 128296 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Header]
+2026-04-07T10:24:32.186+08:00  INFO 128296 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Host]
+2026-04-07T10:24:32.186+08:00  INFO 128296 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Method]
+2026-04-07T10:24:32.186+08:00  INFO 128296 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Path]
+2026-04-07T10:24:32.186+08:00  INFO 128296 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Query]
+2026-04-07T10:24:32.186+08:00  INFO 128296 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [ReadBody]
+2026-04-07T10:24:32.186+08:00  INFO 128296 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [RemoteAddr]
+2026-04-07T10:24:32.186+08:00  INFO 128296 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [XForwardedRemoteAddr]
+2026-04-07T10:24:32.186+08:00  INFO 128296 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Weight]
+2026-04-07T10:24:32.186+08:00  INFO 128296 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [CloudFoundryRouteService]
+2026-04-07T10:24:32.664+08:00  INFO 128296 --- [SK-gateway] [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 4 endpoints beneath base path '/actuator'
+2026-04-07T10:24:32.963+08:00  WARN 128296 --- [SK-gateway] [main] iguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2026-04-07T10:24:33.178+08:00  INFO 128296 --- [SK-gateway] [main] o.s.b.web.embedded.netty.NettyWebServer  : Netty started on port 8079 (http)
+2026-04-07T10:24:33.638+08:00  INFO 128296 --- [SK-gateway] [main] com.seckill.gateway.GatewayApplication   : Started GatewayApplication in 5.408 seconds (process running for 6.523)
+2026-04-07T10:24:52.223+08:00  INFO 128296 --- [SK-gateway] [SpringApplicationShutdownHook] o.s.b.w.embedded.netty.GracefulShutdown  : Commencing graceful shutdown. Waiting for active requests to complete
+2026-04-07T10:24:52.226+08:00  INFO 128296 --- [SK-gateway] [netty-shutdown] o.s.b.w.embedded.netty.GracefulShutdown  : Graceful shutdown complete
+2026-04-07T10:38:29.199+08:00  INFO 117340 --- [SK-gateway] [main] com.seckill.gateway.GatewayApplication   : Starting GatewayApplication using Java 17.0.11 with PID 117340 (D:\work\Seckill\backend\SK-gateway\target\classes started by L2326 in D:\work\Seckill\backend)
+2026-04-07T10:38:29.202+08:00  INFO 117340 --- [SK-gateway] [main] com.seckill.gateway.GatewayApplication   : The following 1 profile is active: "stage1"
+2026-04-07T10:38:30.504+08:00  INFO 117340 --- [SK-gateway] [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2026-04-07T10:38:30.508+08:00  INFO 117340 --- [SK-gateway] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-04-07T10:38:30.550+08:00  INFO 117340 --- [SK-gateway] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 16 ms. Found 0 Redis repository interfaces.
+2026-04-07T10:38:30.848+08:00  INFO 117340 --- [SK-gateway] [main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=a8463ad6-25d5-3f5f-ad43-4002dd492514
+2026-04-07T10:38:32.333+08:00  INFO 117340 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [After]
+2026-04-07T10:38:32.333+08:00  INFO 117340 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Before]
+2026-04-07T10:38:32.333+08:00  INFO 117340 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Between]
+2026-04-07T10:38:32.333+08:00  INFO 117340 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Cookie]
+2026-04-07T10:38:32.333+08:00  INFO 117340 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Header]
+2026-04-07T10:38:32.333+08:00  INFO 117340 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Host]
+2026-04-07T10:38:32.333+08:00  INFO 117340 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Method]
+2026-04-07T10:38:32.333+08:00  INFO 117340 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Path]
+2026-04-07T10:38:32.333+08:00  INFO 117340 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Query]
+2026-04-07T10:38:32.333+08:00  INFO 117340 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [ReadBody]
+2026-04-07T10:38:32.333+08:00  INFO 117340 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [RemoteAddr]
+2026-04-07T10:38:32.333+08:00  INFO 117340 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [XForwardedRemoteAddr]
+2026-04-07T10:38:32.333+08:00  INFO 117340 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Weight]
+2026-04-07T10:38:32.333+08:00  INFO 117340 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [CloudFoundryRouteService]
+2026-04-07T10:38:32.822+08:00  INFO 117340 --- [SK-gateway] [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 4 endpoints beneath base path '/actuator'
+2026-04-07T10:38:33.122+08:00  WARN 117340 --- [SK-gateway] [main] iguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2026-04-07T10:38:33.339+08:00  INFO 117340 --- [SK-gateway] [main] o.s.b.web.embedded.netty.NettyWebServer  : Netty started on port 8079 (http)
+2026-04-07T10:38:33.804+08:00  INFO 117340 --- [SK-gateway] [main] com.seckill.gateway.GatewayApplication   : Started GatewayApplication in 5.393 seconds (process running for 6.461)
+2026-04-07T10:45:11.881+08:00  INFO 117340 --- [SK-gateway] [SpringApplicationShutdownHook] o.s.b.w.embedded.netty.GracefulShutdown  : Commencing graceful shutdown. Waiting for active requests to complete
+2026-04-07T10:45:11.885+08:00  INFO 117340 --- [SK-gateway] [netty-shutdown] o.s.b.w.embedded.netty.GracefulShutdown  : Graceful shutdown complete
+2026-04-07T10:45:17.537+08:00  INFO 78932 --- [SK-gateway] [main] com.seckill.gateway.GatewayApplication   : Starting GatewayApplication using Java 17.0.11 with PID 78932 (D:\work\Seckill\backend\SK-gateway\target\classes started by L2326 in D:\work\Seckill\backend)
+2026-04-07T10:45:17.539+08:00  INFO 78932 --- [SK-gateway] [main] com.seckill.gateway.GatewayApplication   : The following 1 profile is active: "stage1"
+2026-04-07T10:45:18.867+08:00  INFO 78932 --- [SK-gateway] [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2026-04-07T10:45:18.871+08:00  INFO 78932 --- [SK-gateway] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-04-07T10:45:18.907+08:00  INFO 78932 --- [SK-gateway] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 18 ms. Found 0 Redis repository interfaces.
+2026-04-07T10:45:19.215+08:00  INFO 78932 --- [SK-gateway] [main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=a8463ad6-25d5-3f5f-ad43-4002dd492514
+2026-04-07T10:45:20.731+08:00  INFO 78932 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [After]
+2026-04-07T10:45:20.731+08:00  INFO 78932 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Before]
+2026-04-07T10:45:20.731+08:00  INFO 78932 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Between]
+2026-04-07T10:45:20.731+08:00  INFO 78932 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Cookie]
+2026-04-07T10:45:20.731+08:00  INFO 78932 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Header]
+2026-04-07T10:45:20.731+08:00  INFO 78932 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Host]
+2026-04-07T10:45:20.731+08:00  INFO 78932 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Method]
+2026-04-07T10:45:20.731+08:00  INFO 78932 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Path]
+2026-04-07T10:45:20.731+08:00  INFO 78932 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Query]
+2026-04-07T10:45:20.731+08:00  INFO 78932 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [ReadBody]
+2026-04-07T10:45:20.731+08:00  INFO 78932 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [RemoteAddr]
+2026-04-07T10:45:20.731+08:00  INFO 78932 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [XForwardedRemoteAddr]
+2026-04-07T10:45:20.731+08:00  INFO 78932 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Weight]
+2026-04-07T10:45:20.731+08:00  INFO 78932 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [CloudFoundryRouteService]
+2026-04-07T10:45:21.461+08:00  INFO 78932 --- [SK-gateway] [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 4 endpoints beneath base path '/actuator'
+2026-04-07T10:45:22.096+08:00  WARN 78932 --- [SK-gateway] [main] iguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2026-04-07T10:45:22.597+08:00  INFO 78932 --- [SK-gateway] [main] o.s.b.web.embedded.netty.NettyWebServer  : Netty started on port 8079 (http)
+2026-04-07T10:45:23.780+08:00  INFO 78932 --- [SK-gateway] [main] com.seckill.gateway.GatewayApplication   : Started GatewayApplication in 7.005 seconds (process running for 8.066)
+2026-04-07T10:45:52.719+08:00  INFO 78932 --- [SK-gateway] [SpringApplicationShutdownHook] o.s.b.w.embedded.netty.GracefulShutdown  : Commencing graceful shutdown. Waiting for active requests to complete
+2026-04-07T10:45:52.722+08:00  INFO 78932 --- [SK-gateway] [netty-shutdown] o.s.b.w.embedded.netty.GracefulShutdown  : Graceful shutdown complete
+2026-04-07T11:24:09.742+08:00  INFO 114848 --- [SK-gateway] [main] com.seckill.gateway.GatewayApplication   : Starting GatewayApplication using Java 17.0.11 with PID 114848 (D:\work\Seckill\backend\SK-gateway\target\classes started by L2326 in D:\work\Seckill\backend)
+2026-04-07T11:24:09.745+08:00  INFO 114848 --- [SK-gateway] [main] com.seckill.gateway.GatewayApplication   : The following 1 profile is active: "stage1"
+2026-04-07T11:24:11.055+08:00  INFO 114848 --- [SK-gateway] [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2026-04-07T11:24:11.058+08:00  INFO 114848 --- [SK-gateway] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-04-07T11:24:11.093+08:00  INFO 114848 --- [SK-gateway] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 17 ms. Found 0 Redis repository interfaces.
+2026-04-07T11:24:11.379+08:00  INFO 114848 --- [SK-gateway] [main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=a8463ad6-25d5-3f5f-ad43-4002dd492514
+2026-04-07T11:24:12.821+08:00  INFO 114848 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [After]
+2026-04-07T11:24:12.821+08:00  INFO 114848 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Before]
+2026-04-07T11:24:12.821+08:00  INFO 114848 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Between]
+2026-04-07T11:24:12.821+08:00  INFO 114848 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Cookie]
+2026-04-07T11:24:12.821+08:00  INFO 114848 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Header]
+2026-04-07T11:24:12.821+08:00  INFO 114848 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Host]
+2026-04-07T11:24:12.821+08:00  INFO 114848 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Method]
+2026-04-07T11:24:12.821+08:00  INFO 114848 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Path]
+2026-04-07T11:24:12.821+08:00  INFO 114848 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Query]
+2026-04-07T11:24:12.821+08:00  INFO 114848 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [ReadBody]
+2026-04-07T11:24:12.821+08:00  INFO 114848 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [RemoteAddr]
+2026-04-07T11:24:12.821+08:00  INFO 114848 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [XForwardedRemoteAddr]
+2026-04-07T11:24:12.821+08:00  INFO 114848 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Weight]
+2026-04-07T11:24:12.821+08:00  INFO 114848 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [CloudFoundryRouteService]
+2026-04-07T11:24:13.301+08:00  INFO 114848 --- [SK-gateway] [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 4 endpoints beneath base path '/actuator'
+2026-04-07T11:24:13.590+08:00  WARN 114848 --- [SK-gateway] [main] iguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2026-04-07T11:24:13.798+08:00  INFO 114848 --- [SK-gateway] [main] o.s.b.web.embedded.netty.NettyWebServer  : Netty started on port 8079 (http)
+2026-04-07T11:24:14.261+08:00  INFO 114848 --- [SK-gateway] [main] com.seckill.gateway.GatewayApplication   : Started GatewayApplication in 5.356 seconds (process running for 6.416)
+2026-04-07T11:24:45.009+08:00  INFO 114848 --- [SK-gateway] [SpringApplicationShutdownHook] o.s.b.w.embedded.netty.GracefulShutdown  : Commencing graceful shutdown. Waiting for active requests to complete
+2026-04-07T11:24:45.012+08:00  INFO 114848 --- [SK-gateway] [netty-shutdown] o.s.b.w.embedded.netty.GracefulShutdown  : Graceful shutdown complete
+2026-04-07T11:25:27.878+08:00  INFO 25360 --- [SK-gateway] [main] com.seckill.gateway.GatewayApplication   : Starting GatewayApplication using Java 17.0.11 with PID 25360 (D:\work\Seckill\backend\SK-gateway\target\classes started by L2326 in D:\work\Seckill\backend)
+2026-04-07T11:25:27.881+08:00  INFO 25360 --- [SK-gateway] [main] com.seckill.gateway.GatewayApplication   : The following 1 profile is active: "stage1"
+2026-04-07T11:25:29.263+08:00  INFO 25360 --- [SK-gateway] [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2026-04-07T11:25:29.268+08:00  INFO 25360 --- [SK-gateway] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-04-07T11:25:29.333+08:00  INFO 25360 --- [SK-gateway] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 28 ms. Found 0 Redis repository interfaces.
+2026-04-07T11:25:29.645+08:00  INFO 25360 --- [SK-gateway] [main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=a8463ad6-25d5-3f5f-ad43-4002dd492514
+2026-04-07T11:25:31.216+08:00  INFO 25360 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [After]
+2026-04-07T11:25:31.218+08:00  INFO 25360 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Before]
+2026-04-07T11:25:31.218+08:00  INFO 25360 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Between]
+2026-04-07T11:25:31.218+08:00  INFO 25360 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Cookie]
+2026-04-07T11:25:31.218+08:00  INFO 25360 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Header]
+2026-04-07T11:25:31.218+08:00  INFO 25360 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Host]
+2026-04-07T11:25:31.218+08:00  INFO 25360 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Method]
+2026-04-07T11:25:31.218+08:00  INFO 25360 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Path]
+2026-04-07T11:25:31.218+08:00  INFO 25360 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Query]
+2026-04-07T11:25:31.218+08:00  INFO 25360 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [ReadBody]
+2026-04-07T11:25:31.218+08:00  INFO 25360 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [RemoteAddr]
+2026-04-07T11:25:31.218+08:00  INFO 25360 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [XForwardedRemoteAddr]
+2026-04-07T11:25:31.218+08:00  INFO 25360 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Weight]
+2026-04-07T11:25:31.218+08:00  INFO 25360 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [CloudFoundryRouteService]
+2026-04-07T11:25:31.748+08:00  INFO 25360 --- [SK-gateway] [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 4 endpoints beneath base path '/actuator'
+2026-04-07T11:25:32.054+08:00  WARN 25360 --- [SK-gateway] [main] iguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2026-04-07T11:25:32.288+08:00  INFO 25360 --- [SK-gateway] [main] o.s.b.web.embedded.netty.NettyWebServer  : Netty started on port 8079 (http)
+2026-04-07T11:25:32.786+08:00  INFO 25360 --- [SK-gateway] [main] com.seckill.gateway.GatewayApplication   : Started GatewayApplication in 5.722 seconds (process running for 6.803)
+2026-04-07T11:26:00.277+08:00  INFO 25360 --- [SK-gateway] [SpringApplicationShutdownHook] o.s.b.w.embedded.netty.GracefulShutdown  : Commencing graceful shutdown. Waiting for active requests to complete
+2026-04-07T11:26:00.281+08:00  INFO 25360 --- [SK-gateway] [netty-shutdown] o.s.b.w.embedded.netty.GracefulShutdown  : Graceful shutdown complete
+2026-04-07T12:58:54.124+08:00  INFO 31208 --- [SK-gateway] [main] com.seckill.gateway.GatewayApplication   : Starting GatewayApplication using Java 17.0.11 with PID 31208 (D:\work\Seckill\backend\SK-gateway\target\classes started by L2326 in D:\work\Seckill\backend)
+2026-04-07T12:58:54.125+08:00  INFO 31208 --- [SK-gateway] [main] com.seckill.gateway.GatewayApplication   : The following 1 profile is active: "stage1"
+2026-04-07T12:58:55.406+08:00  INFO 31208 --- [SK-gateway] [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2026-04-07T12:58:55.408+08:00  INFO 31208 --- [SK-gateway] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-04-07T12:58:55.443+08:00  INFO 31208 --- [SK-gateway] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 16 ms. Found 0 Redis repository interfaces.
+2026-04-07T12:58:55.741+08:00  INFO 31208 --- [SK-gateway] [main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=a8463ad6-25d5-3f5f-ad43-4002dd492514
+2026-04-07T12:58:57.245+08:00  INFO 31208 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [After]
+2026-04-07T12:58:57.245+08:00  INFO 31208 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Before]
+2026-04-07T12:58:57.245+08:00  INFO 31208 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Between]
+2026-04-07T12:58:57.245+08:00  INFO 31208 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Cookie]
+2026-04-07T12:58:57.246+08:00  INFO 31208 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Header]
+2026-04-07T12:58:57.246+08:00  INFO 31208 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Host]
+2026-04-07T12:58:57.246+08:00  INFO 31208 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Method]
+2026-04-07T12:58:57.246+08:00  INFO 31208 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Path]
+2026-04-07T12:58:57.246+08:00  INFO 31208 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Query]
+2026-04-07T12:58:57.246+08:00  INFO 31208 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [ReadBody]
+2026-04-07T12:58:57.246+08:00  INFO 31208 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [RemoteAddr]
+2026-04-07T12:58:57.246+08:00  INFO 31208 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [XForwardedRemoteAddr]
+2026-04-07T12:58:57.246+08:00  INFO 31208 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Weight]
+2026-04-07T12:58:57.246+08:00  INFO 31208 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [CloudFoundryRouteService]
+2026-04-07T12:58:57.753+08:00  INFO 31208 --- [SK-gateway] [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 4 endpoints beneath base path '/actuator'
+2026-04-07T12:58:58.087+08:00  WARN 31208 --- [SK-gateway] [main] iguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2026-04-07T12:59:00.392+08:00  WARN 31208 --- [SK-gateway] [main] onfigReactiveWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'webServerStartStop'
+2026-04-07T12:59:00.437+08:00  INFO 31208 --- [SK-gateway] [main] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2026-04-07T12:59:00.453+08:00 ERROR 31208 --- [SK-gateway] [main] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Web server failed to start. Port 8079 was already in use.
+
+Action:
+
+Identify and stop the process that's listening on port 8079 or configure this application to listen on another port.
+
+2026-04-07T12:59:54.318+08:00  INFO 129596 --- [SK-gateway] [main] com.seckill.gateway.GatewayApplication   : Starting GatewayApplication using Java 17.0.11 with PID 129596 (D:\work\Seckill\backend\SK-gateway\target\classes started by L2326 in D:\work\Seckill\backend)
+2026-04-07T12:59:54.322+08:00  INFO 129596 --- [SK-gateway] [main] com.seckill.gateway.GatewayApplication   : The following 1 profile is active: "stage1"
+2026-04-07T12:59:55.623+08:00  INFO 129596 --- [SK-gateway] [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2026-04-07T12:59:55.627+08:00  INFO 129596 --- [SK-gateway] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-04-07T12:59:55.662+08:00  INFO 129596 --- [SK-gateway] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 17 ms. Found 0 Redis repository interfaces.
+2026-04-07T12:59:55.949+08:00  INFO 129596 --- [SK-gateway] [main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=a8463ad6-25d5-3f5f-ad43-4002dd492514
+2026-04-07T12:59:57.474+08:00  INFO 129596 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [After]
+2026-04-07T12:59:57.474+08:00  INFO 129596 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Before]
+2026-04-07T12:59:57.474+08:00  INFO 129596 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Between]
+2026-04-07T12:59:57.475+08:00  INFO 129596 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Cookie]
+2026-04-07T12:59:57.475+08:00  INFO 129596 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Header]
+2026-04-07T12:59:57.475+08:00  INFO 129596 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Host]
+2026-04-07T12:59:57.475+08:00  INFO 129596 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Method]
+2026-04-07T12:59:57.475+08:00  INFO 129596 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Path]
+2026-04-07T12:59:57.475+08:00  INFO 129596 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Query]
+2026-04-07T12:59:57.475+08:00  INFO 129596 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [ReadBody]
+2026-04-07T12:59:57.475+08:00  INFO 129596 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [RemoteAddr]
+2026-04-07T12:59:57.475+08:00  INFO 129596 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [XForwardedRemoteAddr]
+2026-04-07T12:59:57.475+08:00  INFO 129596 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Weight]
+2026-04-07T12:59:57.475+08:00  INFO 129596 --- [SK-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [CloudFoundryRouteService]
+2026-04-07T12:59:58.009+08:00  INFO 129596 --- [SK-gateway] [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 4 endpoints beneath base path '/actuator'
+2026-04-07T12:59:58.325+08:00  WARN 129596 --- [SK-gateway] [main] iguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2026-04-07T12:59:58.538+08:00  INFO 129596 --- [SK-gateway] [main] o.s.b.web.embedded.netty.NettyWebServer  : Netty started on port 8079 (http)
+2026-04-07T12:59:59.016+08:00  INFO 129596 --- [SK-gateway] [main] com.seckill.gateway.GatewayApplication   : Started GatewayApplication in 5.43 seconds (process running for 6.528)
+2026-04-07T13:00:38.754+08:00  INFO 129596 --- [SK-gateway] [SpringApplicationShutdownHook] o.s.b.w.embedded.netty.GracefulShutdown  : Commencing graceful shutdown. Waiting for active requests to complete
+2026-04-07T13:00:38.756+08:00  INFO 129596 --- [SK-gateway] [netty-shutdown] o.s.b.w.embedded.netty.GracefulShutdown  : Graceful shutdown complete

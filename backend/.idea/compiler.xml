@@ -13,9 +13,10 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="false">
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.42/lombok-1.18.42.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.30/lombok-1.18.30.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.30/lombok-1.18.30.jar" />
         </processorPath>
-        <module name="core-boot" />
+        <module name="user-boot" />
         <module name="order-biz" />
         <module name="SK-gateway" />
         <module name="order-constant" />
@@ -29,29 +30,19 @@
         <module name="core-mq" />
         <module name="user-bo" />
         <module name="order-ao" />
+        <module name="order-boot" />
         <module name="order-bo" />
         <module name="user-biz" />
         <module name="SK-common" />
       </profile>
-      <profile name="Annotation profile for order-boot" enabled="true">
+      <profile name="Annotation profile for core-boot" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="false">
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.42/lombok-1.18.42.jar" />
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.42/lombok-1.18.42.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.30/lombok-1.18.30.jar" />
         </processorPath>
-        <module name="order-boot" />
-      </profile>
-      <profile name="Annotation profile for user-boot" enabled="true">
-        <sourceOutputDir name="target/generated-sources/annotations" />
-        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <processorPath useClasspath="false">
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.42/lombok-1.18.42.jar" />
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.42/lombok-1.18.42.jar" />
-        </processorPath>
-        <module name="user-boot" />
+        <module name="core-boot" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -60,12 +51,13 @@
       <module name="gateway" target="1.5" />
       <module name="order" target="1.5" />
       <module name="secKill" target="1.5" />
+      <module name="seckill-backend" target="17" />
       <module name="user" target="1.5" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="SK-client" options="-parameters" />
+      <module name="SK-client" options="" />
       <module name="SK-common" options="-parameters" />
       <module name="SK-core" options="-parameters" />
       <module name="SK-gateway" options="-parameters" />

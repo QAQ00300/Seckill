@@ -1,10 +1,7 @@
 package com.seckill.core.seckill.mapper;
 
-
-
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.seckill.core.seckill.model.SeckillSuccess;
-import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
@@ -14,7 +11,6 @@ import java.util.List;
 /**
  * 秒杀成功记录Mapper
  */
-@Mapper
 public interface SeckillSuccessMapper extends BaseMapper<SeckillSuccess> {
 
     /**
