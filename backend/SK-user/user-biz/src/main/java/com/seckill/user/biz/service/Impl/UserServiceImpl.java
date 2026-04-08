@@ -3,6 +3,7 @@ package com.seckill.user.biz.service.Impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.seckill.common.tools.exception.CustomException;
+import com.seckill.core.cache.CacheService;
 import com.seckill.user.biz.mapper.UserMapper;
 import com.seckill.user.biz.service.UserService;
 import com.seckill.user.bo.eo.UserEO;
@@ -12,6 +13,7 @@ import com.seckill.user.ao.req.AdminResetPasswordREQ;
 import com.seckill.user.ao.req.UserRegisterREQ;
 import com.seckill.user.ao.req.UserUpdateREQ;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -21,6 +23,9 @@ import java.util.List;
 @Slf4j
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, UserEO> implements UserService {
+
+    @Autowired
+    private CacheService cacheService;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -56,28 +61,88 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEO> implements 
 
     @Override
     public UserEO getById(Long id) {
-        return baseMapper.selectById(id);
+        if (id == null) {
+            return null;
+        }
+        String cacheKey = "user:id:" + id;
+        // 尝试从缓存获取
+        UserEO user = cacheService.get(cacheKey, UserEO.class);
+        if (user != null) {
+            return user;
+        }
+        // 缓存未命中，从数据库查询
+        user = baseMapper.selectById(id);
+        if (user != null) {
+            // 存入缓存，设置过期时间为1小时
+            cacheService.set(cacheKey, user, 3600);
+        }
+        return user;
     }
 
     @Override
     public UserEO getByUsername(String username) {
+        if (!StringUtils.hasText(username)) {
+            return null;
+        }
+        String cacheKey = "user:username:" + username;
+        // 尝试从缓存获取
+        UserEO user = cacheService.get(cacheKey, UserEO.class);
+        if (user != null) {
+            return user;
+        }
+        // 缓存未命中，从数据库查询
         LambdaQueryWrapper<UserEO> wrapper= new LambdaQueryWrapper<>();
         wrapper.eq(UserEO::getUsername, username);
-        return getOne(wrapper);
+        user = getOne(wrapper);
+        if (user != null) {
+            // 存入缓存，设置过期时间为1小时
+            cacheService.set(cacheKey, user, 3600);
+        }
+        return user;
     }
 
     @Override
     public UserEO getByPhone(String phone) {
+        if (!StringUtils.hasText(phone)) {
+            return null;
+        }
+        String cacheKey = "user:phone:" + phone;
+        // 尝试从缓存获取
+        UserEO user = cacheService.get(cacheKey, UserEO.class);
+        if (user != null) {
+            return user;
+        }
+        // 缓存未命中，从数据库查询
         LambdaQueryWrapper<UserEO> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(UserEO::getPhone, phone);
-        return getOne(wrapper);
+        user = getOne(wrapper);
+        if (user != null) {
+            // 存入缓存，设置过期时间为1小时
+            cacheService.set(cacheKey, user, 3600);
+        }
+        return user;
     }
 
     @Override
     public UserEO getByEmail(String email) {
+        if (!StringUtils.hasText(email)) {
+            return null;
+        }
+        String cacheKey = "user:email:" + email;
+        // 尝试从缓存获取
+        UserEO user = cacheService.get(cacheKey, UserEO.class);
+        if (user != null) {
+            return user;
+        }
+        // 缓存未命中，从数据库查询
         LambdaQueryWrapper<UserEO> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(UserEO::getEmail, email);
-        return getOne(wrapper);
+        user = getOne(wrapper);
+        if (user != null) {
+            // 存入缓存，设置过期时间为1小时
+            cacheService.set(cacheKey, user, 3600);
+        }
+        return user;
     }
 
     @Override
@@ -129,6 +194,19 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEO> implements 
         }
 
         updateById(user);
+        // 清除缓存
+        String idCacheKey = "user:id:" + userId;
+        cacheService.delete(idCacheKey);
+        String usernameCacheKey = "user:username:" + user.getUsername();
+        cacheService.delete(usernameCacheKey);
+        if (user.getPhone() != null) {
+            String phoneCacheKey = "user:phone:" + user.getPhone();
+            cacheService.delete(phoneCacheKey);
+        }
+        if (user.getEmail() != null) {
+            String emailCacheKey = "user:email:" + user.getEmail();
+            cacheService.delete(emailCacheKey);
+        }
         log.info("用户信息更新成功，userId={}", userId);
     }
 
@@ -142,6 +220,19 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEO> implements 
 
         user.setStatus(status);
         updateById(user);
+        // 清除缓存
+        String idCacheKey = "user:id:" + userId;
+        cacheService.delete(idCacheKey);
+        String usernameCacheKey = "user:username:" + user.getUsername();
+        cacheService.delete(usernameCacheKey);
+        if (user.getPhone() != null) {
+            String phoneCacheKey = "user:phone:" + user.getPhone();
+            cacheService.delete(phoneCacheKey);
+        }
+        if (user.getEmail() != null) {
+            String emailCacheKey = "user:email:" + user.getEmail();
+            cacheService.delete(emailCacheKey);
+        }
         log.info("用户状态设置成功，userId={}, status={}", userId, status);
     }
 
@@ -155,6 +246,19 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEO> implements 
 
         user.setPassword(req.getNewPassword());
         updateById(user);
+        // 清除缓存
+        String idCacheKey = "user:id:" + userId;
+        cacheService.delete(idCacheKey);
+        String usernameCacheKey = "user:username:" + user.getUsername();
+        cacheService.delete(usernameCacheKey);
+        if (user.getPhone() != null) {
+            String phoneCacheKey = "user:phone:" + user.getPhone();
+            cacheService.delete(phoneCacheKey);
+        }
+        if (user.getEmail() != null) {
+            String emailCacheKey = "user:email:" + user.getEmail();
+            cacheService.delete(emailCacheKey);
+        }
         log.info("管理员重置用户密码成功，userId={}", userId);
     }
 
@@ -181,6 +285,19 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEO> implements 
             throw new CustomException(UserErrorCode.USER_NOT_FOUND);
         }
 
+        // 清除缓存
+        String idCacheKey = "user:id:" + userId;
+        cacheService.delete(idCacheKey);
+        String usernameCacheKey = "user:username:" + user.getUsername();
+        cacheService.delete(usernameCacheKey);
+        if (user.getPhone() != null) {
+            String phoneCacheKey = "user:phone:" + user.getPhone();
+            cacheService.delete(phoneCacheKey);
+        }
+        if (user.getEmail() != null) {
+            String emailCacheKey = "user:email:" + user.getEmail();
+            cacheService.delete(emailCacheKey);
+        }
         removeById(userId);
         log.info("用户删除成功，userId={}", userId);
     }

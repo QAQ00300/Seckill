@@ -2,7 +2,6 @@ package com.seckill.core.cache;
 
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 /**
@@ -10,7 +9,6 @@ import org.springframework.stereotype.Service;
  * 阶段1：不启用缓存，所有操作直接返回null或false
  */
 @Service
-@Primary  // 阶段1使用此实现
 @Slf4j
 public class NoOpCacheService implements CacheService {
 

@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.seckill.common.tools.exception.CustomException;
+import com.seckill.core.cache.CacheService;
 import com.seckill.order.biz.mapper.OrderMapper;
 import com.seckill.order.biz.service.OrderService;
 import com.seckill.order.bo.eo.OrderEO;
@@ -24,6 +25,8 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEO> implements OrderService {
+
+    private final CacheService cacheService;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -71,9 +74,24 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEO> implemen
 
     @Override
     public OrderEO getOrderByNo(String orderNo) {
+        if (orderNo == null) {
+            return null;
+        }
+        String cacheKey = "order:no:" + orderNo;
+        // 尝试从缓存获取
+        OrderEO order = cacheService.get(cacheKey, OrderEO.class);
+        if (order != null) {
+            return order;
+        }
+        // 缓存未命中，从数据库查询
         LambdaQueryWrapper<OrderEO> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(OrderEO::getOrderNo, orderNo);
-        return getOne(wrapper);
+        order = getOne(wrapper);
+        if (order != null) {
+            // 存入缓存，设置过期时间为1小时
+            cacheService.set(cacheKey, order, 3600);
+        }
+        return order;
     }
 
     @Override
@@ -113,7 +131,13 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEO> implemen
     @Transactional(rollbackFor = Exception.class)
     public boolean updateOrder(OrderEO order) {
         order.setUpdateTime(LocalDateTime.now());
-        return updateById(order);
+        boolean result = updateById(order);
+        if (result) {
+            // 清除缓存
+            String cacheKey = "order:no:" + order.getOrderNo();
+            cacheService.delete(cacheKey);
+        }
+        return result;
     }
 
 
@@ -132,7 +156,13 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEO> implemen
         }
         order.setUpdateTime(LocalDateTime.now());
 
-        return updateById(order);
+        boolean result = updateById(order);
+        if (result) {
+            // 清除缓存
+            String cacheKey = "order:no:" + orderNo;
+            cacheService.delete(cacheKey);
+        }
+        return result;
     }
 
     @Override
@@ -155,6 +185,9 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEO> implemen
 
         boolean result = updateById(order);
         if (result) {
+            // 清除缓存
+            String cacheKey = "order:no:" + orderNo;
+            cacheService.delete(cacheKey);
             log.info("订单已取消：orderNo={}", orderNo);
         }
 
@@ -171,6 +204,9 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEO> implemen
                     OrderErrorCode.ORDER_NOT_FOUND.getMessage());
         }
 
+        // 清除缓存
+        String cacheKey = "order:no:" + orderNo;
+        cacheService.delete(cacheKey);
         return removeById(order.getId());
     }
 

@@ -16,14 +16,14 @@ public class CacheProperties {
      * 阶段1：false（不启用）
      * 阶段2：true（启用Redis）
      */
-    private boolean enabled = false;
+    private boolean enabled = true;
 
     /**
      * 缓存类型
      * none：无缓存（阶段1）
      * redis：Redis缓存（阶段2）
      */
-    private String type = "none";
+    private String type = "redis";
 
     /**
      * 默认过期时间（秒）

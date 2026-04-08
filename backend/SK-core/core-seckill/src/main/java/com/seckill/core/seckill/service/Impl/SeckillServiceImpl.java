@@ -1,6 +1,8 @@
 package com.seckill.core.seckill.service.Impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.seckill.core.cache.CacheService;
+import com.seckill.core.cache.DistributedLockService;
 import com.seckill.core.seckill.client.SeckillOrderClient;
 import com.seckill.core.seckill.dto.SeckillOrderDTO;
 import com.seckill.core.seckill.dto.SeckillRequest;
@@ -32,6 +34,8 @@ public class SeckillServiceImpl implements SeckillService {
     private final StockService stockService;
     private final SeckillOrderClient seckillOrderClient;
     private final SeckillValidator seckillValidator;
+    private final CacheService cacheService;
+    private final DistributedLockService distributedLockService;
 
 
     @Override
@@ -40,6 +44,9 @@ public class SeckillServiceImpl implements SeckillService {
                 request.getUserId(), request.getSeckillId());
 
         long startTime = System.currentTimeMillis();
+
+        // 生成分布式锁key
+        String lockKey = "seckill:lock:" + request.getSeckillId();
 
         try {
             // 1. 基础请求验证
@@ -58,14 +65,27 @@ public class SeckillServiceImpl implements SeckillService {
                 throw new SeckillException(400, "您已参加过该秒杀活动");
             }
 
-            // 4-5. 扣减库存并创建订单（事务内）
-            return processDeductAndCreateOrder(request, activity, startTime);
+            // 4. 获取分布式锁
+            boolean locked = distributedLockService.tryLockWithRetry(lockKey, 10, 3, 50);
+            if (!locked) {
+                throw new SeckillException(400, "系统繁忙，请稍后重试");
+            }
+
+            try {
+                // 5-6. 扣减库存并创建订单（事务内）
+                return processDeductAndCreateOrder(request, activity, startTime);
+            } finally {
+                // 释放分布式锁
+                distributedLockService.unlock(lockKey);
+            }
 
         } catch (SeckillException e) {
             log.warn("秒杀失败：{}", e.getMessage());
             return SeckillResponse.fail(e.getCode(), e.getMessage());
         } catch (Exception e) {
             log.error("系统异常", e);
+            // 确保释放锁
+            distributedLockService.unlock(lockKey);
             return SeckillResponse.fail(500, "系统繁忙，请稍后重试");
         }
     }
@@ -116,12 +136,24 @@ public class SeckillServiceImpl implements SeckillService {
 
     @Override
     public SeckillActivity getSeckillActivity(Long seckillId) {
-        return seckillActivityMapper.selectById(seckillId);
+        String cacheKey = "seckill:activity:" + seckillId;
+        // 尝试从缓存获取
+        SeckillActivity activity = cacheService.get(cacheKey, SeckillActivity.class);
+        if (activity != null) {
+            return activity;
+        }
+        // 缓存未命中，从数据库查询
+        activity = seckillActivityMapper.selectById(seckillId);
+        if (activity != null) {
+            // 存入缓存，设置过期时间为1小时
+            cacheService.set(cacheKey, activity, 3600);
+        }
+        return activity;
     }
 
     @Override
     public boolean checkSeckillStatus(Long seckillId) {
-        SeckillActivity activity = seckillActivityMapper.selectById(seckillId);
+        SeckillActivity activity = getSeckillActivity(seckillId);
         if (activity == null) {
             return false;
         }
@@ -134,8 +166,18 @@ public class SeckillServiceImpl implements SeckillService {
 
     @Override
     public Integer getSeckillStock(Long seckillId) {
-        SeckillActivity activity = seckillActivityMapper.selectById(seckillId);
-        return activity != null ? activity.getRemainStock() : 0;
+        String cacheKey = "seckill:stock:" + seckillId;
+        // 尝试从缓存获取
+        Integer stock = cacheService.get(cacheKey, Integer.class);
+        if (stock != null) {
+            return stock;
+        }
+        // 缓存未命中，从数据库查询
+        SeckillActivity activity = getSeckillActivity(seckillId);
+        stock = activity != null ? activity.getRemainStock() : 0;
+        // 存入缓存，设置过期时间为30秒（库存变化频繁）
+        cacheService.set(cacheKey, stock, 30);
+        return stock;
     }
 
     @Override
@@ -144,7 +186,7 @@ public class SeckillServiceImpl implements SeckillService {
     }
 
     private SeckillActivity validateSeckill(Long seckillId) {
-        SeckillActivity activity = seckillActivityMapper.selectById(seckillId);
+        SeckillActivity activity = getSeckillActivity(seckillId);
         if (activity == null) {
             throw new SeckillException(404, "秒杀活动不存在");
         }

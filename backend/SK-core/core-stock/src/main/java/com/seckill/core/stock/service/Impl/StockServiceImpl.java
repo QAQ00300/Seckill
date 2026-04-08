@@ -2,6 +2,8 @@ package com.seckill.core.stock.service.Impl;
 
 
 
+import com.seckill.core.cache.CacheService;
+import com.seckill.core.cache.DistributedLockService;
 import com.seckill.core.stock.mapper.StockMapper;
 import com.seckill.core.stock.model.StockDeductRequest;
 import com.seckill.core.stock.model.StockDeductResult;
@@ -22,6 +24,12 @@ public class StockServiceImpl implements StockService {
     @Autowired
     private StockMapper stockMapper;
 
+    @Autowired
+    private CacheService cacheService;
+
+    @Autowired
+    private DistributedLockService distributedLockService;
+
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean deductStock(Long seckillId, Integer quantity) {
@@ -30,20 +38,43 @@ public class StockServiceImpl implements StockService {
             return false;
         }
 
-        try {
-            // 使用数据库乐观锁扣减库存
-            int affectedRows = stockMapper.deductStockWithOptimisticLock(seckillId, quantity);
+        // 生成分布式锁key
+        String lockKey = "stock:lock:" + seckillId;
 
-            if (affectedRows > 0) {
-                log.info("库存扣减成功: seckillId={}, quantity={}", seckillId, quantity);
-                return true;
-            } else {
-                log.warn("库存扣减失败，库存不足或活动不存在: seckillId={}", seckillId);
+        try {
+            // 获取分布式锁
+            boolean locked = distributedLockService.tryLockWithRetry(lockKey, 10, 3, 50);
+            if (!locked) {
+                log.warn("获取库存锁失败: seckillId={}", seckillId);
                 return false;
+            }
+
+            try {
+                // 使用数据库乐观锁扣减库存
+                int affectedRows = stockMapper.deductStockWithOptimisticLock(seckillId, quantity);
+
+                if (affectedRows > 0) {
+                    log.info("库存扣减成功: seckillId={}, quantity={}", seckillId, quantity);
+                    // 清除缓存
+                    String cacheKey = "stock:" + seckillId;
+                    cacheService.delete(cacheKey);
+                    // 同时清除秒杀服务中的库存缓存
+                    String seckillStockKey = "seckill:stock:" + seckillId;
+                    cacheService.delete(seckillStockKey);
+                    return true;
+                } else {
+                    log.warn("库存扣减失败，库存不足或活动不存在: seckillId={}", seckillId);
+                    return false;
+                }
+            } finally {
+                // 释放分布式锁
+                distributedLockService.unlock(lockKey);
             }
 
         } catch (Exception e) {
             log.error("库存扣减异常: seckillId={}", seckillId, e);
+            // 确保释放锁
+            distributedLockService.unlock(lockKey);
             throw new RuntimeException("库存扣减异常", e);
         }
     }
@@ -54,9 +85,19 @@ public class StockServiceImpl implements StockService {
             return 0;
         }
 
+        String cacheKey = "stock:" + seckillId;
+        // 尝试从缓存获取
+        Integer stock = cacheService.get(cacheKey, Integer.class);
+        if (stock != null) {
+            return stock;
+        }
+
         try {
-            Integer stock = stockMapper.selectStockBySeckillId(seckillId);
-            return stock != null ? stock : 0;
+            stock = stockMapper.selectStockBySeckillId(seckillId);
+            stock = stock != null ? stock : 0;
+            // 存入缓存，设置过期时间为30秒
+            cacheService.set(cacheKey, stock, 30);
+            return stock;
         } catch (Exception e) {
             log.error("查询库存异常: seckillId={}", seckillId, e);
             return 0;
@@ -72,6 +113,14 @@ public class StockServiceImpl implements StockService {
 
         try {
             int affectedRows = stockMapper.increaseStock(seckillId, quantity);
+            if (affectedRows > 0) {
+                // 清除缓存
+                String cacheKey = "stock:" + seckillId;
+                cacheService.delete(cacheKey);
+                // 同时清除秒杀服务中的库存缓存
+                String seckillStockKey = "seckill:stock:" + seckillId;
+                cacheService.delete(seckillStockKey);
+            }
             return affectedRows > 0;
         } catch (Exception e) {
             log.error("增加库存异常: seckillId={}", seckillId, e);
