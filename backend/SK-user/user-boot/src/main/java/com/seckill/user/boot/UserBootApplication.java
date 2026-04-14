@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan(basePackages = {"com.seckill.user"})
+@ComponentScan(basePackages = {"com.seckill.user", "com.seckill.core"})
 @MapperScan("com.seckill.user.biz.mapper")
 public class UserBootApplication {
 

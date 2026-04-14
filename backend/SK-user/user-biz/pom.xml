@@ -33,7 +33,10 @@
             <groupId>com.seckill</groupId>
             <artifactId>user-constant</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>com.seckill</groupId>
+            <artifactId>core-cache</artifactId>
+        </dependency>
 
     </dependencies>
 

@@ -1,4 +1,7 @@
 package com.seckill.core.mq;
 
-public class MqConsumer {
+/**
+ * 消息队列消费者接口
+ */
+public interface MqConsumer {
 }

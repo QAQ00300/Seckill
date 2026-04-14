@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan(basePackages = {"com.seckill.order"})
+@ComponentScan(basePackages = {"com.seckill.order", "com.seckill.core"})
 @MapperScan("com.seckill.order.biz.mapper")
 public class OrderBootApplication {
 

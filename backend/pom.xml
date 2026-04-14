@@ -49,7 +49,7 @@
         <redisson.version>3.23.2</redisson.version>
 
         <!-- 消息队列 -->
-        <rocketmq.version>5.3.2</rocketmq.version>
+        <rocketmq.version>2.2.3</rocketmq.version>
         <kafka.version>3.4.1</kafka.version>
 
         <!-- 工具类 -->

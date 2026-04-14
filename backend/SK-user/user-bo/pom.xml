@@ -13,12 +13,18 @@
     <artifactId>user-bo</artifactId>
     <version>${revision}</version>
 
-    <name>user-boot</name>
+    <name>user-bo</name>
     <properties>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.seckill</groupId>
+            <artifactId>SK-common</artifactId>
+        </dependency>
+    </dependencies>
 
 </project>

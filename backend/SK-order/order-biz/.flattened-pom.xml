@@ -25,6 +25,12 @@
       <scope>compile</scope>
     </dependency>
     <dependency>
+      <groupId>com.seckill</groupId>
+      <artifactId>core-cache</artifactId>
+      <version>release-1.0.0</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-tx</artifactId>
       <version>6.2.17</version>

@@ -22,5 +22,11 @@
         </exclusion>
       </exclusions>
     </dependency>
+    <dependency>
+      <groupId>com.seckill</groupId>
+      <artifactId>core-cache</artifactId>
+      <version>release-1.0.0</version>
+      <scope>compile</scope>
+    </dependency>
   </dependencies>
 </project>

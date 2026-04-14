@@ -48,10 +48,18 @@ seckill:
     enabled: true
     type: redis
 
-# 消息队列配置（阶段 1 不启用）
+# 消息队列配置
   mq:
-    enabled: false
-    type: none
+    enabled: true
+    type: rocketmq
+
+# RocketMQ配置
+rocketmq:
+  name-server: localhost:9876
+  producer:
+    group: seckill-producer-group
+  consumer:
+    group: seckill-consumer-group
 
 # 秒杀业务配置
 sk:
